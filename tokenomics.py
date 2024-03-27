@@ -9,7 +9,7 @@ st.sidebar.image("pip2.png", use_column_width=True)
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 st.sidebar.title("Navigation")
 app_mode = st.sidebar.selectbox("Select tokenomics section",
-                                ["Token Supply & Distribution", "Vesting & Release Schedule", "Deflationary Mechanisms", "Staking & Liquidity", "Investment KPIs"])
+                                ["Token Supply & Distribution", "Vesting & Release Schedule", "Deflationary Mechanisms", "Staking & Liquidity", ""])
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 
 st.sidebar.markdown("""
@@ -64,11 +64,11 @@ The $PIP token lies at the heart of the PIP World ecosystem, carefully designed 
 
 
     # Labels, sizes, and colors
-    labels = ['Strategic Round', 'Seed Round', 'Public Round', 'Team and Advisors', 
-            'Ecosystem Fund', 'Staking Rewards', 'Liquidity Provision', 
-            'Airdrops and Partnerships', 'Foundation Reserve']
-    sizes = [6, 8.125, 12.5, 10, 20, 20, 10, 10, 3.375]
-    colors = ['#ff9999','#66b3ff','#99ff99','#ffcc99', '#c2c2f0','#ffb3e6', '#c4e17f', '#76d7c4', '#fffac8']
+    labels = ['Strategic Round', 'Seed Round', 'KOL','IEO', 'Team', 'Advisors', 
+          'Community', 'Liquidity', 'Ecosystem', 'Reserve']
+    sizes = [8, 15, 1, 10, 10, 3, 9, 10, 15, 19]
+
+    colors = ['#ff9999','#66b3ff','#987345','#99ff99','#ffcc99', '#c2c2f0','#ffb3e6', '#c4e17f', '#76d7c4', '#fffac8']
 
     # Create the pie chart
     fig = go.Figure(data=[go.Pie(labels=labels, 
@@ -89,18 +89,18 @@ The $PIP token lies at the heart of the PIP World ecosystem, carefully designed 
     st.write("""
 &nbsp;
 
-| Category | Allocation | Tokens (million) | Price | Discount | Raise (million) | Fully Diluted Valuation |
-| --- | --- | --- | --- | --- | --- | --- |
-| Strategic Round | 6% | 30 | $0.08 | 66.7% | $2.4 | $40M |
-| Seed Round | 8.125% | 40.625 | $0.16 | 33.4% | $6.5 | $80M |
-| Public Round | 12.5% | 62.5 | $0.24 | 0% | $15 | $120M |
-| Team and Advisors | 10% | 50 | - | - | - | - |
-| Ecosystem Fund | 20% | 100 | - | - | - | - |
-| Staking Rewards | 20% | 100 | - | - | - | - |
-| Liquidity Provision | 10% | 50 | - | - | - | - |
-| Airdrops and Partnerships | 10% | 50 | - | - | - | - |
-| Foundation Reserve | 3.375% | 16.875 | - | - | - | - |
-| Total | 100% | 500 | - | - | $23.9M | - |
+| Category | Allocation | Tokens | Price | Raise (M) | Fully Diluted Valuation |
+| --- | --- | --- | --- | --- | ---- |
+| Strategic Round | 8% | 40 000 000 | $0.12 | $4.8 | $60 000 000 |
+| Seed Round | 15% | 75 000 000 | $0.16 | $12 | $80 000 000 |
+| KOL Round | 1% | 5 000 000 | $0.10 | $0.5 | $50 000 000 |
+| IEO Round | 10% | 50 000 000 | $0.25 | $12.5 | $125 000 000 |
+| Team & Advisors | 13% | 65 000 000 | - | - | - |
+| Ecosystem Fund | 15% | 75 000 000 | - | - | - |
+| Liquidity Provision | 10% | 50 000 000 | - | - | - |
+| Community | 9% | 45 000 000 | - | - | - |
+| Reserve | 19% | 95 000 000 | - | - | - |
+| Total | 100% | 500 000 000 | - | $29.8 | - |
 
 &nbsp;
 
@@ -110,25 +110,15 @@ The $PIP token lies at the heart of the PIP World ecosystem, carefully designed 
         st.write("""
 The token distribution has been carefully allocated to support the project's development, incentivise adoption, and ensure a healthy and sustainable ecosystem.
 
-1. **Strategic Round (6%)**: This round is designed to onboard key partners and advisors who bring significant value to the project. By allocating tokens at a lower price point, we can attract strategic investors who are committed to the long-term success of PIP World.
-2. **Seed Round (8.125%)**: The seed round provides early supporters with an opportunity to contribute to the project's development. These investors play a crucial role in helping PIP World establish a strong foundation and gain traction in the early stages.
-3. **Public Round (12.5%)**: The public round allows the wider community to participate in the project and benefit from its growth. By setting a higher price point than the previous rounds, we can ensure that the project is fairly valued while still providing an attractive opportunity for public investors.
-4. **Team and Advisors (10%)**: Allocating tokens to the team and advisors helps align their interests with the long-term success of the project. The 4-year vesting schedule with a 1-year cliff ensures that the team is committed to the project's growth and development over an extended period.
-5. **Ecosystem Fund (20%)**: The Ecosystem Fund is a crucial component of the tokenomics model, designed to support the development of the platform, incentivise user adoption, and forge strategic partnerships. By allocating a significant portion of the token supply to this fund, we can ensure that PIP World has the resources necessary to grow and thrive. The Ecosystem Fund will finance initiatives such as:
-    - Developer grants to encourage the creation of new learning modules, games, and features within the PIP World platform
-    - Educational content creation and localisation to make financial literacy accessible to a global audience
-    - Partnerships with educational institutions, non-profits, and industry leaders to expand the reach and impact of PIP World
-    - Community-driven projects and events that foster engagement, collaboration, and knowledge-sharing among PIP World users
-6. **Staking Rewards (20%)**: Staking rewards are essential for incentivising users to hold and stake their $PIP tokens, contributing to the security and stability of the network. By allocating a substantial portion of the token supply to staking rewards, we create a strong incentive for users to actively participate in the ecosystem and benefit from the platform's growth.
-7. **Liquidity Provision (10%)**: Allocating tokens to provide liquidity on decentralised exchanges is crucial for ensuring a healthy and stable market for $PIP tokens. Our liquidity provisioning strategy focuses on:
-    - Partnering with leading decentralised exchanges to ensure wide accessibility and trading volume for $PIP tokens
-    - Implementing a liquidity mining program that rewards users for providing liquidity and maintaining stable token prices
-    - Continuously monitoring and adjusting liquidity parameters to optimise market efficiency and minimise volatility
-8. **Airdrops and Partnerships (10%)**: Reserving a portion of the token supply for airdrops and partnerships allows PIP World to drive adoption, collaborate with key players in the industry, and expand its ecosystem. These initiatives help create awareness, attract new users, and foster valuable relationships within the blockchain and education communities. Our airdrop and partnership strategy includes:
-    - Targeted airdrops to active users of leading DeFi protocols, NFT marketplaces, and learning platforms
-    - Strategic partnerships with companies and projects that share our vision of accessible, engaging, and rewarding financial education
-    - Cross-promotional activities and collaborations that introduce PIP World to new audiences and create mutual value for our partners
-9. **Foundation Reserve (3.375%)**: The Foundation Reserve acts as a buffer, providing the PIP World project with the flexibility to address any unforeseen challenges or opportunities that may arise. This reserve ensures that the project can adapt to changing circumstances and continue to thrive in the long term. The Foundation Reserve will be managed transparently, with allocations decided through community governance mechanisms that will be detailed in the upcoming governance and community section of the whitepaper.
+1. **Strategic Round (8%)**: This round is designed to onboard key partners and advisors who bring significant value to the project. By allocating tokens at a lower price point, we can attract strategic investors who are committed to the long-term success of PiP World.
+2. **Seed Round (15%)**: The seed round provides early supporters with an opportunity to contribute to the project's development. These investors play a crucial role in helping PiP World establish a strong foundation and gain traction in the early stages.
+3. **KOL Round (1%)**: Targeted at Key Opinion Leaders in the crypto and blockchain space, this round acknowledges the pivotal role influencers and thought leaders play in disseminating information and generating awareness for PiP World, leveraging their reach to foster community engagement.
+4. **IEO (10%)**: The IEO round allows the wider community to participate in the project and benefit from its growth. By setting a higher price point than the previous rounds, we aim to ensure that the project is fairly valued while still providing an attractive opportunity for public investors.
+5. **Team and Advisors (13%)**: Allocating tokens to the team and advisors helps align their interests with the long-term success of the project. The 5-year vesting schedule with a 1-year cliff ensures that the team is committed to the project's growth and development over an extended period.
+6. **Ecosystem (15%)**: The Ecosystem Fund is a crucial component of the tokenomics model, designed to support the development of the platform, incentivise user adoption, and forge strategic partnerships. This fund is instrumental in ensuring that PiP World has the resources necessary to grow and thrive.
+7. **Liquidity (10%)**: Allocating tokens for liquidity provision on decentralized exchanges is essential for maintaining a healthy and stable market for $PiP tokens. This strategy aims to ensure wide accessibility and stable token prices, supporting the ecosystem's liquidity needs.
+8. **Community (9%)**: Reserving a portion of the token supply for the community enables PiP World to drive adoption, collaborate with key industry players, and expand its ecosystem. Initiatives like airdrops and partnerships foster engagement and build valuable relationships within the blockchain and education communities.
+9. **Reserve (19%)**: The Reserve serves as a strategic asset for PiP World, offering the flexibility to address challenges or capitalize on opportunities as they arise. This fund supports operational needs, market interventions, future expansions, and is managed with full transparency and community involvement in allocation decisions.
     
     """)    
     st.markdown("<hr>", unsafe_allow_html=True)
@@ -141,9 +131,10 @@ The token distribution has been carefully allocated to support the project's dev
 
         | Round | Dates | Token Price | Discount | Fundraising Goal |
         | --- | --- | --- | --- | --- |
-        | Strategic | Q2 2024 | $0.08 | 66.7% | $2.4M |
-        | Seed | Q2 2024 | $0.16 | 33.4% | $6.5M |
-        | Public | Q2 2024 | $0.24 | 0% | $15M |
+        | Strategic | Q2 2024 | $0.12 | 52% | $4.8M |
+        | Seed | Q2 2024 | $0.16 | 36% | $12M |
+        | KOL | Q2 2024 | $0.10 | 60% | $0.5M |
+        | Public | Q2 2024 | $0.25 | 0% | $12.5M |
 
         &nbsp;
         
@@ -199,40 +190,32 @@ elif app_mode == "Vesting & Release Schedule":
     st.write("""
 &nbsp;
 
-At Pip World, we have adopted a platform-based approach for token distribution. This method offers numerous benefits that streamline the process and enhance security, efficiency, and compliance. Here's why we chose this route:
+At PiP World, we believe in aligning the interests of all stakeholders with the long-term vision and sustainability of our ecosystem. Our vesting schedule is meticulously designed to foster a deep commitment to the project's success, ensuring that contributors, team members, and advisors are invested in the growth and development of PiP World over time. 
 
-- **Comprehensive Management**: Manage token launches, TGEs, and token sales all from a single platform, ensuring consistency and efficiency.
-- **Automated Distribution**: Automatically distribute tokens based on custom vesting schedules. This eliminates the need for custom smart contracts or manual token transfers, simplifying the distribution process.
-- **DeFi Integration**: Seamlessly transfer vested tokens to DeFi products for liquidity provision, staking, or yield farming, facilitating immediate utilization of tokens as they vest over time.
-- **Enhanced Visibility and Communication**: Real-time dashboards offer players and investors clear insights into their $PIP tokens and vesting schedules.
-- **Centralized Legal Documentation**: Keep all key legal agreements, such as SAFTs, organized and accessible in one place, simplifying document management.
-- **Unified Governance**: Provide a singular platform for governance token holders to cast votes on proposals, fostering an engaged and active community.
-- **Real-Time Cap Table Monitoring**: Easily view token cap table in real time and monitor significant transactions, maintaining transparency and control.
-- **Compliance with Regulations**: Implement KYC/AML procedures and security token transfer restrictions directly through the platform, ensuring regulatory compliance.
+By implementing strategic lock-up periods and gradual token releases, we aim to mitigate market volatility and reward enduring participation. This approach not only stabilises the token economy but also embodies our ethos of community-driven growth, transparency, and mutual success. Through this, we lay the foundation for a robust and thriving ecosystem, where each stakeholder's contribution is recognized and valued in our journey towards a decentralized future.
 
-### Future Developments: Dedicated Distribution Contract
+| Round          | Allocation | USD Value   | Initial Market Cap | Cliff (Months) | Lock (Months) |
+|----------------|------------|-------------|--------------------|----------------|---------------|
+| Strategic Round| 8%         | $4,800,000  | $60,000,000        | 9              | 36            |
+| Seed Round     | 15%        | $12,000,000 | $80,000,000        | 9              | 36            |
+| KOL Round      | 1%         | $500,000    | $50,000,000        | 3              | 12            |
+| IEO            | 10%        | $12,500,000 | $125,000,000       | 0              | 12            |
+| Team           | 10%        | -           | -                  | 12             | 48            |
+| Advisors       | 3%         | -           | -                  | 9              | 48            |
+| Community      | 9%         | -           | -                  | 0              | 60            |
+| Liquidity      | 10%        | -           | -                  | 0              | 0             |
+| Ecosystem      | 15%        | -           | -                  | 0              | 60            |
+| Reserve        | 19%        | -           | -                  | 0              | 60            |
+| **Total**      | **100%**   | **$29,800,000** | -              | -              | -             |
 
-Pip World is actively exploring the development of a dedicated smart contract for token distribution. This innovative approach aims to further streamline the token distribution process, guaranteeing a transparent, efficient, and secure delivery of tokens directly to the intended recipients. By leveraging blockchain technology, we underscore our commitment to operational excellence and building trust among our stakeholders.
-
-| Category | Token Amount (%) | USD Value (million) | Initial Market Cap. (TGE) | Cliff (months) | Linear Vesting (months) |
-| --- | --- | --- | --- | --- | --- |
-| Strategic Round | 6% | $0.25 | $20.0 | 6 | 8 |
-| Seed Round | 8.125% | $0.65 | $40.0 | 6 | 8 |
-| Public Round | 12.5% | $15 | $30.0 | 2 | 6 |
-| Team and Advisors | 10% | - | - | 12 | 36 |
-| Ecosystem Fund | 20% | - | - | 24 | 60 |
-| Staking Rewards | 20% | - | - | 0 | 12 |
-| Liquidity Provision | 10% | - | - | 0 | 12 |
-| Airdrops and Partnerships | 10% | - | - | 0 | 8 |
-| Foundation Reserve | 3.375% | - | - | 60 | 60 |
 
 &nbsp;
 
-To ensure the long-term alignment of interests and commitment to the project, the team and advisor tokens are subject to a 3-year vesting schedule with a 1-year cliff. This means that:
+To ensure the long-term alignment of interests and commitment to the project, the team and advisor tokens are subject to a 4-year vesting schedule with a 1-year cliff and 9-month cliff respectively. This means that:
 
-- No team or advisor tokens will be released during the first year following the token generation event (TGE)
-- After the 1-year cliff, 33.34% of the team and advisor tokens will be released
-- The remaining team and advisor tokens will be released in equal monthly instalments over the following 2 year.
+- No team or advisor tokens will be released during the 9 to 12 months following the token generation event (TGE).
+- After the cliff, 25% of the team and advisor tokens will be released.
+- The remaining team and advisor tokens will be released in equal monthly instalments over the following years.
 
 This vesting schedule ensures that the team and advisors have a strong incentive to drive the project's success over an extended period and provides transparency and predictability for the $PIP token supply.
 
@@ -241,45 +224,67 @@ In addition to the team and advisor vesting, the Ecosystem Fund tokens will be r
 &nbsp;
 """)
     
-    tab1, tab2 = st.tabs(["Platform-Based Vesting", "Future Contract-Level Vesting"])
+    tab1, tab2 = st.tabs(["Private Round Vesting", "Public Vesting"])
     
     with tab1:
-            st.header("Platform-Based Vesting")
+            st.header("Private Round Vesting")
             st.write("""
-                 In our pursuit of fostering longevity and aligning stakeholder incentives within our ecosystem, Pip World has chosen to implement platform-based vesting and cliff mechanisms for our token distribution schedule. This strategic approach allows us to distribute tokens to various recipients securely, efficiently, and in harmony with our stakeholders' and ecosystems needs. 
+                 For the private rounds, including the Strategic, Seed and KOL Rounds, we've designed a vesting schedule that balances the need for early support with the importance of long-term commitment. These rounds are pivotal, as they involve participants who provide not just capital but also strategic value and promotional support during the crucial early stages of the project.
                  &nbsp;
+
+- Strategic Round: The 9-month cliff and 36-month lock period for strategic investors ensure their long-term commitment and align their interests with the sustainable growth of the project, providing stability in the early stages of development.
+- Seed Round: Similar to the Strategic Round, a 9-month cliff and 36-month lock ensure seed investors are committed to the project's long-term success, reducing early sell-off and fostering gradual market entry.
+- KOL Round: A shorter 3-month cliff and 12-month lock for KOLs encourage early promotion and support for the project, while ensuring their engagement over a critical initial growth period.
                  """)
-            st.write()
-            with st.expander("Our Approach"):
-                st.write("""
-                         - **Automated Token Unlocks:** We aim to enable the progressive unlocking of tokens to recipients over the vesting period. This can be configured to release tokens on a schedule as granular as weekly, hourly, or even minute-by-minute, ensuring a steady and controlled distribution that aligns with the Pip World’s growth and milestones.
-- **Cliff Date Setting:** The inclusion of cliff dates in our vesting schedules introduces a lock-up period before vesting commences. This feature is instrumental in ensuring that recipients are committed to the long-term success of the project before receiving their tokens.
-- **Transparent Payment Processing:** Transparency is a cornerstone of our approach. All vesting transactions are conducted on-chain, allowing stakeholders to monitor the vesting schedule and token emissions through Blockchain Explorers. This openness fosters trust and accountability within our community and aligns with our Trust Model.
-- **On- and Off-Chain:** In addition to our on-chain vesting controls, Pip World has established vesting rules that are fixed and regulated within legal documents prior to our TGE, considered 'off-chain'. This dual-layered approach ensures a comprehensive governance framework that aligns with both regulatory standards and our ecosystem's integrity.
-                         """)
+            
     
     with tab2:
-        st.header("Future Contract-Level Vesting")
+        st.header("Public Vesting")
         st.write("""
-                 While currently leveraging platform-based solutions for their efficiency and adaptability, Pip World remains open to exploring contract-level vesting in the future. This flexibility ensures that as our ecosystem evolves and new needs emerge, we can adapt our strategies to maintain alignment with our core principles of security, transparency, and stakeholder alignment.
-
-By choosing platform-based vesting, Pip World positions itself at the forefront of innovative token distribution methodologies, setting a standard for security, efficiency, and stakeholder engagement in the digital asset space.
+                 Public rounds' vesting schedules are crafted to ensure widespread participation while safeguarding the ecosystem against volatility. These rounds aim to democratize access to the project, inviting community members and public investors to contribute to and benefit from the ecosystem's growth.
                  """)
     
+        st.write()
+        with st.expander("Our Approach"):
+                st.write("""
+
+1. IEO: No cliff with a 12-month lock allows immediate market participation while maintaining a vested interest in the project's success, supporting price stability post-launch.
+2. Team: A 12-month cliff and 48-month lock for team members underscore their commitment to the project's long-term vision and success, aligning incentives with sustained ecosystem development.
+3. Advisors: The 9-month cliff and 48-month lock ensure advisors provide ongoing strategic guidance and support over an extended period, contributing to the project's longevity.
+4. Community: No cliff with a 60-month lock reflects the commitment to rewarding and retaining the community's support over time, fostering a loyal user base.
+5. Liquidity: No cliff or lock period facilitates immediate market liquidity, supporting trading volume and token accessibility from the outset.
+6. Ecosystem: No cliff with a 60-month lock supports the long-term development and expansion of the ecosystem, funding innovation and growth initiatives.
+7. Reserve: No cliff with a 60-month lock ensures a strategic reserve is available to address future needs and opportunities, safeguarding the project's adaptability and resilience.
+                         """)
+                    
     #st.pyplot(create_chart(token_prices, "Token Price Over Time", "Price ($)"))
 
 elif app_mode == "Deflationary Mechanisms":
     st.title("Deflationary Mechanisms")
     st.write("""
              
-             Pip World is implementing several deflationary mechanisms to sustain and enhance the value of $PIP token within its ecosystem. These strategies leverage robust economic principles to ensure the circulating supply of tokens accurately reflects market demand. Following the launch, PIP tokens will maintain a fixed supply cap of 500 million tokens, enforced by the PIP Token smart contract. 
+In navigating the complex terrain of digital currency economics, PiP World employs a nuanced blend of monetary and fiscal policies designed to maintain a healthy token supply, control inflation, and stimulate demand for the $PiP token. These policies are meticulously crafted to ensure the long-term sustainability and growth of the ecosystem.
 
-Governance may introduce an inflation rate up to 1.5% annually, contingent on ecosystem sustainability needs. This rate, along with the allocation of new tokens, will be determined by governance, with the smart contract enforcing a 1.5% cap. 
+#### Managing Token Supply:
 
-Default inflation is set at 0% unless altered through governance decisions.
+For $PiP, we implements several key mechanisms to manage the token supply effectively:
 
-In our strategy to maintain the PIP token's stability, we employ a balanced approach of carefully controlled inflation and a burn mechanism. This strategy is designed to manage supply and demand effectively, ensuring the PIP token remains a valuable asset within our ecosystem. By meticulously regulating the token supply—increasing it modestly when beneficial for growth and decreasing it to enhance scarcity—we aim to achieve a stable economic environment conducive to the long-term success of the PIP token.
+- **Token Burns:** A deflationary measure where a portion of the token supply is periodically removed from circulation. This mechanism is employed to counteract inflationary pressures and enhance the token's scarcity and value over time. The criteria and schedule for these burns are transparently outlined, aligning with significant ecosystem milestones or transaction volume thresholds.
 
+- **Vesting Schedules:** To align the interests of team members, advisors, and early investors with the long-term success of the ecosystem, $PiP World incorporates vesting schedules into its tokenomics. These schedules dictate the gradual release of tokens over a specified period, preventing market flooding and ensuring a steady, controlled increase in token circulation.
+
+- **Staking Rewards:** Encouraging token holders to stake their tokens not only secures the network but also reduces the velocity of money within the ecosystem. Staked tokens are temporarily removed from circulation, which can have a deflationary effect by decreasing the available supply, thus potentially increasing the token's price.
+
+#### Inflation Control and Demand Stimulation:
+
+To mitigate the risk of inflation and stimulate demand for the $PiP token, PiP World adopts the following policies:
+
+
+- **Inflation Rate Management:** While the $PiP token has a capped supply, mechanisms for releasing tokens into the ecosystem, such as rewards for staking or participation in governance, are designed with a cap to ensure they do not dilute the token's value. The governance model allows for adjustments to these mechanisms, ensuring flexibility to respond to changing economic conditions.
+- **Demand Stimulation Initiatives:** Beyond the utility provided within the ecosystem, PiP World engages in strategies to stimulate demand for the $PiP token. These include partnerships that expand the token's use cases, marketing campaigns to raise awareness and adoption, and liquidity provisioning on exchanges to facilitate easy trading.
+
+By integrating these monetary and fiscal policies, PiP World aims to maintain a balanced and thriving economy. Managing the token supply through burns, vesting, and staking, alongside strategic measures to control inflation and stimulate demand, positions the $PiP token for sustained value and utility within the ecosystem.
+             
 ### Burn Mechanism
 
 The decision to remove tokens from circulation will be made transparently, considering ecosystem health and token economics. Burns will occur systematically, tied to:
@@ -685,6 +690,10 @@ elif app_mode == "Investment KPIs":
 
         # Display the graph
         st.plotly_chart(fig, use_container_width=True)
+        
+        
+        #--
+        #--
 
         # Displaying the price change percentage in a large block next to the graph
         col1, col2 = st.columns([3, 1])

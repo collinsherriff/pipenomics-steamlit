@@ -831,7 +831,7 @@ if authenticate_user():
                 
                 st.plotly_chart(fig2, use_container_width=True)
                 
-                with st.expander("Market Cap Growth"):
+                with st.expander("Market Cap Growth Rate"):
                     st.write("""
 This graph presents a projected market cap growth based on a conservative growth rate of 0.06, as determined by market research. While we've assumed a steady increase over time for this estimate, actual market cap fluctuations could lead to different token pricing outcomes.
                     """)

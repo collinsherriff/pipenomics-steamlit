@@ -5,26 +5,15 @@ import time
 import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.graph_objs as go
+# from dotenv import load_dotenv
+# import os
 
-
-# import yaml
-# from yaml.loader import SafeLoader
-# with open('../auth.yaml') as file:
-#     config = yaml.load(file, Loader=SafeLoader)
-    
-    
-# authenticator = Authenticate(
-#     config['credentials'],
-#     config['cookie']['name'],
-#     config['cookie']['key'],
-#     config['cookie']['expiry_days'],
-#     config['preauthorized']
-# )
-
-# name, authentication_status, username = authenticator.login('Login', 'main')
+# load_dotenv()
+# keyname = os.getenv('PASSWORD')
+# keyword = os.getenv('USERNAME')
 
 def creds_entered():
-    if st.session_state['user'].strip() == 'admin' and st.session_state['password'].strip() == 'admin':
+    if st.session_state['user'].strip() == "admin" and st.session_state['password'].strip() == "admin":
         st.session_state['authenticated'] = True
     
     else:
@@ -637,39 +626,41 @@ if authenticate_user():
 
         st.write("""
                 
-                ### Introducing vePIP Tokens
-
-    Within Pip World, vePIP tokens act as a pivotal element designed to enhance the ecosystems economy and governance structure. By engaging in our staking program, users can secure their $PIP tokens within our staking smart contract for a period ranging from 1 to 30 months, earning vePIP tokens as a reward for their commitment.
-
-    ### Earning vePIP Tokens
-
-    Users can lock their $PIP tokens into the staking smart contract for any duration between 1 and 30 months. Upon doing so, they will be granted vePIP tokens, which serve as a measure of their staked investment's value over the locked period.
-
-    ### The vePIP Multiplier Formula
-
-    To reward our users for their loyalty and long-term participation, we've devised the vePIP multiplier formula as follows:
+              PiP World introduces a strategic staking and rewards mechanism that not only incentivises long-term holding of the $PiP token but also significantly contributes to the stability and liquidity of the ecosystem. This approach is carefully designed to balance rewarding token holders while ensuring the health and growth of the platform.
+ 
+### Staking Models & Rewards:
+PiP World offers a flexible staking model that allows token holders to lock their tokens for varying periods, thereby earning staking rewards. The model is structured to offer higher rewards for longer lock-up periods, thus encouraging long-term holding.
+The rewards are distributed from a designated staking rewards pool (reserve fund), ensuring a consistent and predictable supply of rewards to stakeholders. This model serves dual purposes:
                 
                 """)
+        st.divider()
+        col1, space, col2 = st.columns([1,0.1,1])
+        with col1:
+            st.write("""#### Long-term Holding Incentive""")
+            st.write("""By providing higher rewards for longer staking periods, token holders are encouraged to commit their tokens over extended periods. This reduces the circulating supply of $PiP, increasing their value and providing a financial incentive for holders to align with the ecosystem's long-term success.""")
+            
+            
+        with col2:
+            st.write("""#### Ecosystem Stability""")
+            st.write("""The predictable nature of staking rewards, coupled with the commitment of tokens for staking, lends stability to the $PiP token's market. It mitigates the impact of speculative trading and short-term volatility, fostering a more stable economic environment.""")
+        # st.latex(r'''multiplier = 1.05^x''')
         
-        st.latex(r'''multiplier = 1.05^x''')
+        st.divider()
         
+        st.write("### Impact on Token Velocity and Ecosystem Liquidity")
         st.write("""
                 
-                &nbsp;
+                The staking mechanism directly influences the velocity of the PiP token and the liquidity within the ecosystem:
                 
-    Where (*x*) represents the number of months the $PIP tokens are locked. This exponential approach ensures that the longer users commit their tokens, the greater the rewards, incentivising a longer lock-in period to maximise their vePIP token returns.
+- **Reduced Token Velocity:** Staking rewards encourage holders to lock their tokens, reducing the frequency with which the PiP token changes hands. A lower velocity (V↓) is beneficial for $PiPs value, as it suggests a preference for holding over trading.  
+- **Enhanced Ecosystem Liquidity:** Part of the staking strategy includes provisions for liquidity provisioning. Stakers might have the opportunity to contribute to liquidity pools, earning additional rewards while enhancing the liquidity of $PiP tokens on DEXs. This not only benefits the stakers but also improves the trading experience for all users by reducing slippage and ensuring fair market prices.
 
-    ### Benefits of vePIP Tokens
+PiP World's staking and rewards mechanism is designed to encourage long-term holding and contribute to ecosystem stability. By carefully balancing incentives for token holders with the needs of the ecosystem, PiP World ensures a vibrant community of stakeholders invested in its long-term success, while managing token velocity and enhancing liquidity.
+ 
+### Future NFT Vesting Accelerators
+At PiP World we are exploring into an exciting innovation: using NFTs to offer unique vesting and staking advantages. These NFTs aim to provide two key benefits: the ability to accelerate vesting periods, allowing investors quicker access to their tokens, and the option to stake these NFTs for additional rewards. This initiative reflects our commitment to leveraging best-in-class technology for greater ecosystem flexibility and community engagement, offering stakeholders more control and added value within the $PiP ecosystem.
 
-    The implementation of vePIP tokenomics is designed with multiple objectives:
-
-    - **Incentivising Long-Term Holding**: By encouraging users to lock their tokens, we aim to decrease the available supply of $PIP tokens actively circulating in the market, thereby potentially reducing sell pressure and contributing to the token's value stabilisation over time.
-    - **Enhancing Governance Participation**: vePIP tokens are at the heart of our governance mechanism. Users must lock their $PIP tokens for a minimum of one month to participate in governance decisions, ensuring that only those with a vested interest in the ecosystems future can influence its direction.
-    - **Rewarding Commitment**: The vePIP multiplier directly acknowledges users' dedication to the ecosystem by compensating staking from a 20% token allocation and offering up to a 4.32x APY for a maximum 30-month staking period, courtesy of our multiplier formula. This approach not only provides financial advantages to our users but also reinforces the financial and operational robustness of the Pip World ecosystem.
-
-    This strategic approach to staking and governance ensures that Pip World remains a secure, user-centric platform. It aligns the interests of our users with the long-term success and stability of the ecosystem, creating a harmonious balance between rewarding individual participation and fostering collective growth.
-        
-    &nbsp;
+&nbsp;
                 """)
         
 

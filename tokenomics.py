@@ -878,8 +878,9 @@ if authenticate_user():
             col1, space, space, col2 = st.columns([1,2,2,1])
             with col1:
                 st.write("")
+                
             with col2:
-                on = st.toggle('TGE Release')
+                on = st.checkbox('TGE Release', value=False)
 
                 if on:
                         tge = 0

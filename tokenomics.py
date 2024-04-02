@@ -879,7 +879,7 @@ if authenticate_user():
             with col1:
                 st.write("")
             with col2:
-                on = st.toggle(':red[TGE Release]')
+                on = st.toggle('TGE Release')
 
                 if on:
                         tge = 0

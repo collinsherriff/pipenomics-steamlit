@@ -278,8 +278,8 @@ if authenticate_user():
     | Advisors       | 3%         | -           | -                  | 9              | 48            |
     | Community      | 9%         | -           | -                  | 0              | 60            |
     | Liquidity      | 10%        | -           | -                  | 0              | 0             |
-    | Ecosystem      | 15%        | -           | -                  | 0              | 60            |
-    | Reserve        | 19%        | -           | -                  | 0              | 60            |
+    | Ecosystem      | 15%        | -           | -                  | 3              | 60            |
+    | Reserve        | 19%        | -           | -                  | 6              | 60            |
     | **Total**      | **100%**   | **$29,800,000** | -              | -              | -             |
 
                 """)
@@ -319,9 +319,9 @@ if authenticate_user():
                         monthly_amount = (max_supply * (percentage / 100)) / (end_month - start_month + 1)
                         df.loc[start_month:end_month, category] = monthly_amount
                         
-                    linear_release(1, 60, 15, 'Ecosystem')
+                    linear_release(4, 60, 15, 'Ecosystem')
                     linear_release(13, 48, 10, 'Team')
-                    linear_release(1, 60, 19, 'Reserve')
+                    linear_release(7, 60, 19, 'Reserve')
                     linear_release(10, 48, 3, 'Advisors')
                     linear_release(1, 60, 9, 'Community')
                     
@@ -361,8 +361,8 @@ if authenticate_user():
                 "Category": ["Strategic", "Seed", "KOL", "IEO", "Ecosystem", "Team", "Reserve", "Advisors", "Community", "Liquidity"],
                 "Token Amount": [40000000, 75000000, 5000000, 50000000, 75000000, 50000000, 95000000, 15000000, 45000000, 50000000],
                 "Initial Release": [0.05, 0.07, 0.2, 0.2, 0, 0, 0, 0, 0, 1],
-                "Monthly Release": [0.035185185, 0.034444444, 0.088888889, 0.066666667, 0.016666667, 0.027777778, 0.016666667, 0.025641026, 0.016666667, 0],
-                "Start Month": [10, 10, 4, 1, 1, 13, 1, 10, 1, 0],
+                "Monthly Release": [0.035185185, 0.034444444, 0.088888889, 0.066666667, 0.0175438596491228, 0.027777778, 0.0185185185185185, 0.025641026, 0.016666667, 0],
+                "Start Month": [10, 10, 4, 1, 4, 13, 7, 10, 1, 0],
                 "End Month": [36, 36, 12, 12, 60, 48, 60, 48, 60, 0]
             }
 
@@ -432,8 +432,8 @@ if authenticate_user():
     3. Advisors: The 9-month cliff and 48-month lock ensure advisors provide ongoing strategic guidance and support over an extended period, contributing to the project's longevity.
     4. Community: No cliff with a 60-month lock reflects the commitment to rewarding and retaining the community's support over time, fostering a loyal user base.
     5. Liquidity: No cliff or lock period facilitates immediate market liquidity, supporting trading volume and token accessibility from the outset.
-    6. Ecosystem: No cliff with a 60-month lock supports the long-term development and expansion of the ecosystem, funding innovation and growth initiatives.
-    7. Reserve: No cliff with a 60-month lock ensures a strategic reserve is available to address future needs and opportunities, safeguarding the project's adaptability and resilience.
+    6. Ecosystem: 3-month cliff with a 60-month lock supports the long-term development and expansion of the ecosystem, funding innovation and growth initiatives.
+    7. Reserve: 6-month cliff with a 60-month lock ensures a strategic reserve is available to address future needs and opportunities, safeguarding the project's adaptability and resilience.
                             """)
 
     elif app_mode == "Monetary & Fiscal Policies":
@@ -688,11 +688,11 @@ if authenticate_user():
             with col1:
                 st.write("""
                         
-                        To make an informed decision about the optimal timing for investing in $PiP tokens, consider the detailed metrics outlined below. These metrics are crucial in assessing the viability and potential profitability of such investments within specified monthly periods. By carefully analyzing the proposed market capitalization figures and trends over these ranges, you can identify the most favorable moments to allocate resources to PiP tokens. 
+                        To make an informed decision about the optimal timing for investing in $PiP tokens, consider the detailed metrics outlined below. These metrics are crucial in assessing the viability and potential profitability of such investments within specified monthly periods. By carefully analysing the proposed market capitalisation figures and trends over these ranges, you can identify the most favorable moments to allocate resources to PiP tokens. 
                         
-                        This strategic approach not only maximizes your investment potential but also minimizes risk by relying on data-driven insights and projections. Keep in mind that understanding the dynamics of market capitalization, including factors that influence fluctuations and growth prospects, is essential in making educated investment choices.
+                        This strategic approach not only maximises your investment potential but also minimises risk by relying on data-driven insights and projections. Keep in mind that understanding the dynamics of market capitalisation, including factors that influence fluctuations and growth prospects, is essential in making educated investment choices.
                         
-                        *Select the desired range of months, as well as the market cap to view the potential corresponding token price and circulating supply figures, enabling you to make well-informed investment decisions*:
+                        :violet[*Select the desired range of months, as well as the market cap to view the potential corresponding token price and circulating supply figures, enabling you to make well-informed investment decisions*:]
                         &nbsp;
                         """)
 
@@ -821,6 +821,13 @@ if authenticate_user():
 
 
                 st.plotly_chart(fig, use_container_width=True)
+                
+                st.markdown(f"""
+                <div class="metric-block">
+                    <h3>Price Change</h3>
+                    <h2><span style='color:green'>{price_change_percent:,.0f}%</span></h2>
+                </div>
+                """, unsafe_allow_html=True)
             
             with col2:
                 st.header("Market Cap Growth Over Selected Period")
@@ -835,30 +842,17 @@ if authenticate_user():
                     st.write("""
 This graph presents a projected market cap growth based on a conservative growth rate of 0.06, as determined by market research. While we've assumed a steady increase over time for this estimate, actual market cap fluctuations could lead to different token pricing outcomes.
                     """)
+                    df = pd.DataFrame({"Months": months, "Market Cap ($M)": market_cap / 1e6})
+                    st.write(df)
+                    
+                with st.expander("Important **Disclaimer**"):
+                    st.write("""
+                           
+                           The information provided on this page is based on economic principles and formulae and is not intended to provide the true picture of the token price. It should not be considered as financial advice. Please note that the supply of tokens is assumed to be linear over months and does not include any vesting periods. Make sure to conduct thorough research and consult with a financial advisor before making any investment decisions.  
+                             
+                             """)
                 
-                
-                # st.header("Market Cap Growth Over Selected Period")
-                # fig2 = go.Figure()
-                # fig2.add_trace(go.Scatter(x=months, y=market_cap, mode='lines+markers', name='Market Cap', line=dict(color='#5e28d5')))
-                # fig2.update_layout(title="Market Cap Growth Over Selected Period", xaxis_title="Months", yaxis_title="Market Cap ($)",
-                #                 yaxis=dict(tickformat=".0fM", tickvals=[i * 1e6 for i in range(0, int(max(market_cap) / 1e6) + 2)]))
 
-                # st.plotly_chart(fig2, use_container_width=True)
-
-            
-            col1, space, col2 = st.columns([1, 0.1, 1])
-            with col2:
-                st.write("")
-                # st.warning(' Assumption of 0.06 growth rate in MCAP selected', icon="ℹ️")
-
-            with col1:
-                
-                # st.metric(label="Price Change", value=price_change_percent, delta="1 °F")
-                
-                color = "green" if price_change_percent >= 0 else "red"
-                st.markdown(f"<h1 style='color:{color};'>{price_change_percent:.2f}%</h1>", unsafe_allow_html=True)
-                st.caption("Price Change")
-        
         with tab2:
             st.header("Token Emissions")
             st.write("""
@@ -884,12 +878,13 @@ This graph presents a projected market cap growth based on a conservative growth
                         tge = 1
                 
             ##NEW
+            
             data = {
                 "Category": ["Strategic", "Seed", "KOL", "IEO", "Ecosystem", "Team", "Reserve", "Advisors", "Community", "Liquidity"],
                 "Token Amount": [40000000, 75000000, 5000000, 50000000, 75000000, 50000000, 95000000, 15000000, 45000000, 50000000],
                 "Initial Release": [0.05, 0.07, 0.2, 0.2, 0, 0, 0, 0, 0, 1],
-                "Monthly Release": [0.035185185, 0.034444444, 0.088888889, 0.066666667, 0.016666667, 0.027777778, 0.016666667, 0.025641026, 0.016666667, 0],
-                "Start Month": [10, 10, 4, 1, 1, 13, 1, 10, 1, 0],
+                "Monthly Release": [0.035185185, 0.034444444, 0.088888889, 0.066666667, 0.0175438596491228, 0.027777778, 0.0185185185185185, 0.025641026, 0.016666667, 0],
+                "Start Month": [10, 10, 4, 1, 4, 13, 7, 10, 1, 0],
                 "End Month": [36, 36, 12, 12, 60, 48, 60, 48, 60, 0]
             }
 
@@ -954,14 +949,13 @@ This graph presents a projected market cap growth based on a conservative growth
 
 
                 data = {
-                    "Category": ["Strategic", "Seed", "KOL", "IEO", "Ecosystem", "Team", "Reserve", "Advisors", "Community", "Liquidity"],
-                    "Token Amount": [40000000, 75000000, 5000000, 50000000, 75000000, 50000000, 95000000, 15000000, 45000000, 50000000],
-                    "Initial Release": [0.05, 0.07, 0.2, 0.2, 0, 0, 0, 0, 0, 1],
-                    "Monthly Release": [0.035185185, 0.034444444, 0.088888889, 0.066666667, 0.016666667, 0.027777778, 0.016666667, 0.025641026, 0.016666667, 0],
-                    "Start Month": [10, 10, 4, 1, 1, 13, 1, 10, 1, 0],
-                    "End Month": [36, 36, 12, 12, 60, 48, 60, 48, 60, 0]
+                "Category": ["Strategic", "Seed", "KOL", "IEO", "Ecosystem", "Team", "Reserve", "Advisors", "Community", "Liquidity"],
+                "Token Amount": [40000000, 75000000, 5000000, 50000000, 75000000, 50000000, 95000000, 15000000, 45000000, 50000000],
+                "Initial Release": [0.05, 0.07, 0.2, 0.2, 0, 0, 0, 0, 0, 1],
+                "Monthly Release": [0.035185185, 0.034444444, 0.088888889, 0.066666667, 0.0175438596491228, 0.027777778, 0.0185185185185185, 0.025641026, 0.016666667, 0],
+                "Start Month": [10, 10, 4, 1, 4, 13, 7, 10, 1, 0],
+                "End Month": [36, 36, 12, 12, 60, 48, 60, 48, 60, 0]
                 }
-
 
                 df_data = pd.DataFrame(data)
 
@@ -1054,9 +1048,9 @@ This graph presents a projected market cap growth based on a conservative growth
                         df.loc[start_month:end_month, category] = monthly_amount
                         
 
-                    linear_release(1, 60, 15, 'Ecosystem')
+                    linear_release(4, 60, 15, 'Ecosystem')
                     linear_release(13, 48, 10, 'Team')
-                    linear_release(1, 60, 19, 'Reserve')
+                    linear_release(7, 60, 19, 'Reserve')
                     linear_release(10, 48, 3, 'Advisors')
                     linear_release(1, 60, 9, 'Community')
                     
@@ -1187,9 +1181,9 @@ This graph presents a projected market cap growth based on a conservative growth
                     
     | Category    |  Percentage of Total Supply | Price   | Token Amount | Token Price at Public Round | Sale in $    | Cliff (m) | Lock (m) | Unlock on TGE % | Tokens Unlock on TGE | Unlocked in $ | Unlock % pm | Token Unlock pm | Unlock pm $TGE |
     |-------------|-------------------|---------|--------------|-----------------------------|--------------|-----------|----------|-----------------|----------------------|---------------|-------------|-----------------|----------------|
-    | Ecosystem   | 15.00%            | -       | 75,000,000   | 18,750,000                   | -            | 0         | 60       | 0.00%           | 0                    | $0            | 1.69%       | 1,271,186       | $317,797       |
+    | Ecosystem   | 15.00%            | -       | 75,000,000   | 18,750,000                   | -            | 3         | 60       | 0.00%           | 0                    | $0            | 1.69%       | 1,271,186       | $317,797       |
     | Team        | 10.00%            | -       | 50,000,000   | 12,500,000                   | -            | 12        | 48       | 0.00%           | 0                    | $0            | 2.08%       | 1,041,667       | $260,417       |
-    | Reserve     | 19.00%            | -       | 95,000,000   | 23,750,000                   | -            | 0         | 60       | 0.00%           | 0                    | $0            | 1.67%       | 1,583,333       | $395,833       |
+    | Reserve     | 19.00%            | -       | 95,000,000   | 23,750,000                   | -            | 6         | 60       | 0.00%           | 0                    | $0            | 1.67%       | 1,583,333       | $395,833       |
     | Advisors    | 3.00%             | -       | 15,000,000   | 3,750,000                    | -            | 9         | 48       | 0.00%           | 0                    | $0            | 2.08%       | 312,500         | $78,125        |
     | Community   | 9.00%             | -       | 45,000,000   | 11,250,000                   | -            | 0         | 60       | 0.00%           | 0                    | $0            | 1.69%       | 762,712         | $190,678       |
     | Strategic   | 8.00%             | $0.12   | 40,000,000   | 10,000,000                   | $4,800,000   | 9         | 36       | 5.00%           | 2,000,000            | $500,000      | 2.64%       | 1,055,556       | $263,889       |
@@ -1203,31 +1197,31 @@ This graph presents a projected market cap growth based on a conservative growth
 
                 """)
             
-            # Data preparation
-            source = [0, 1, 2, 3, 4, 5, 6, 7, 8, 8, 9]
-            target = [10, 10, 10, 10, 10, 11, 11, 11, 11, 12, 12]
-            value = [40000000, 75000000, 5000000, 50000000, 75000000, 50000000, 95000000, 15000000, 45000000, 50000000, 50000000]
-            label = ["Strategic", "Seed", "KOL", "IEO", "Ecosystem", "Team", "Reserve", "Advisors", "Community", "Liquidity", "TGE Unlocks", "Monthly Unlocks", "Circulation"]
+            # # Data preparation
+            # source = [0, 1, 2, 3, 4, 5, 6, 7, 8, 8, 9]
+            # target = [10, 10, 10, 10, 10, 11, 11, 11, 11, 12, 12]
+            # value = [40000000, 75000000, 5000000, 50000000, 75000000, 50000000, 95000000, 15000000, 45000000, 50000000, 50000000]
+            # label = ["Strategic", "Seed", "KOL", "IEO", "Ecosystem", "Team", "Reserve", "Advisors", "Community", "Liquidity", "TGE Unlocks", "Monthly Unlocks", "Circulation"]
 
-            # Creating the Sankey diagram
-            fig = go.Figure(data=[go.Sankey(
-                node=dict(
-                    pad=15,
-                    thickness=20,
-                    line=dict(color='#050413', width=0.5),
-                    label=label,
-                    color='#050413'
-                ),
-                link=dict(
-                    source=source,
-                    target=target,
-                    value=value
-                ))])
 
-            fig.update_layout(title_text='Detailed Token Release Schedule', font_size=15, height=800, width=800)
+            # fig = go.Figure(data=[go.Sankey(
+            #     node=dict(
+            #         pad=15,
+            #         thickness=20,
+            #         line=dict(color='#050413', width=0.5),
+            #         label=label,
+            #         color='#050413'
+            #     ),
+            #     link=dict(
+            #         source=source,
+            #         target=target,
+            #         value=value
+            #     ))])
 
-            # Displaying the Sankey diagram in Streamlit
-            st.plotly_chart(fig, use_container_width=True)
+            # fig.update_layout(title_text='Detailed Token Release Schedule', font_size=15, height=800, width=800)
+
+
+            # st.plotly_chart(fig, use_container_width=True)
 
 
 

@@ -62,7 +62,7 @@ if authenticate_user():
     # return False
 
     st.set_page_config(layout="wide", page_title="$PiP Tokenomics", page_icon=":coin:")
-    st.sidebar.image("pip2.png", use_column_width=True)
+    st.sidebar.image("pip.png", use_column_width=True)
     st.sidebar.markdown("<hr>", unsafe_allow_html=True)
     st.sidebar.title("Navigation")
     app_mode = st.sidebar.selectbox("Select tokenomics section",

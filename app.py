@@ -4,12 +4,10 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Sample data for visualizations (Replace with your actual data)
 rounds = ["Private 1a", "Private 1b", "Private 2", "Private Current", "Public Launchpads", "KOLs"]
 prices = [0.001, 0.001, 0.0015, 0.0015, 0.0035, 0.0035]
 raised = [300000, 1100000, 65000, 685500, 280000, 1100000]
 
-# Creating charts (You might want to replace this with your actual data and charts)
 def create_fundraising_chart():
     fig, ax1 = plt.subplots()
     color = 'tab:red'

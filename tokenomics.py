@@ -5,7 +5,7 @@ import time
 import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.graph_objs as go
-# import streamlit_authenticator as stauth
+
 
 # import yaml
 # from yaml.loader import SafeLoader
@@ -22,6 +22,7 @@ import plotly.graph_objs as go
 # )
 
 # name, authentication_status, username = authenticator.login('Login', 'main')
+
 def creds_entered():
     if st.session_state['user'].strip() == 'admin' and st.session_state['password'].strip() == 'admin':
         st.session_state['authenticated'] = True
@@ -820,11 +821,6 @@ if authenticate_user():
 
 
                 st.plotly_chart(fig, use_container_width=True)
-                
-                with st.expander("Price Growth"):
-                    st.write("""
-    Disclaimer
-                    """)
             
             with col2:
                 st.header("Market Cap Growth Over Selected Period")
@@ -837,7 +833,7 @@ if authenticate_user():
                 
                 with st.expander("Market Cap Growth"):
                     st.write("""
-    Disclaimer
+This graph presents a projected market cap growth based on a conservative growth rate of 0.06, as determined by market research. While we've assumed a steady increase over time for this estimate, actual market cap fluctuations could lead to different token pricing outcomes.
                     """)
                 
                 

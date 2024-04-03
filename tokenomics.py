@@ -39,17 +39,6 @@ def authenticate_user():
             return False
 
 if authenticate_user():
-    # st.title("Login to PiP World")
-    # username = st.text_input("Username")
-    # password = st.text_input("Password", type='password')
-    # if st.button("Login"):
-    #     if username == "pipworld" and password == "pipworld":
-    #         st.success("Logged in as: {}".format(username))
-    #         return True
-    #     else:
-    #         st.error("Invalid credentials. Please try again.")
-    #         return False
-    # return False
 
     st.set_page_config(layout="wide", page_title="$PiP Tokenomics", page_icon=":coin:")
     st.sidebar.image("pip.png", use_column_width=True)
@@ -691,6 +680,7 @@ At PiP World we are exploring into an exciting innovation: using NFTs to offer u
         
         
             # NEW VERSION WITH 2 SLIDERS
+                monthly_release = np.array([68250000.0, 4083333.0, 4083333.0, 4083333.0, 5843567.0, 5843567.0, 5843567.0, 7602827.0, 7602827.0, 7602827.0, 11978183.0, 11978183.0, 11978183.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0])
                 max_supply = 500e6  
                 total_months = 60  
             
@@ -701,17 +691,17 @@ At PiP World we are exploring into an exciting innovation: using NFTs to offer u
                 with st.spinner("Modelling..."):
                     time.sleep(2)
                 st.success("Complete") 
-
+                
             st.divider()
 
-            months = np.arange(selected_months[0], selected_months[1] + 1)  
-            circulating_supply = max_supply * (np.sqrt(months) / np.sqrt(total_months))  
-
+            circulating_supply = np.cumsum(monthly_release[:(selected_months[1])])
+            circulating_supply = circulating_supply[(selected_months[0]-1):]
+             
 
             initial_market_cap = market_cap_million * 1e6
             growth_rate = 0.06  
-            market_cap = initial_market_cap * (1 + growth_rate) ** (months - selected_months[0]) 
-
+            months = np.arange(selected_months[0], selected_months[1] + 1) 
+            market_cap = initial_market_cap * (1 + growth_rate) ** (months - selected_months[0])
 
             token_price = market_cap / circulating_supply
 
@@ -721,19 +711,15 @@ At PiP World we are exploring into an exciting innovation: using NFTs to offer u
             fig.update_layout(title="Token Price vs Circulating Supply (Selected Range)", xaxis_title="Months", yaxis_title="Token Price ($)",
                             yaxis=dict(tickformat=".2f"), showlegend=False, height=550, width=780)
 
+
+
             token_price_start = token_price[0]
             token_price_end = token_price[-1]
             supply_start = circulating_supply[0] / 1e6  
             supply_end = circulating_supply[-1] / 1e6
             expected_price_growth = (token_price_end - token_price_start) * 100
             
-            # col1, col2 = st.columns(2)
-            # col1.metric("Token Price (Start of Range)", f"${token_price_start:.2f}")
-            # col2.metric("Token Price (End of Range)", f"${token_price_end:.2f}")
 
-            # col3, col4 = st.columns(2)
-            # col3.metric("Supply at Start of Range", f"{supply_start:.0f}M Tokens")
-            # col4.metric("Supply at End of Range", f"{supply_end:.0f}M Tokens")
         
 
             block_style = """

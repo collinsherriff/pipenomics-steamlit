@@ -682,11 +682,11 @@ At PiP World we are exploring into an exciting innovation: using NFTs to offer u
             # NEW VERSION WITH 2 SLIDERS
                 monthly_release = np.array([68250000.0, 4083333.0, 4083333.0, 4083333.0, 5843567.0, 5843567.0, 5843567.0, 7602827.0, 7602827.0, 7602827.0, 11978183.0, 11978183.0, 11978183.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0])
                 max_supply = 500e6  
-                total_months = 60  
+                total_months = 61  
             
                 # User Inputs
                 market_cap_million = st.slider("Market Cap ($M)", min_value=1, max_value=2000, value=50, step=1, format='%dM')
-                selected_months = st.slider("Select Month Range", min_value=1, max_value=total_months, value=(1, total_months), step=1)
+                selected_months = st.slider("Select Month Range (TGE included at M1)", min_value=1, max_value=total_months, value=(1, total_months), step=1)
                 
                 with st.spinner("Modelling..."):
                     time.sleep(2)

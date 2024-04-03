@@ -825,9 +825,9 @@ This graph presents a projected market cap growth based on a conservative growth
                     st.write(df)
                     
                 with st.expander("Important **Disclaimer**"):
-                    st.write("""
+                    st.warning("""
                            
-                           The information provided on this page is based on economic principles and formulae and is not intended to provide the true picture of the token price. It should not be considered as financial advice. Please note that the supply of tokens is assumed to be linear over months and does not include any vesting periods. Make sure to conduct thorough research and consult with a financial advisor before making any investment decisions.  
+                           The information provided on this page is based on economic principles and formulae and is not intended to provide the true picture of the token price. It should not be considered as financial advice. Make sure to conduct thorough research and consult with a financial advisor before making any investment decisions.  
                              
                              """)
                 
@@ -1207,13 +1207,14 @@ This graph presents a projected market cap growth based on a conservative growth
                 st.plotly_chart(fig4, use_container_width=True)
                 
                 
-        #long graph
+
         # data = {
         #     "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Community", "Strategic", "Seed", "KOL", "IEO", "Liquidity"],
         #     "Token Amount": ["75,000,000", "50,000,000", "95,000,000", "15,000,000", "45,000,000", "40,000,000", "75,000,000", "5,000,000", "50,000,000", "50,000,000"],
         #     "Tokens Unlock on TGE": ["0", "0", "0", "0", "0", "2,000,000", "5,250,000", "1,000,000", "10,000,000", "50,000,000"],
-        #     "Unlock % pm": ["1.75%", "2.78%", "1.85%", "2.56%", "1.67%", "3.52%", "3.44%", "8.89%", "6.67%", "0.00%"],
-        #     "Unlock pm $TGE": ["$328,947", "$347,222", "$439,815", "$96,154", "$187,500", "$351,852", "$645,833", "$111,111", "$833,333", "$0"]
+        #     "Unlock pm $TGE": ["328,947", "347,222", "439,815", "96,154", "187,500", "351,852", "645,833", "111,111", "833,333", "0"],
+        #     "Cliff (m)": [3, 12, 6, 9, 0, 9, 9, 3, 0, 0],
+        #     "Lock (m)": [60, 48, 60, 48, 60, 36, 36, 12, 12, 0]
         # }
 
         # df = pd.DataFrame(data)
@@ -1221,25 +1222,33 @@ This graph presents a projected market cap growth based on a conservative growth
         # # Convert string values to numeric
         # df['Token Amount'] = df['Token Amount'].str.replace(',', '').astype(int)
         # df['Tokens Unlock on TGE'] = df['Tokens Unlock on TGE'].str.replace(',', '').astype(int)
-        # df['Unlock % pm'] = df['Unlock % pm'].str.replace('%', '').astype(float) / 100
-        # df['Unlock pm $TGE'] = df['Unlock pm $TGE'].str.replace('$', '').str.replace(',', '').astype(float)
+        # df['Unlock pm $TGE'] = df['Unlock pm $TGE'].str.replace(',', '').astype(float)
 
-        # # Create the combined graph
+        # # Calculate total vesting time
+        # df['Total Vesting Time (m)'] = df['Lock (m)']
+
+        # # Create the combined graph with secondary y-axis
         # fig = make_subplots(specs=[[{"secondary_y": True}]])
 
         # # Add bar charts
         # fig.add_trace(go.Bar(x=df['Category'], y=df['Token Amount'], name='Token Amount'), secondary_y=False)
         # fig.add_trace(go.Bar(x=df['Category'], y=df['Tokens Unlock on TGE'], name='Tokens Unlock on TGE'), secondary_y=False)
 
-        # # Add line charts
-        # fig.add_trace(go.Scatter(x=df['Category'], y=df['Unlock % pm'], name='Unlock % pm', mode='lines+markers'), secondary_y=True)
+        # # Add line chart for "Unlock pm $TGE"
         # fig.add_trace(go.Scatter(x=df['Category'], y=df['Unlock pm $TGE'], name='Unlock pm $TGE', mode='lines+markers'), secondary_y=True)
 
+        # # Add bubble chart for "Total Vesting Time (m)"
+        # # The size of the bubble is adjusted by 'Total Vesting Time (m)' values
+        # fig.add_trace(go.Scatter(x=df['Category'], y=[max(df['Unlock pm $TGE'])]*len(df), # Align bubbles at the top
+        #                         mode='markers+text', name='Vesting Time',
+        #                         marker=dict(size=df['Total Vesting Time (m)'], sizemode='diameter', sizeref=1.5),
+        #                         text=df['Total Vesting Time (m)'], textposition="bottom center"), secondary_y=True)
+
         # # Update layout
-        # fig.update_layout(title_text="Combined View: Token Metrics")
+        # fig.update_layout(title_text="Combined View: Token Metrics & Vesting")
         # fig.update_xaxes(title_text="Category")
         # fig.update_yaxes(title_text="Amount / Tokens", secondary_y=False)
-        # fig.update_yaxes(title_text="Percentage / $ Value", secondary_y=True)
+        # fig.update_yaxes(title_text="$ Value / Vesting Time (months)", secondary_y=True)
 
         # # Display the figure in Streamlit
         # st.plotly_chart(fig, use_container_width=True)

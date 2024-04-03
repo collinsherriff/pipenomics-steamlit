@@ -8,13 +8,6 @@ import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 
-# from dotenv import load_dotenv
-# import os
-
-# load_dotenv()
-# keyname = os.getenv('PASSWORD')
-# keyword = os.getenv('USERNAME')
-
 def creds_entered():
     if st.session_state['user'].strip() == "admin" and st.session_state['password'].strip() == "admin":
         st.session_state['authenticated'] = True
@@ -53,7 +46,20 @@ def authenticate_user():
 
 if authenticate_user():
 
+    
     st.set_page_config(layout="wide", page_title="$PiP Tokenomics", page_icon=":coin:")
+    
+    custom_css = """
+    <style>
+        body {
+            cursor: crosshair;
+        }
+    </style>
+    """
+
+    # Inject custom CSS with st.markdown()
+    st.markdown(custom_css, unsafe_allow_html=True)
+    
     st.sidebar.image("pip.png", use_column_width=True)
     st.sidebar.markdown("<hr>", unsafe_allow_html=True)
     st.sidebar.title("Navigation")

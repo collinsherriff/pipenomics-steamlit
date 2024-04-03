@@ -7,6 +7,7 @@ import plotly.express as px
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
+
 # from dotenv import load_dotenv
 # import os
 
@@ -19,6 +20,11 @@ def creds_entered():
         st.session_state['authenticated'] = True
     
     else:
+        col1, col2, col3 = st.columns([1,1,1])
+        with col2:
+            st.image("pip.png", use_column_width=False, width=200, clamp=False, channels='RGB')
+        st.write("&nbsp;")
+        st.header(":rainbow[PiP World Interactive Tokenomics Dashboard]")
         st.session_state['authenticated'] = False
         if not st.session_state['password']:
             st.warning("Please Enter Password")
@@ -29,6 +35,11 @@ def creds_entered():
 
 def authenticate_user():
     if 'authenticated' not in st.session_state:
+        col1, col2, col3 = st.columns([1,1,1])
+        with col2:
+            st.image("pip.png", use_column_width=False, width=200, clamp=False, channels='RGB')
+        st.write("&nbsp;")
+        st.header(":rainbow[PiP World Interactive Tokenomics Dashboard]")
         st.text_input(label="Username: ", value="", key="user", on_change=creds_entered)
         st.text_input(label="Password: ", value="", key="password", type="password", on_change=creds_entered)
         return False
@@ -55,9 +66,6 @@ if authenticate_user():
     For further information on PiP World, follow the link here to explore our Whitepaper.
     """)
 
-    # st.sidebar.slider("Select Month", min_value=0, max_value=48, value=0, step=1)
-    # st.sidebar.slider("Select Market Cap", min_value=1, max_value=500, value=1, step=1, format='%dM')
-
     def create_chart(data, title, ylabel):
         fig, ax = plt.subplots()
         ax.plot(data, marker='o')
@@ -73,11 +81,11 @@ if authenticate_user():
         st.title("$PIP Token Supply and Distribution")
         
         st.write("""
-    &nbsp;
+
 
     The $PIP token lies at the heart of the PIP World ecosystem, carefully designed to incentivise participation, reward learning, and foster a vibrant, self-sustaining economy. Our tokenomics model has been meticulously crafted to ensure the long-term sustainability of the platform, align the interests of all stakeholders, and support the growth and adoption of PIP World.
 
-    &nbsp;
+
                     """)
         
 
@@ -99,7 +107,7 @@ if authenticate_user():
                                             hoverinfo='label+percent')])
 
                 
-                fig.update_layout(height=700, width=800)  
+                fig.update_layout(height=650, width=800)  
 
                 st.plotly_chart(fig, use_container_width=False)  
 
@@ -138,11 +146,8 @@ if authenticate_user():
     7. **Liquidity (10%)**: Allocating tokens for liquidity provision on decentralized exchanges is essential for maintaining a healthy and stable market for $PiP tokens. This strategy aims to ensure wide accessibility and stable token prices, supporting the ecosystem's liquidity needs.
     8. **Community (9%)**: Reserving a portion of the token supply for the community enables PiP World to drive adoption, collaborate with key industry players, and expand its ecosystem. Initiatives like airdrops and partnerships foster engagement and build valuable relationships within the blockchain and education communities.
     9. **Reserve (19%)**: The Reserve serves as a strategic asset for PiP World, offering the flexibility to address challenges or capitalize on opportunities as they arise. This fund supports operational needs, market interventions, future expansions, and is managed with full transparency and community involvement in allocation decisions.
-        
         """)   
-        st.write()
-    
-        st.divider()
+
         tab1, tab2 = st.tabs(["Token Sale Roadmap", "Token Supply Dynamics"])
         
         with tab1:

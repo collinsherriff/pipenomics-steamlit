@@ -5,6 +5,8 @@ import time
 import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.graph_objs as go
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
 # from dotenv import load_dotenv
 # import os
 
@@ -1151,7 +1153,7 @@ This graph presents a projected market cap growth based on a conservative growth
             
             
         with tab4:
-            data = {
+            table_data = {
                 "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Community", "Strategic", "Seed", "KOL", "IEO", "Liquidity", "Total"],
                 "Allocation% in Total Supply": ["15.00%", "10.00%", "19.00%", "3.00%", "9.00%", "8.00%", "15.00%", "1.00%", "10.00%", "10.00%", "100.00%"],
                 "Price": ["-", "-", "-", "-", "-", "$0.12", "$0.16", "$0.10", "$0.25", "-", "-"],
@@ -1168,41 +1170,80 @@ This graph presents a projected market cap growth based on a conservative growth
                 "Unlock pm $TGE": ["$328,947", "$347,222", "$439,815", "$96,154", "$187,500", "$351,852", "$645,833", "$111,111", "$833,333", "$0", "$3,341,768"]
             }
 
-            # Convert the data to a Pandas DataFrame
-            df = pd.DataFrame(data)
-
-            # Display the DataFrame as an interactive table in Streamlit
+            df = pd.DataFrame(table_data)
             st.header('Token Allocation Table')
             st.dataframe(df, height=430)
             
-            # # Data preparation
-            # source = [0, 1, 2, 3, 4, 5, 6, 7, 8, 8, 9]
-            # target = [10, 10, 10, 10, 10, 11, 11, 11, 11, 12, 12]
-            # value = [40000000, 75000000, 5000000, 50000000, 75000000, 50000000, 95000000, 15000000, 45000000, 50000000, 50000000]
-            # label = ["Strategic", "Seed", "KOL", "IEO", "Ecosystem", "Team", "Reserve", "Advisors", "Community", "Liquidity", "TGE Unlocks", "Monthly Unlocks", "Circulation"]
+            col1, space, col2 = st.columns([1,0.1,1])
+    
+                    
+            df = pd.DataFrame(table_data)
+            df['Token Amount'] = df['Token Amount'].str.replace(',', '').astype(int)
+            df['Tokens Unlock on TGE'] = df['Tokens Unlock on TGE'].str.replace(',', '').astype(int)
+            df['Unlock % pm'] = df['Unlock % pm'].str.replace('%', '').astype(float) / 100
+            df['Unlock pm $TGE'] = df['Unlock pm $TGE'].str.replace('$', '').str.replace(',', '').astype(float)
 
+            df = df[df['Category'] != 'Total']
+            
+            with col1:
+                #Pie chart on allocation
+                fig = px.pie(df, values='Token Amount', names='Category', title='Token Allocation (%)', hole=0.2, height=500)
+                st.plotly_chart(fig, use_container_width=True)
+                
+            with col2:
+                #pie chart on unlock on TGE
+                fig2 = px.pie(df, values='Tokens Unlock on TGE', names='Category', title='Tokens Unlock on TGE (%)', hole=0.2, height=500)
+                st.plotly_chart(fig2, use_container_width=True)
+                
+            col1, space, col2 = st.columns([1,0.1,1])
+            with col1:
+                #pie chart on unlock % pm  
+                fig3 = px.pie(df, values='Unlock % pm', names='Category', title='Unlock % pm (%)', hole=0.2, height=500)
+                st.plotly_chart(fig3, use_container_width=True)
+                
+            with col2:
+                #pie chat on unlock pm $TGE
+                fig4 = px.pie(df, values='Unlock pm $TGE', names='Category', title='Unlock pm $TGE (%)', hole=0.2, height=500)
+                st.plotly_chart(fig4, use_container_width=True)
+                
+                
+        #long graph
+        # data = {
+        #     "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Community", "Strategic", "Seed", "KOL", "IEO", "Liquidity"],
+        #     "Token Amount": ["75,000,000", "50,000,000", "95,000,000", "15,000,000", "45,000,000", "40,000,000", "75,000,000", "5,000,000", "50,000,000", "50,000,000"],
+        #     "Tokens Unlock on TGE": ["0", "0", "0", "0", "0", "2,000,000", "5,250,000", "1,000,000", "10,000,000", "50,000,000"],
+        #     "Unlock % pm": ["1.75%", "2.78%", "1.85%", "2.56%", "1.67%", "3.52%", "3.44%", "8.89%", "6.67%", "0.00%"],
+        #     "Unlock pm $TGE": ["$328,947", "$347,222", "$439,815", "$96,154", "$187,500", "$351,852", "$645,833", "$111,111", "$833,333", "$0"]
+        # }
 
-            # fig = go.Figure(data=[go.Sankey(
-            #     node=dict(
-            #         pad=15,
-            #         thickness=20,
-            #         line=dict(color='#050413', width=0.5),
-            #         label=label,
-            #         color='#050413'
-            #     ),
-            #     link=dict(
-            #         source=source,
-            #         target=target,
-            #         value=value
-            #     ))])
+        # df = pd.DataFrame(data)
 
-            # fig.update_layout(title_text='Detailed Token Release Schedule', font_size=15, height=800, width=800)
+        # # Convert string values to numeric
+        # df['Token Amount'] = df['Token Amount'].str.replace(',', '').astype(int)
+        # df['Tokens Unlock on TGE'] = df['Tokens Unlock on TGE'].str.replace(',', '').astype(int)
+        # df['Unlock % pm'] = df['Unlock % pm'].str.replace('%', '').astype(float) / 100
+        # df['Unlock pm $TGE'] = df['Unlock pm $TGE'].str.replace('$', '').str.replace(',', '').astype(float)
 
+        # # Create the combined graph
+        # fig = make_subplots(specs=[[{"secondary_y": True}]])
 
-            # st.plotly_chart(fig, use_container_width=True)
+        # # Add bar charts
+        # fig.add_trace(go.Bar(x=df['Category'], y=df['Token Amount'], name='Token Amount'), secondary_y=False)
+        # fig.add_trace(go.Bar(x=df['Category'], y=df['Tokens Unlock on TGE'], name='Tokens Unlock on TGE'), secondary_y=False)
 
+        # # Add line charts
+        # fig.add_trace(go.Scatter(x=df['Category'], y=df['Unlock % pm'], name='Unlock % pm', mode='lines+markers'), secondary_y=True)
+        # fig.add_trace(go.Scatter(x=df['Category'], y=df['Unlock pm $TGE'], name='Unlock pm $TGE', mode='lines+markers'), secondary_y=True)
 
+        # # Update layout
+        # fig.update_layout(title_text="Combined View: Token Metrics")
+        # fig.update_xaxes(title_text="Category")
+        # fig.update_yaxes(title_text="Amount / Tokens", secondary_y=False)
+        # fig.update_yaxes(title_text="Percentage / $ Value", secondary_y=True)
 
+        # # Display the figure in Streamlit
+        # st.plotly_chart(fig, use_container_width=True)
+        
         block_style = """
             <style>
             .metric-block {

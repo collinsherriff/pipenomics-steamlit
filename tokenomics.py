@@ -721,7 +721,7 @@ At PiP World we are exploring into an exciting innovation: using NFTs to offer u
 
             fig = go.Figure()
             fig.add_trace(go.Scatter(x=months, y=token_price, mode='lines+markers', name='Token Price', line=dict(color='#5e28d5'), stackgroup='one'))
-            fig.add_trace(go.Scatter(x=months, y=circulating_supply, mode='lines+markers', name='Circulating Supply', line=dict(color='violet'), yaxis='y2'))
+            fig.add_trace(go.Scatter(x=months, y=circulating_supply, mode='lines+markers', name='Circulating Supply', line=dict(color='grey'), yaxis='y2'))
             
             # fig.update_layout(title="Token Price vs Circulating Supply (Selected Range)", xaxis_title="Months", yaxis_title="Token Price ($)",
             #                 yaxis=dict(tickformat=".2f"), showlegend=False, height=550, width=780)

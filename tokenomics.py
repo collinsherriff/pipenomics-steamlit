@@ -7,6 +7,8 @@ import plotly.express as px
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
+import streamlit_analytics
+
 
 def creds_entered():
     if st.session_state['user'].strip() == "admin" and st.session_state['password'].strip() == "admin":
@@ -46,7 +48,7 @@ def authenticate_user():
 
 if authenticate_user():
 
-    
+    streamlit_analytics.start_tracking()
     st.set_page_config(layout="wide", page_title="$PiP Tokenomics", page_icon=":coin:")
     
     custom_css = """
@@ -647,6 +649,9 @@ The rewards are distributed from a designated staking rewards pool (reserve fund
             st.write("""The predictable nature of staking rewards, coupled with the commitment of tokens for staking, lends stability to the $PiP token's market. It mitigates the impact of speculative trading and short-term volatility, fostering a more stable economic environment.""")
         # st.latex(r'''multiplier = 1.05^x''')
         
+        
+        
+        
         st.divider()
         
         st.write("### Impact on Token Velocity and Ecosystem Liquidity")
@@ -670,7 +675,7 @@ At PiP World we are exploring into an exciting innovation: using NFTs to offer u
 
         st.title(":rainbow[Investment KPIs]")
 
-        tab1, tab2, tab3, tab4 = st.tabs(["$PiP Token Price", "Token Emmissions", "Investor Rounds","Tokenomics Tables"])
+        tab1, tab2, tab3, tab4, tab5 = st.tabs(["$PiP Token Price", "Token Emmissions", "Investor Rounds","Tokenomics Tables","."])
         
         with tab1:
             st.write("## $PiP Token Price")
@@ -1226,53 +1231,10 @@ This graph presents a projected market cap growth based on a conservative growth
                 #pie chat on unlock pm $TGE
                 fig4 = px.pie(df, values='Unlock pm $TGE', names='Category', title='Unlock pm $TGE (%)', hole=0.2, height=500)
                 st.plotly_chart(fig4, use_container_width=True)
-                
-                
-
-        # data = {
-        #     "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Community", "Strategic", "Seed", "KOL", "IEO", "Liquidity"],
-        #     "Token Amount": ["75,000,000", "50,000,000", "95,000,000", "15,000,000", "45,000,000", "40,000,000", "75,000,000", "5,000,000", "50,000,000", "50,000,000"],
-        #     "Tokens Unlock on TGE": ["0", "0", "0", "0", "0", "2,000,000", "5,250,000", "1,000,000", "10,000,000", "50,000,000"],
-        #     "Unlock pm $TGE": ["328,947", "347,222", "439,815", "96,154", "187,500", "351,852", "645,833", "111,111", "833,333", "0"],
-        #     "Cliff (m)": [3, 12, 6, 9, 0, 9, 9, 3, 0, 0],
-        #     "Lock (m)": [60, 48, 60, 48, 60, 36, 36, 12, 12, 0]
-        # }
-
-        # df = pd.DataFrame(data)
-
-        # # Convert string values to numeric
-        # df['Token Amount'] = df['Token Amount'].str.replace(',', '').astype(int)
-        # df['Tokens Unlock on TGE'] = df['Tokens Unlock on TGE'].str.replace(',', '').astype(int)
-        # df['Unlock pm $TGE'] = df['Unlock pm $TGE'].str.replace(',', '').astype(float)
-
-        # # Calculate total vesting time
-        # df['Total Vesting Time (m)'] = df['Lock (m)']
-
-        # # Create the combined graph with secondary y-axis
-        # fig = make_subplots(specs=[[{"secondary_y": True}]])
-
-        # # Add bar charts
-        # fig.add_trace(go.Bar(x=df['Category'], y=df['Token Amount'], name='Token Amount'), secondary_y=False)
-        # fig.add_trace(go.Bar(x=df['Category'], y=df['Tokens Unlock on TGE'], name='Tokens Unlock on TGE'), secondary_y=False)
-
-        # # Add line chart for "Unlock pm $TGE"
-        # fig.add_trace(go.Scatter(x=df['Category'], y=df['Unlock pm $TGE'], name='Unlock pm $TGE', mode='lines+markers'), secondary_y=True)
-
-        # # Add bubble chart for "Total Vesting Time (m)"
-        # # The size of the bubble is adjusted by 'Total Vesting Time (m)' values
-        # fig.add_trace(go.Scatter(x=df['Category'], y=[max(df['Unlock pm $TGE'])]*len(df), # Align bubbles at the top
-        #                         mode='markers+text', name='Vesting Time',
-        #                         marker=dict(size=df['Total Vesting Time (m)'], sizemode='diameter', sizeref=1.5),
-        #                         text=df['Total Vesting Time (m)'], textposition="bottom center"), secondary_y=True)
-
-        # # Update layout
-        # fig.update_layout(title_text="Combined View: Token Metrics & Vesting")
-        # fig.update_xaxes(title_text="Category")
-        # fig.update_yaxes(title_text="Amount / Tokens", secondary_y=False)
-        # fig.update_yaxes(title_text="$ Value / Vesting Time (months)", secondary_y=True)
-
-        # # Display the figure in Streamlit
-        # st.plotly_chart(fig, use_container_width=True)
+        
+        with tab5:    
+            streamlit_analytics.track(unsafe_password="test123")
+            streamlit_analytics.stop_tracking() 
         
         block_style = """
             <style>
@@ -1301,7 +1263,7 @@ This graph presents a projected market cap growth based on a conservative growth
                     <h2>{selected_months:}</h3>
                 </div>
                 """, unsafe_allow_html=True)
-        
-        
+               
+    # streamlit_analytics.track(unsafe_password="admin")
         
         

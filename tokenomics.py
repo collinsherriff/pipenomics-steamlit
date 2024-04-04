@@ -675,7 +675,7 @@ At PiP World we are exploring into an exciting innovation: using NFTs to offer u
 
         st.title(":rainbow[Investment KPIs]")
 
-        tab1, tab2, tab3, tab4, tab5 = st.tabs(["$PiP Token Price", "Token Emmissions", "Investor Rounds","Tokenomics Tables","."])
+        tab1, tab2, tab3, tab4, tab5 = st.tabs(["$PiP Token Price", "Token Emmissions", "Investor Rounds","Tokenomics Tables",":gray[.]"])
         
         with tab1:
             st.write("## $PiP Token Price")

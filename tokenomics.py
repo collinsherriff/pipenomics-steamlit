@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -8,12 +9,61 @@ import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import streamlit_analytics
+import rudderstack.analytics as rudder_analytics
+from dotenv import load_dotenv
 
+load_dotenv()
+
+rudder_analytics.write_key = os.getenv('RUDDERSTACK_WRITE_KEY')
+rudder_analytics.dataPlaneUrl = os.getenv('RUDDERSTACK_DATA_PLANE_URL')
+
+rudder_analytics.identify('user_id', {
+    'email': 'user@example.com',
+    'name': 'User Name',
+})
+
+# def creds_entered():
+#     if st.session_state['user'].strip() == "admin" and st.session_state['password'].strip() == "admin":
+#         st.session_state['authenticated'] = True
+    
+#     else:
+#         col1, col2, col3 = st.columns([1,1,1])
+#         with col2:
+#             st.image("pip.png", use_column_width=False, width=200, clamp=False, channels='RGB')
+#         st.write("&nbsp;")
+#         st.header(":rainbow[PiP World Interactive Tokenomics Dashboard]")
+#         st.session_state['authenticated'] = False
+#         if not st.session_state['password']:
+#             st.warning("Please Enter Password")
+#         elif not st.session_state['user']:
+#             st.warning("Please Enter Username")
+#         else:
+#             st.error("Invalid credentials. :face_with_raised_eyebrow: Please try again.")
+
+# def authenticate_user():
+#     if 'authenticated' not in st.session_state:
+#         col1, col2, col3 = st.columns([1,1,1])
+#         with col2:
+#             st.image("pip.png", use_column_width=False, width=200, clamp=False, channels='RGB')
+#         st.write("&nbsp;")
+#         st.header(":rainbow[PiP World Interactive Tokenomics Dashboard]")
+#         st.text_input(label="Username: ", value="", key="user", on_change=creds_entered)
+#         st.text_input(label="Password: ", value="", key="password", type="password", on_change=creds_entered)
+#         return False
+#     else:
+#         if st.session_state["authenticated"]:
+#             return True
+#         else: 
+#             st.text_input(label="Username: ", value="", key="user", on_change=creds_entered)
+#             st.text_input(label="Password: ", value="", key="password", type="password", on_change=creds_entered)
+#             return False
 
 def creds_entered():
-    if st.session_state['user'].strip() == "admin" and st.session_state['password'].strip() == "admin":
-        st.session_state['authenticated'] = True
+    allowed_emails = os.getenv('ALLOWED_EMAILS').split(',')
+    entered_email = st.session_state['email'].strip().lower()
     
+    if entered_email in allowed_emails:
+        st.session_state['authenticated'] = True
     else:
         col1, col2, col3 = st.columns([1,1,1])
         with col2:
@@ -21,12 +71,10 @@ def creds_entered():
         st.write("&nbsp;")
         st.header(":rainbow[PiP World Interactive Tokenomics Dashboard]")
         st.session_state['authenticated'] = False
-        if not st.session_state['password']:
-            st.warning("Please Enter Password")
-        elif not st.session_state['user']:
-            st.warning("Please Enter Username")
+        if not entered_email:
+            st.warning("Please Enter Email")
         else:
-            st.error("Invalid credentials. :face_with_raised_eyebrow: Please try again.")
+            st.error("Access Denied: Email not recognized. Please try again.")
 
 def authenticate_user():
     if 'authenticated' not in st.session_state:
@@ -35,15 +83,13 @@ def authenticate_user():
             st.image("pip.png", use_column_width=False, width=200, clamp=False, channels='RGB')
         st.write("&nbsp;")
         st.header(":rainbow[PiP World Interactive Tokenomics Dashboard]")
-        st.text_input(label="Username: ", value="", key="user", on_change=creds_entered)
-        st.text_input(label="Password: ", value="", key="password", type="password", on_change=creds_entered)
+        st.text_input("Email:", value="", key="email", on_change=creds_entered)
         return False
     else:
         if st.session_state["authenticated"]:
             return True
         else: 
-            st.text_input(label="Username: ", value="", key="user", on_change=creds_entered)
-            st.text_input(label="Password: ", value="", key="password", type="password", on_change=creds_entered)
+            st.text_input("Email:", value="", key="email", on_change=creds_entered)
             return False
 
 if authenticate_user():

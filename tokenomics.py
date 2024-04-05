@@ -1233,6 +1233,7 @@ This graph presents a projected market cap growth based on a conservative growth
                 st.plotly_chart(fig4, use_container_width=True)
         
         with tab5:    
+            st.write("")
             streamlit_analytics.track(unsafe_password="test123")
             streamlit_analytics.stop_tracking() 
         
@@ -1264,6 +1265,5 @@ This graph presents a projected market cap growth based on a conservative growth
                 </div>
                 """, unsafe_allow_html=True)
                
-    # streamlit_analytics.track(unsafe_password="admin")
         
         

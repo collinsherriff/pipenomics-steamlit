@@ -512,7 +512,7 @@ In navigating the complex terrain of digital currency economics, PiP World emplo
 
 For $PiP, we implements several key mechanisms to manage the token supply effectively:
 
-- **Token Burns:** A deflationary measure where a portion of the token supply is periodically removed from circulation. This mechanism is employed to counteract inflationary pressures and enhance the token's scarcity and value over time. The criteria and schedule for these burns are transparently outlined, aligning with significant ecosystem milestones or transaction volume thresholds.
+- **Token Buyback:** A deflationary measure where a portion of the token supply is periodically removed from circulation. This mechanism is employed to counteract inflationary pressures and enhance the token's scarcity and value over time.
 
 - **Vesting Schedules:** To align the interests of team members, advisors, and early investors with the long-term success of the ecosystem, $PiP World incorporates vesting schedules into its tokenomics. These schedules dictate the gradual release of tokens over a specified period, preventing market flooding and ensuring a steady, controlled increase in token circulation.
 
@@ -531,33 +531,28 @@ To mitigate the risk of inflation and stimulate demand for the $PiP token, PiP W
     st.write("""
 &nbsp;
 
-By integrating these monetary and fiscal policies, PiP World aims to maintain a balanced and thriving economy. Managing the token supply through burns, vesting, and staking, alongside strategic measures to control inflation and stimulate demand, positions the $PiP token for sustained value and utility within the ecosystem.
+By integrating these monetary and fiscal policies, PiP World aims to maintain a balanced and thriving economy. Managing the token supply through locking, vesting, and staking, alongside strategic measures to control inflation and stimulate demand, positions the $PiP token for sustained value and utility within the ecosystem.
             
             """)
     st.divider()
     col1, space, col2 = st.columns([1,0.1,1])
     with col1:
-        st.header("Burn Mechanism")
+        st.header("Token Locking and Linear Claiming")
         st.write("""
-The decision to remove tokens from circulation will be made transparently, considering ecosystem health and token economics. Burns will occur systematically, tied to:
-
-- transaction volume
-- significant milestones
-- governance decisions
-
-A detailed schedule and criteria will be outlined, with burns executed via smart contract functions.
+Token locking for all participants, including public presale, secures PiP tokens for 12 months, reducing market volatility. The linear claiming strategy allows for real-time, second-by-second token release, mitigating bulk sell-off risks and stabilizing token price.
+                """)
+        st.header("Staking Protocol with Diverse Rewards")
+        st.write("""
+Our staking protocol incentivizes token holding by offering rewards in stablecoins or WETH, alongside PiP tokens. Allocating USDT from revenue streams into the staking rewards pool ensures a continuous incentive for token holders, promoting long-term holding and ecosystem stability.
             """)
     with col2:
-        st.header("Unsold Token Burn Strategy")
+        st.header("NFT Integration for Enhanced Utility")
         st.write("""
-Following the initial token offering, Pip World will burn all unsold tokens. This approach guarantees that the supply of tokens in circulation directly corresponds to the initial demand, effectively aligning supply with demand from launch. By eliminating the excess supply, this measure aims to protect the token's value from potential market dilution.
-
-| Burn Contract | 0x..123 |
-| --- | --- |
-| Burn Address | 0x…123 |
-| Functionality | Manages burns, transaction validations, and enforces supply cap and inflation rules. |
-
-&nbsp;
+NFTs within PiP World not only serve as digital art assets but also play a crucial role in the deflationary framework. Increasing staking reward claim frequency based on NFT holdings and enabling NFT staking for PiP rewards add layers of utility, driving both NFT acquisition and token retention.
+    """)
+        st.header("Ecosystem Growth and Social Farming Initiatives")
+        st.write("""
+The Short-term Ecosystem Growth Fund (EGF) explores social farming as a method to engage the community and drive ecosystem growth, potentially incorporating rewards that align with deflationary objectives.
     """)
     st.divider()
     st.header("Supply Shocks and Pricing Dynamics")

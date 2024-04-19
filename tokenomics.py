@@ -77,7 +77,7 @@ import plotly.graph_objects as go
 #         if not entered_email:
 #             st.warning("Please Enter Email")
 #         else:
-#             st.error("Access Denied: Email not recognized. Please try again.")
+#             st.error("Access Denied: Email not recognised. Please try again.")
 
 # def authenticate_user():
 #     if 'authenticated' not in st.session_state:
@@ -221,9 +221,9 @@ The token distribution has been carefully allocated to support the project's dev
 4. **IEO (10%)**: The IEO round allows the wider community to participate in the project and benefit from its growth. By setting a higher price point than the previous rounds, we aim to ensure that the project is fairly valued while still providing an attractive opportunity for public investors.
 5. **Team and Advisors (13%)**: Allocating tokens to the team and advisors helps align their interests with the long-term success of the project. The 5-year vesting schedule with a 1-year cliff ensures that the team is committed to the project's growth and development over an extended period.
 6. **Ecosystem (15%)**: The Ecosystem Fund is a crucial component of the tokenomics model, designed to support the development of the platform, incentivise user adoption, and forge strategic partnerships. This fund is instrumental in ensuring that PiP World has the resources necessary to grow and thrive.
-7. **Liquidity (10%)**: Allocating tokens for liquidity provision on decentralized exchanges is essential for maintaining a healthy and stable market for $PiP tokens. This strategy aims to ensure wide accessibility and stable token prices, supporting the ecosystem's liquidity needs.
+7. **Liquidity (10%)**: Allocating tokens for liquidity provision on decentralised exchanges is essential for maintaining a healthy and stable market for $PiP tokens. This strategy aims to ensure wide accessibility and stable token prices, supporting the ecosystem's liquidity needs.
 8. **Community (9%)**: Reserving a portion of the token supply for the community enables PiP World to drive adoption, collaborate with key industry players, and expand its ecosystem. Initiatives like airdrops and partnerships foster engagement and build valuable relationships within the blockchain and education communities.
-9. **Reserve (19%)**: The Reserve serves as a strategic asset for PiP World, offering the flexibility to address challenges or capitalize on opportunities as they arise. This fund supports operational needs, market interventions, future expansions, and is managed with full transparency and community involvement in allocation decisions.
+9. **Reserve (19%)**: The Reserve serves as a strategic asset for PiP World, offering the flexibility to address challenges or capitalise on opportunities as they arise. This fund supports operational needs, market interventions, future expansions, and is managed with full transparency and community involvement in allocation decisions.
     """)   
 
     tab1, tab2 = st.tabs(["Token Sale Roadmap", "Token Supply Dynamics"])
@@ -268,7 +268,7 @@ This decision underlines our commitment to balancing the need for validator ince
 
 This supply growth model, inspired by practices in platforms like Ethereum pre-merge, ensures a controlled increase in token supply, adhering to a schedule that sees a periodical halving of new tokens, hence, gradually tapering the supply increase.
 
-Furthermore, the ecosystem is energized by a continuum of speculators—both atomistic and myopic—who trade tokens for speculative gains, injecting liquidity into the market. This trading is decentralized, meaning participants act independently without the consideration of the collective impact on the market.
+Furthermore, the ecosystem is energised by a continuum of speculators—both atomistic and myopic—who trade tokens for speculative gains, injecting liquidity into the market. This trading is decentralised, meaning participants act independently without the consideration of the collective impact on the market.
 
 Speculators, external to the ecosystems operational core, may lack direct insights into the ecosystems fundamentals. They might engage in trading based on overconfident assessments of noisy or spurious information, as suggested by Sockin (2023) and evidenced by subsequent studies.
 
@@ -306,7 +306,7 @@ elif app_mode == "Vesting & Release Schedule":
 
 At PiP World, we believe in aligning the interests of all stakeholders with the long-term vision and sustainability of our ecosystem. Our vesting schedule is meticulously designed to foster a deep commitment to the project's success, ensuring that contributors, team members, and advisors are invested in the growth and development of PiP World over time. 
 
-By implementing strategic lock-up periods and gradual token releases, we aim to mitigate market volatility and reward enduring participation. This approach not only stabilises the token economy but also embodies our ethos of community-driven growth, transparency, and mutual success. Through this, we lay the foundation for a robust and thriving ecosystem, where each stakeholder's contribution is recognized and valued in our journey towards a decentralized future.
+By implementing strategic lock-up periods and gradual token releases, we aim to mitigate market volatility and reward enduring participation. This approach not only stabilises the token economy but also embodies our ethos of community-driven growth, transparency, and mutual success. Through this, we lay the foundation for a robust and thriving ecosystem, where each stakeholder's contribution is recognised and valued in our journey towards a decentralised future.
 
 &nbsp;
 """)
@@ -482,7 +482,7 @@ In addition to the team and advisor vesting, the Ecosystem Fund tokens will be r
     with col2:
         st.header("Public Vesting")
         st.write("""
-                Public rounds' vesting schedules are crafted to ensure widespread participation while safeguarding the ecosystem against volatility. These rounds aim to democratize access to the project, inviting community members and public investors to contribute to and benefit from the ecosystem's growth.
+                Public rounds' vesting schedules are crafted to ensure widespread participation while safeguarding the ecosystem against volatility. These rounds aim to democratise access to the project, inviting community members and public investors to contribute to and benefit from the ecosystem's growth.
                 
                 &nbsp;
                 """)
@@ -541,11 +541,11 @@ By integrating these monetary and fiscal policies, PiP World aims to maintain a 
     with col1:
         st.header("Token Locking and Linear Claiming")
         st.write("""
-Token locking for all participants, including public presale, secures PiP tokens for 12 months, reducing market volatility. The linear claiming strategy allows for real-time, second-by-second token release, mitigating bulk sell-off risks and stabilizing token price.
+Token locking for all participants, including public presale, secures PiP tokens for 12 months, reducing market volatility. The linear claiming strategy allows for real-time, second-by-second token release, mitigating bulk sell-off risks and stabilising token price.
                 """)
         st.header("Staking Protocol with Diverse Rewards")
         st.write("""
-Our staking protocol incentivizes token holding by offering rewards in stablecoins or WETH, alongside PiP tokens. Allocating USDT from revenue streams into the staking rewards pool ensures a continuous incentive for token holders, promoting long-term holding and ecosystem stability.
+Our staking protocol incentivises token holding by offering rewards in stablecoins or WETH, alongside PiP tokens. Allocating USDT from revenue streams into the staking rewards pool ensures a continuous incentive for token holders, promoting long-term holding and ecosystem stability.
             """)
     with col2:
         st.header("NFT Integration for Enhanced Utility")
@@ -927,7 +927,7 @@ This graph presents a projected market cap growth based on a conservative growth
         st.header("Token Emissions")
         st.write("""
             
-The graph below outlines the phased distribution strategy for $PiP tokens, aligning with the ecosystem's long-term vision for growth and sustainability. Across a span of 60 months, this visualszation demonstrates the deliberate and strategic release of tokens into the ecosystem, highlighting categories such as Strategic, Seed, KOL, IEO, Ecosystem, Team, Reserve, Advisors, Community, and Liquidity.
+The graph below outlines the phased distribution strategy for $PiP tokens, aligning with the ecosystem's long-term vision for growth and sustainability. Across a span of 60 months, this visualsation demonstrates the deliberate and strategic release of tokens into the ecosystem, highlighting categories such as Strategic, Seed, KOL, IEO, Ecosystem, Team, Reserve, Advisors, Community, and Liquidity.
 
 Each line represents a different category emission, not showcasing the initial lump-sum releases (of Liquidity and initial percentages for Strategic, Seed, KOL, and IEO rounds) followed by a linear release model tailored to each category's specific role within the $PiP ecosystem. This ensures a balanced injection of tokens, facilitating ecosystem development, rewarding early backers, and fostering a vibrant community engagement while maintaining market stability.
 
@@ -1013,7 +1013,7 @@ This release strategy underscores $PiP's commitment to transparency and a steady
         with col1:
             st.header("Cumulative Token Emissions")
             st.write(""" 
-The graph presents the cumulative token release schedule for $PiP over a 60-month horizon, detailing the progressive distribution of tokens across various categories. 
+The graph presents the cumulative token release schedule for $PiP over a 60-month horison, detailing the progressive distribution of tokens across various categories. 
                     
                     """)
 

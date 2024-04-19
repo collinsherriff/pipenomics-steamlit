@@ -8,6 +8,8 @@ import plotly.express as px
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
+
+
 # import streamlit_analytics
 # import rudderstack.analytics as rudder_analytics
 # from dotenv import load_dotenv
@@ -154,12 +156,12 @@ token_prices = np.random.rand(10) * 10
 market_caps = np.random.rand(10) * 1000
 
 if app_mode == "Token Supply & Distribution":
-    st.title("$PIP Token Supply and Distribution")
+    st.title("$PiP Token Supply and Distribution")
     
     st.write("""
 
 
-The $PIP token lies at the heart of the PIP World ecosystem, carefully designed to incentivise participation, reward learning, and foster a vibrant, self-sustaining economy. Our tokenomics model has been meticulously crafted to ensure the long-term sustainability of the platform, align the interests of all stakeholders, and support the growth and adoption of PIP World.
+The $PiP token lies at the heart of the PiP World ecosystem, carefully designed to incentivise participation, reward learning, and foster a vibrant, self-sustaining economy. Our tokenomics model has been meticulously crafted to ensure the long-term sustainability of the platform, align the interests of all stakeholders, and support the growth and adoption of PiP World.
 
 
                 """)
@@ -247,9 +249,9 @@ The token distribution has been carefully allocated to support the project's dev
         with col1:
                 st.header("Token Sale Roadmap")
                 st.write("""
-        The $PIP token supply and distribution have been carefully crafted to support the long-term success and sustainability of the PIP World project. By strategically allocating tokens to key stakeholders, providing robust incentives for participation and adoption, and implementing transparent vesting and release schedules, PIP World is well-positioned to create a vibrant, rewarding, and enduring ecosystem that empowers users worldwide with the knowledge and skills to achieve financial freedom.
+        The $PiP token supply and distribution have been carefully crafted to support the long-term success and sustainability of the PiP World project. By strategically allocating tokens to key stakeholders, providing robust incentives for participation and adoption, and implementing transparent vesting and release schedules, PiP World is well-positioned to create a vibrant, rewarding, and enduring ecosystem that empowers users worldwide with the knowledge and skills to achieve financial freedom.
 
-        In the following sections of the whitepaper, we will delve into the **governance and community** aspects of the PIP World ecosystem, showcasing how $PIP token holders will have the opportunity to actively shape the direction and evolution of the project through decentralised decision-making and collaboration.
+        In the following sections of the whitepaper, we will delve into the **governance and community** aspects of the PiP World ecosystem, showcasing how $PiP token holders will have the opportunity to actively shape the direction and evolution of the project through decentralised decision-making and collaboration.
                 """)
     
     with tab2:
@@ -319,9 +321,9 @@ To ensure the long-term alignment of interests and commitment to the project, th
 &nbsp;
                 """)
     st.write("""
-This vesting schedule ensures that the team and advisors have a strong incentive to drive the project's success over an extended period and provides transparency and predictability for the $PIP token supply.
+This vesting schedule ensures that the team and advisors have a strong incentive to drive the project's success over an extended period and provides transparency and predictability for the $PiP token supply.
 
-In addition to the team and advisor vesting, the Ecosystem Fund tokens will be released gradually over a 5-year period following the vesting period of the TGE. This controlled release schedule ensures that the Ecosystem Fund can sustainably support the long-term growth and development of the PIP World platform without causing undue inflationary pressure on the $PIP token price.
+In addition to the team and advisor vesting, the Ecosystem Fund tokens will be released gradually over a 5-year period following the vesting period of the TGE. This controlled release schedule ensures that the Ecosystem Fund can sustainably support the long-term growth and development of the PiP World platform without causing undue inflationary pressure on the $PiP token price.
 
 """)
     with col2:
@@ -628,7 +630,7 @@ The relationship between supply shock and the subsequent price drop is deeply ro
 
 The precise impact of supply shock on price can vary based on a multitude of factors, including the project's market cap, liquidity, and investor sentiment. However, historical data from multiple projects consistently demonstrates a tangible link between these supply changes and market reactions. This relationship highlights the importance of carefully planned token distribution schedules to mitigate potential adverse effects on market price.
 
-Understanding this correlation is pivotal for Pip World ecosystem teams and investors, as it underscores the potential market implications of token unlock events and other supply-related activities. It encourages a strategic approach to token releases, ensuring they align with long-term project goals and market stability.
+Understanding this correlation is pivotal for PiP World ecosystem teams and investors, as it underscores the potential market implications of token unlock events and other supply-related activities. It encourages a strategic approach to token releases, ensuring they align with long-term project goals and market stability.
 
 &nbsp;
 

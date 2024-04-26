@@ -23,7 +23,7 @@ import plotly.graph_objects as go
 #     'name': 'User Name',
 # })
 
-## Password Bits
+## Password Bitss
 # def creds_entered():
 #     if st.session_state['user'].strip() == "admin" and st.session_state['password'].strip() == "admin":
 #         st.session_state['authenticated'] = True
@@ -213,7 +213,7 @@ The $PiP token lies at the heart of the PiP World ecosystem, carefully designed 
         with st.expander("Distribution Breakdown"):
             
             st.write("""
-The token distribution has been carefully allocated to support the project's development, incentivise adoption, and ensure a healthy and sustainable ecosystem.
+The token distribution has been carefully allocated to support the ecosystems's development, incentivise adoption, and ensure a healthy and sustainable ecosystem.
 
 1. **Strategic Round (8%)**: This round is designed to onboard key partners and advisors who bring significant value to the project. By allocating tokens at a lower price point, we can attract strategic investors who are committed to the long-term success of PiP World.
 2. **Seed Round (15%)**: The seed round provides early supporters with an opportunity to contribute to the project's development. These investors play a crucial role in helping PiP World establish a strong foundation and gain traction in the early stages.

@@ -124,18 +124,31 @@ st.set_page_config(layout="wide", page_title="$PiP Tokenomics", page_icon=":coin
 custom_css = """
 <style>
 body {
-    cursor: crosshair;
+    cursor: pointer;
 }
 </style>
 """
 
+font_style = """
+<style>
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+body {
+    font-family: "VT323", monospace;
+}
+</style>
+"""
+
+# Injecting the style into the Streamlit app
+st.markdown(font_style, unsafe_allow_html=True)
+
+
 # Inject custom CSS with st.markdown()
 st.markdown(custom_css, unsafe_allow_html=True)
 
-st.sidebar.image("pip.png", use_column_width=True)
+st.sidebar.image("logopixel.png", use_column_width=True)
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 st.sidebar.title("Navigation")
-app_mode = st.sidebar.selectbox("Select tokenomics section",
+app_mode = st.sidebar.radio("Select tokenomics section",
                                 ["Token Supply & Distribution", "Vesting & Release Schedule", "Monetary & Fiscal Policies", "Staking & Liquidity", "Investment KPIs"])
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 
@@ -173,7 +186,8 @@ The $PiP token lies at the heart of the PiP World ecosystem, carefully designed 
                     'Community', 'Liquidity', 'Ecosystem', 'Reserve']
             sizes = [8, 15, 1, 10, 10, 3, 9, 10, 15, 19]
 
-            colors = ['#ff9999','#66b3ff','#987345','#99ff99','#ffcc99', '#c2c2f0','#ffb3e6', '#c4e17f', '#76d7c4', '#fffac8']
+            # colors = ['#ff9999','#66b3ff','#987345','#99ff99','#ffcc99', '#c2c2f0','#ffb3e6', '#c4e17f', '#76d7c4', '#fffac8']
+            colors = ['#9747FF','#0038FF','#48FF63','#000000','#9747FF','#0038FF','#48FF63','#000000', '#9747FF', '#48FF63']
 
 
             fig = go.Figure(data=[go.Pie(labels=labels, 
@@ -755,7 +769,7 @@ elif app_mode == "Investment KPIs":
                     
                     This strategic approach not only maximises your investment potential but also minimises risk by relying on data-driven insights and projections. Keep in mind that understanding the dynamics of market capitalisation, including factors that influence fluctuations and growth prospects, is essential in making educated investment choices.
                     
-                    :violet[*Select the desired range of months, as well as the market cap to view the potential corresponding token price and circulating supply figures, enabling you to make well-informed investment decisions*:]
+                    :blue[*Select the desired range of months, as well as the market cap to view the potential corresponding token price and circulating supply figures, enabling you to make well-informed investment decisions*:]
                     &nbsp;
                     """)
 
@@ -790,7 +804,7 @@ elif app_mode == "Investment KPIs":
 
 
         fig = go.Figure()
-        fig.add_trace(go.Scatter(x=months, y=token_price, mode='lines+markers', name='Token Price', line=dict(color='#5e28d5'), stackgroup='one'))
+        fig.add_trace(go.Scatter(x=months, y=token_price, mode='lines+markers', name='Token Price', line=dict(color='blue'), stackgroup='one'))
         fig.add_trace(go.Scatter(x=months, y=circulating_supply, mode='lines+markers', name='Circulating Supply', line=dict(color='grey'), yaxis='y2'))
         
         # fig.update_layout(title="Token Price vs Circulating Supply (Selected Range)", xaxis_title="Months", yaxis_title="Token Price ($)",
@@ -818,12 +832,12 @@ elif app_mode == "Investment KPIs":
         block_style = """
         <style>
         .metric-block {
-            border: 0.7px solid #f5f5f5;  /* Off white border */
-            border-radius: 8px !important;  /* Rounded corners */
+            border: 0.7px solid #CFCFCF;  /* Off white border */
+            border-radius: 1px !important;  /* Rounded corners */
             padding: 10px;
             text-align: center;
             margin: 10px;
-            background-color: #131221;  /* Off white background */
+            background-color: #f5f5f5;  /* Off white background */
         }
         </style>
         """
@@ -1310,7 +1324,7 @@ The graph presents the cumulative token release schedule for $PiP over a 60-mont
             padding: 10px;
             text-align: center;
             margin: 10px;
-            background-color: #131221;  /* Off white background */
+            background-color: #878787;  /* Off white background */
         }
         </style>
         """

@@ -137,7 +137,7 @@ st.sidebar.image("logopixel.png", use_column_width=True)
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 st.sidebar.title("Navigation")
 app_mode = st.sidebar.radio("Select tokenomics section",
-                                ["Token Supply & Distribution", "Vesting & Release Schedule", "Monetary & Fiscal Policies", "Staking & Liquidity", "Investment KPIs"])
+                                ["Token Supply & Distribution", "Vesting & Release Schedule", "Monetary & Fiscal Policies", "Staking & Liquidity", "Investment KPIs 💰"])
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 
 st.sidebar.markdown("""

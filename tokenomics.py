@@ -128,22 +128,10 @@ body {
 }
 </style>
 """
-
-font_style = """
-<style>
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-body {
-    font-family: "VT323", monospace;
-}
-</style>
-"""
-
-# Injecting the style into the Streamlit app
-st.markdown(font_style, unsafe_allow_html=True)
-
-
-# Inject custom CSS with st.markdown()
 st.markdown(custom_css, unsafe_allow_html=True)
+
+with open("style.css") as css:
+    st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
 
 st.sidebar.image("logopixel.png", use_column_width=True)
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)

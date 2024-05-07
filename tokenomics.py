@@ -771,19 +771,38 @@ elif app_mode == "Investment KPIs 💰":
             
             col1, spacer, col2 = st.columns([1, 0.1, 1])
             with col1:
+                # OLD
+                # number = st.number_input("Select Demand Multiplier", min_value=0.06, max_value=0.1, value=0.075, step=0.01)
+                # formatted_number = f"{number:.5f}"
+                # st.write("The current growth rate is ", formatted_number)
+                  
                 
-                number = st.number_input("Select Demand Multiplier", min_value=0.06, max_value=0.1, value=0.075, step=0.01)
-                formatted_number = f"{number:.5f}"
-                st.write("The current growth rate is ", formatted_number)
+                growth_options = {
+                    "Conservative Growth": 0.07,
+                    "Balanced Expansion": 0.075,
+                    "Aggressive Growth": 0.085,
+                    "Breakout Potential": 0.11
+                }
 
+                option = st.selectbox(
+                    "Select Demand Multiplier",
+                    options=list(growth_options.keys()),
+                    index=1,
+                    placeholder="Select Ecosystem Growth..."
+                )
 
+                selected_growth_rate = growth_options[option]
+                
+    
             with col2:
-                st.write()
+                st.write("&nbsp;")
+                
+                
             # growth_rate_slider = st.slider("Growth Rate", min_value=0.05, max_value=0.07, value=0.06, step=0.001)
             
-            with st.spinner("Modelling..."):
-                time.sleep(2)
-            st.success("Complete") 
+                with st.spinner("Modelling..."):
+                    time.sleep(2)
+            st.success(f"Completed! You selected {option}, which corresponds to a growth rate of {selected_growth_rate}*") 
             st.toast("Tokenomics Simulated", icon='🎉')
             
         st.divider()
@@ -793,7 +812,7 @@ elif app_mode == "Investment KPIs 💰":
             
 
         initial_market_cap = market_cap_million * 1e6
-        growth_rate = number #growth_rate_slider
+        growth_rate = selected_growth_rate #growth_rate_slider
         
         
         months = np.arange(selected_months[0], selected_months[1] + 1) 
@@ -921,9 +940,9 @@ elif app_mode == "Investment KPIs 💰":
             
             st.plotly_chart(fig2, use_container_width=True)
             
-            with st.expander("Market Cap Growth Rate"):
+            with st.expander("*Market Cap Growth Rate"):
                 st.write("""
-This graph presents a projected market cap growth based on a conservative growth rate of 0.075, as determined by market research. While we've assumed a steady increase over time for this estimate, actual market cap fluctuations could lead to different token pricing outcomes.
+This graph presents a projected market capitalisation growth based on a growth rate range between 0.07 and 0.1 selected by you. While we've assumed a steady increase over time for this estimate, actual market cap fluctuations could lead to different token pricing outcomes.
                 """)
                 df = pd.DataFrame({"Months": months, "Market Cap ($M)": market_cap / 1e6})
                 st.write(df)

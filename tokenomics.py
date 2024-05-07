@@ -197,9 +197,9 @@ The $PiP token lies at the heart of the PiP World ecosystem, carefully designed 
 
 | Category           | Allocation | Tokens        | Price   | USD Value    | Discount | Fully Diluted Valuation |
 |-----------------|------------|---------------|---------|--------------|----------|-------------------------|
-| Angel Round           | 8%         | 40,000,000    | $0.12   | $4,800,000   | 52%      | $60,000,000             |
-| Seed Round           | 15%        | 75,000,000    | $0.16   | $12,000,000  | 36%      | $80,000,000             |
-| KOL Round             | 1%         | 5,000,000     | $0.10   | $500,000     | 60%      | $50,000,000             |
+| Angel Round           | 8%         | 40,000,000    | $0.07   | $2,800,000   | 72%      | $35,000,000             |
+| Seed Round           | 15%        | 75,000,000    | $0.13   | $9,750,000  | 48%      | $65,000,000             |
+| KOL Round             | 1%         | 5,000,000     | $0.07   | $350,000     | 72%      | $35,000,000             |
 | Public Sale         | 10%        | 50,000,000    | $0.25   | $12,500,000  | 0%       | $125,000,000            |
 | Team Allcoation  | 10%        | 50,000,000    | -       | -            | -        | -                       |
 | Ecosystem Fund | 28%        | 140,000,000    | -       | -            | -        | -                       |
@@ -354,7 +354,7 @@ In addition to the team and advisor vesting, the Ecosystem Fund tokens will be r
 
     col1, space, col2 = st.columns([1,0.1,1])
     with col1:
-        def calculate_token_release(max_supply=500e6, months=60):
+        def calculate_token_release(max_supply=500e6, months=49):
                 allocations = {
                     'Angel': 8,
                     'Seed': 15,
@@ -409,7 +409,7 @@ In addition to the team and advisor vesting, the Ecosystem Fund tokens will be r
                 for category in df_release.columns:
                     fig.add_trace(go.Scatter(x=df_release.index, y=df_release[category], mode='lines', name=category, fill='tozeroy'))
                     
-                fig.update_layout(title='Cumulative Token Release Schedule Over 60 Months', xaxis_title='Month', yaxis_title='Number of Tokens', legend_title='Category', showlegend=True, height=600, width=800,)
+                fig.update_layout(title='Cumulative Token Release Schedule Over 48 Months', xaxis_title='Month', yaxis_title='Number of Tokens', legend_title='Category', showlegend=True, height=600, width=800,)
                 return fig
 
 
@@ -421,7 +421,7 @@ In addition to the team and advisor vesting, the Ecosystem Fund tokens will be r
             "Category": ["Angel", "Seed", "KOL", "Public", "Ecosystem", "Team", "Reserve", "Advisors", "Liquidity"],
             "Token Amount": [40000000, 75000000, 5000000, 50000000, 140000000, 50000000, 75000000, 15000000, 50000000],
             "Initial Release": [0.05, 0.07, 0.2, 0.2, 0, 0, 0, 0, 1],
-            "Monthly Release": [0.039583333, 0.03875, 0.088888889, 0.066666667, 0.020833333, 0.027777778, 0.0185185185185185, 0.025641026, 0],
+            "Monthly Release": [0.039583333, 0.03875, 0.088888889, 0.066666667, 0.020833333, 0.027777778, 0.023809524, 0.025641026, 0],
             "Start Month": [13, 13, 4, 1, 1, 13, 7, 10, 0],
             "End Month": [36, 36, 12, 12, 48, 48, 48, 48, 0]
         }
@@ -759,19 +759,32 @@ elif app_mode == "Investment KPIs 💰":
     
     
         # NEW VERSION WITH 2 SLIDERS
-            # monthly_release = np.array([68250000.0, 4083333.0, 4083333.0, 4083333.0, 5843567.0, 5843567.0, 5843567.0, 7602827.0, 7602827.0, 7602827.0, 11978183.0, 11978183.0, 11978183.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0])
-            monthly_release = np.array([68250000, 6250000, 6250000, 6250000, 6694444, 6694444, 6694444, 8083333, 8083333, 8083333, 8467949, 8467949, 8467949, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889])
+            #OLD: monthly_release = np.array([68250000.0, 4083333.0, 4083333.0, 4083333.0, 5843567.0, 5843567.0, 5843567.0, 7602827.0, 7602827.0, 7602827.0, 11978183.0, 11978183.0, 11978183.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0])
+            #WRONG: monthly_release = np.array([68250000, 6250000, 6250000, 6250000, 6694444, 6694444, 6694444, 8083333, 8083333, 8083333, 8467949, 8467949, 8467949, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889])
+            monthly_release = np.array([68250000, 6250000, 6250000, 6250000, 6694444, 6694444, 6694444, 8480159, 8480159, 8480159, 8864774, 8864774, 8864774, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 6475885, 6475885, 6475885, 6475885, 6475885, 6475885, 6475885, 6475885, 6475885, 6475885, 6475885, 6475885])
             max_supply = 500e6  
-            total_months = 61  
+            total_months = 49  
         
             # User Inputs
             market_cap_million = st.slider("Market Cap ($M)", min_value=1, max_value=2000, value=50, step=1, format='%dM')
             selected_months = st.slider("Select Month Range (TGE included at M1)", min_value=1, max_value=total_months, value=(1, total_months), step=1)
+            
+            col1, spacer, col2 = st.columns([1, 0.1, 1])
+            with col1:
+                
+                number = st.number_input("Select Demand Multiplier", min_value=0.06, max_value=0.1, value=0.075, step=0.01)
+                formatted_number = f"{number:.5f}"
+                st.write("The current growth rate is ", formatted_number)
+
+
+            with col2:
+                st.write()
             # growth_rate_slider = st.slider("Growth Rate", min_value=0.05, max_value=0.07, value=0.06, step=0.001)
             
             with st.spinner("Modelling..."):
                 time.sleep(2)
             st.success("Complete") 
+            st.toast("Tokenomics Simulated", icon='🎉')
             
         st.divider()
 
@@ -780,7 +793,7 @@ elif app_mode == "Investment KPIs 💰":
             
 
         initial_market_cap = market_cap_million * 1e6
-        growth_rate = 0.075 #growth_rate_slider
+        growth_rate = number #growth_rate_slider
         
         
         months = np.arange(selected_months[0], selected_months[1] + 1) 
@@ -927,7 +940,7 @@ This graph presents a projected market cap growth based on a conservative growth
         st.header("Token Emissions")
         st.write("""
             
-The graph below outlines the phased distribution strategy for $PiP tokens, aligning with the ecosystem's long-term vision for growth and sustainability. Across a span of 60 months, this visualsation demonstrates the deliberate and strategic release of tokens into the ecosystem, highlighting categories such as Angel, Seed, KOL, Public, Ecosystem, Team, Reserve, Advisors, and Liquidity.
+The graph below outlines the phased distribution strategy for $PiP tokens, aligning with the ecosystem's long-term vision for growth and sustainability. Across a span of 48 months, this visualsation demonstrates the deliberate and strategic release of tokens into the ecosystem, highlighting categories such as Angel, Seed, KOL, Public, Ecosystem, Team, Reserve, Advisors, and Liquidity.
 
 Each line represents a different category emission, not showcasing the initial lump-sum releases (of Liquidity and initial percentages for Angel, Seed, KOL, and Public rounds) followed by a linear release model tailored to each category's specific role within the PiP ecosystem. This ensures a balanced injection of tokens, facilitating ecosystem development, rewarding early backers, and fostering a vibrant community engagement while maintaining market stability.
 
@@ -953,7 +966,7 @@ This release strategy underscores PiP's commitment to transparency and a steady 
             "Category": ["Angel", "Seed", "KOL", "Public", "Ecosystem", "Team", "Reserve", "Advisors", "Liquidity"],
             "Token Amount": [40000000, 75000000, 5000000, 50000000, 140000000, 50000000, 75000000, 15000000, 50000000],
             "Initial Release": [0.05, 0.07, 0.2, 0.2, 0, 0, 0, 0, 1],
-            "Monthly Release": [0.039583333, 0.03875, 0.088888889, 0.066666667, 0.020833333, 0.027777778, 0.0185185185185185, 0.025641026, 0],
+            "Monthly Release": [0.039583333, 0.03875, 0.088888889, 0.066666667, 0.020833333, 0.027777778, 0.023809524, 0.025641026, 0],
             "Start Month": [13, 13, 4, 1, 1, 13, 7, 10, 0],
             "End Month": [36, 36, 12, 12, 48, 48, 48, 48, 0]
         }
@@ -961,7 +974,7 @@ This release strategy underscores PiP's commitment to transparency and a steady 
 
         df_data = pd.DataFrame(data)
 
-        total_months = 60
+        total_months = 49
 
         df_release = pd.DataFrame(0, index=np.arange(tge, total_months+1), columns=df_data['Category'])
 
@@ -985,7 +998,7 @@ This release strategy underscores PiP's commitment to transparency and a steady 
 
 
         fig.update_layout(
-            title='Fixed Token Release Schedule Per Month Over 60 Months (Default Excluding TGE)',
+            title='Fixed Token Release Schedule Per Month Over 48 Months (Default Excluding TGE)',
             xaxis_title='Month',
             yaxis_title='Tokens Released Per Month',
             legend_title='Category',
@@ -1013,7 +1026,7 @@ This release strategy underscores PiP's commitment to transparency and a steady 
         with col1:
             st.header("Cumulative Token Emissions")
             st.write(""" 
-The graph presents the cumulative token release schedule for $PiP over a 60-month horison, detailing the progressive distribution of tokens across various categories. 
+The graph presents the cumulative token release schedule for $PiP over a 48-month horison, detailing the progressive distribution of tokens across various categories. 
                     
                     """)
 
@@ -1021,7 +1034,7 @@ The graph presents the cumulative token release schedule for $PiP over a 60-mont
             "Category": ["Angel", "Seed", "KOL", "Public", "Ecosystem", "Team", "Reserve", "Advisors", "Liquidity"],
             "Token Amount": [40000000, 75000000, 5000000, 50000000, 140000000, 50000000, 75000000, 15000000, 50000000],
             "Initial Release": [0.05, 0.07, 0.2, 0.2, 0, 0, 0, 0, 1],
-            "Monthly Release": [0.039583333, 0.03875, 0.088888889, 0.066666667, 0.020833333, 0.027777778, 0.0185185185185185, 0.025641026, 0],
+            "Monthly Release": [0.039583333, 0.03875, 0.088888889, 0.066666667, 0.020833333, 0.027777778, 0.023809524, 0.025641026, 0],
             "Start Month": [13, 13, 4, 1, 1, 13, 7, 10, 0],
             "End Month": [36, 36, 12, 12, 48, 48, 48, 48, 0]
             }
@@ -1029,7 +1042,7 @@ The graph presents the cumulative token release schedule for $PiP over a 60-mont
             df_data = pd.DataFrame(data)
 
 
-            total_months = 60
+            total_months = 49
 
 
             df_release = pd.DataFrame(0, index=np.arange(1, total_months+1), columns=df_data['Category'])
@@ -1060,7 +1073,7 @@ The graph presents the cumulative token release schedule for $PiP over a 60-mont
 
 
             fig.update_layout(
-                title='Cumulative Token Release Schedule Over 60 Months',
+                title='Cumulative Token Release Schedule Over 48 Months',
                 xaxis_title='Month',
                 yaxis_title='Cumulative Tokens Released',
                 legend_title='Category',
@@ -1084,10 +1097,10 @@ The graph presents the cumulative token release schedule for $PiP over a 60-mont
         with col2:
             st.header("Token Supply Growth Per Category")
             # st.plotly_chart(fig2, use_container_width=True)
-            st.write("""The graph depicts the rollout of $PiP tokens over 60 months, highlighting the escalating sum of tokens dispensed across distinct allocation categories.""")
+            st.write("""The graph depicts the rollout of $PiP tokens over 48 months, highlighting the escalating sum of tokens dispensed across distinct allocation categories.""")
 
 
-            def calculate_token_release(max_supply=500e6, months=60):
+            def calculate_token_release(max_supply=500e6, months=49):
 
                 allocations = {
                     'Angel': 8,
@@ -1145,7 +1158,7 @@ The graph presents the cumulative token release schedule for $PiP over a 60-mont
                 for category in df_release.columns:
                     fig.add_trace(go.Scatter(x=df_release.index, y=df_release[category], mode='lines', name=category))
                     
-                fig.update_layout(title='Token Release Schedule Over 60 Months', xaxis_title='Month', yaxis_title='Number of Tokens', legend_title='Category', height=550, width=800)
+                fig.update_layout(title='Token Release Schedule Over 48 Months', xaxis_title='Month', yaxis_title='Number of Tokens', legend_title='Category', height=550, width=800)
                 return fig
 
             st.plotly_chart(plot_token_release(df_release), use_container_width=True)

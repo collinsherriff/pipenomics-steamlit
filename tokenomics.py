@@ -197,9 +197,9 @@ The $PiP token lies at the heart of the PiP World ecosystem, carefully designed 
 
 | Category           | Allocation | Tokens        | Price   | USD Value    | Discount | Fully Diluted Valuation |
 |-----------------|------------|---------------|---------|--------------|----------|-------------------------|
-| Angel Round           | 8%         | 40,000,000    | $0.12   | $4,800,000   | 52%      | $60,000,000             |
-| Seed Round           | 15%        | 75,000,000    | $0.16   | $12,000,000  | 36%      | $80,000,000             |
-| KOL Round             | 1%         | 5,000,000     | $0.10   | $500,000     | 60%      | $50,000,000             |
+| Angel Round           | 8%         | 40,000,000    | $0.07   | $2,800,000   | 72%      | $35,000,000             |
+| Seed Round           | 15%        | 75,000,000    | $0.13   | $9,750,000  | 48%      | $65,000,000             |
+| KOL Round             | 1%         | 5,000,000     | $0.07   | $350,000     | 72%      | $35,000,000             |
 | Public Sale         | 10%        | 50,000,000    | $0.25   | $12,500,000  | 0%       | $125,000,000            |
 | Team Allcoation  | 10%        | 50,000,000    | -       | -            | -        | -                       |
 | Ecosystem Fund | 28%        | 140,000,000    | -       | -            | -        | -                       |
@@ -768,11 +768,23 @@ elif app_mode == "Investment KPIs 💰":
             # User Inputs
             market_cap_million = st.slider("Market Cap ($M)", min_value=1, max_value=2000, value=50, step=1, format='%dM')
             selected_months = st.slider("Select Month Range (TGE included at M1)", min_value=1, max_value=total_months, value=(1, total_months), step=1)
+            
+            col1, spacer, col2 = st.columns([1, 0.1, 1])
+            with col1:
+                
+                number = st.number_input("Select Demand Multiplier", min_value=0.06, max_value=0.1, value=0.075, step=0.01)
+                formatted_number = f"{number:.5f}"
+                st.write("The current growth rate is ", formatted_number)
+
+
+            with col2:
+                st.write()
             # growth_rate_slider = st.slider("Growth Rate", min_value=0.05, max_value=0.07, value=0.06, step=0.001)
             
             with st.spinner("Modelling..."):
                 time.sleep(2)
             st.success("Complete") 
+            st.toast("Tokenomics Simulated", icon='🎉')
             
         st.divider()
 
@@ -781,7 +793,7 @@ elif app_mode == "Investment KPIs 💰":
             
 
         initial_market_cap = market_cap_million * 1e6
-        growth_rate = 0.0755 #growth_rate_slider
+        growth_rate = number #growth_rate_slider
         
         
         months = np.arange(selected_months[0], selected_months[1] + 1) 

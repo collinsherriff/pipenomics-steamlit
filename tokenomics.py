@@ -9,7 +9,6 @@ import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 
-
 # import streamlit_analytics
 # import rudderstack.analytics as rudder_analytics
 # from dotenv import load_dotenv
@@ -128,6 +127,7 @@ body {
 </style>
 """
 # this is windows old CURSOR instead of PiP: http://www.rw-designer.com/cursor-extern.php?id=151729
+
 
 st.markdown(custom_css, unsafe_allow_html=True)
 
@@ -788,7 +788,6 @@ elif app_mode == "Investment KPIs 💰":
                     "Select Demand Multiplier",
                     options=list(growth_options.keys()),
                     index=1,
-                    placeholder="Select Ecosystem Growth..."
                 )
 
                 selected_growth_rate = growth_options[option]

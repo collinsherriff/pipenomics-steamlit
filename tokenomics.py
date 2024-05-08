@@ -802,7 +802,6 @@ elif app_mode == "Investment KPIs 💰":
                 with st.spinner("Modelling..."):
                     time.sleep(2)
             st.success(f"Completed! You selected {option}, which corresponds to a growth rate of {selected_growth_rate}*") 
-            st.toast("Tokenomics Simulated", icon='🎉')
             
         st.divider()
 

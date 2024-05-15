@@ -142,8 +142,8 @@ app_mode = st.sidebar.radio("Select tokenomics section",
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 
 st.sidebar.markdown("""
-## PiP World
-For further information on PiP World, follow the link here to explore our Whitepaper.
+## Links
+For more details on PiP World, explore our Whitepaper [here](#).
 """)
 
 def create_chart(data, title, ylabel):
@@ -242,7 +242,7 @@ The token distribution has been carefully allocated to support the ecosystems's 
         | Angel | Q2 2024 | $0.07 | 72% | $2.80M |
         | Seed | Q2 2024 | $0.13 | 48% | $9.75M |
         | KOL | Q2 2024 | $0.07 | 72% | $0.35M |
-        | Public | Q2 2024 | $0.25 | 0% | $12.50M |
+        | Public | Q3 2024 | $0.25 | 0% | $12.50M |
 
         &nbsp;
                 """)
@@ -736,7 +736,7 @@ elif app_mode == "Investment KPIs 💰":
 
     st.title("Investment KPIs")
 
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(["$PiP Token Price", "Token Emmissions", "Investor Rounds","Tokenomics Tables",":gray[.]"])
+    tab1, tab2, tab3, tab4 = st.tabs(["$PiP Token Price", "Token Emmissions", "Investor Rounds","Tokenomics Tables"])
     
     with tab1:
         st.write("## $PiP Token Price")
@@ -1330,8 +1330,8 @@ The graph presents the cumulative token release schedule for $PiP over a 48-mont
             fig4 = px.pie(df, values='Unlock pm $TGE', names='Category', title='Unlock pm $TGE (%)', hole=0.2, height=500, color_discrete_sequence=colors)
             st.plotly_chart(fig4, use_container_width=True)
     
-    with tab5:    
-        st.write("")
+    # with tab5:    
+    #     st.write("")
         # streamlit_analytics.track(unsafe_password="test123")
         # streamlit_analytics.stop_tracking() 
     

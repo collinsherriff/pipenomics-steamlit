@@ -128,11 +128,22 @@ body {
 """
 # this is windows old CURSOR instead of PiP: http://www.rw-designer.com/cursor-extern.php?id=151729
 
+st.markdown("""
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-st.markdown(custom_css, unsafe_allow_html=True)
+        body {
+            font-family: 'Space Mono', monospace;
+        }
 
-with open("style.css") as css:
-    st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'VT323', monospace;
+            font-weight: 400;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 
 st.sidebar.image("logopixel.png", use_column_width=True)
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
@@ -189,7 +200,7 @@ The $PiP token lies at the heart of the PiP World ecosystem, carefully designed 
             
             fig.update_layout(height=650, width=800)  
 
-            st.plotly_chart(fig, use_container_width=False)  
+            st.plotly_chart(fig, use_container_width=True)  
 
     with col1:
         st.write("""
@@ -233,20 +244,18 @@ The token distribution has been carefully allocated to support the ecosystems's 
         col1, space, col2 = st.columns([1, 0.1, 1])
         with col2:
                 st.write("""
-                ## 
 
-        &nbsp;
-        
-        | Round | Dates | Token Price | Discount | Fundraising Goal |
-        | --- | --- | --- | --- | --- |
-        | Angel | Q2 2024 | $0.07 | 72% | $2.80M |
-        | Seed | Q2 2024 | $0.13 | 48% | $9.75M |
-        | KOL | Q2 2024 | $0.07 | 72% | $0.35M |
-        | Public | Q3 2024 | $0.25 | 0% | $12.50M |
+                &nbsp;
 
-        &nbsp;
+                | Round | Dates | Token Price | Discount | Fundraising Goal |
+                | --- | --- | --- | --- | --- |
+                | Angel | Q2 2024 | $0.07 | 72% | $2.80M |
+                | Seed | Q2 2024 | $0.13 | 48% | $9.75M |
+                | KOL | Q2 2024 | $0.07 | 72% | $0.35M |
+                | Public | Q3 2024 | $0.25 | 0% | $12.50M |
+
+                &nbsp;
                 """)
-            
         with col1:
                 st.header("Token Sale Roadmap")
                 st.write("""
@@ -617,7 +626,7 @@ This observation stems from a fundamental economic principle: if the circulating
                         height=550, width=700)
 
 
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
     
     st.write("""
 ### Predicting Price Drop from Supply Shock
@@ -682,7 +691,7 @@ By understanding and applying this equation, investors and our teams can better 
         fig.update_yaxes(range=[min([o for o in outcome if o is not None]) - 10, -10]) 
 
 
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
 
     # st.pyplot(create_chart(market_caps, "Market Cap Over Time", "Market Cap ($)"))
 

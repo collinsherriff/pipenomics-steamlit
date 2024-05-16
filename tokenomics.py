@@ -831,18 +831,37 @@ elif app_mode == "Investment KPIs 💰":
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=months, y=token_price, mode='lines+markers', name='Token Price', line=dict(color='blue'), stackgroup='one'))
         fig.add_trace(go.Scatter(x=months, y=circulating_supply, mode='lines+markers', name='Circulating Supply', line=dict(color='grey'), yaxis='y2'))
-        
-        # fig.update_layout(title="Token Price vs Circulating Supply (Selected Range)", xaxis_title="Months", yaxis_title="Token Price ($)",
-        #                 yaxis=dict(tickformat=".2f"), showlegend=False, height=550, width=780)
-        
+
         fig.update_layout(title="Token Price vs Circulating Supply (Selected Range)",
-                xaxis_title="Months",
-                yaxis_title="Token Price ($)",
-                yaxis=dict(tickformat=".2f"),
-                # Define the secondary y-axis
-                yaxis2=dict(title='Circulating Supply', titlefont=dict(color='white'),
-                            tickfont=dict(color='white'), overlaying='y', side='right'),
-                showlegend=True, height=550, width=780)
+                        xaxis_title="Months",
+                        yaxis_title="Token Price ($)",
+                        yaxis=dict(tickformat=".2f"),
+                        yaxis2=dict(title='Circulating Supply', titlefont=dict(color='white'),
+                                    tickfont=dict(color='white'), overlaying='y', side='right'),
+                        showlegend=True, height=550, width=780)
+
+        # Display the initial chart
+        chart = st.plotly_chart(fig, use_container_width=True)
+
+        # Add animation and incremental updates
+        progress_bar = st.sidebar.progress(0)
+        status_text = st.sidebar.empty()
+
+        for i in range(1, len(months)):
+            # Update the chart data incrementally
+            fig.data[0].x = months[:i+1]
+            fig.data[0].y = token_price[:i+1]
+            fig.data[1].x = months[:i+1]
+            fig.data[1].y = circulating_supply[:i+1]
+
+            # Update the chart in Streamlit
+            status_text.text("%i%% Complete" % int(i / len(months) * 100))
+            chart.plotly_chart(fig, use_container_width=True)
+            progress_bar.progress(int(i / len(months) * 100))
+            time.sleep(0.1)
+
+        progress_bar.empty()
+        status_text.empty()
 
 
         token_price_start = token_price[0]
@@ -906,7 +925,7 @@ elif app_mode == "Investment KPIs 💰":
 
         st.write("&nbsp;")
         
-        st.plotly_chart(fig, use_container_width=True)
+        # st.plotly_chart(fig, use_container_width=True)
 
         
         st.divider()

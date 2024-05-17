@@ -303,7 +303,10 @@ By dissecting the relationships between token supply, speculator activity, and p
 
                 """)
         st.divider()
-        st.markdown('_Source: Sockin, M., & Xiong, W. (2023). A Model of Cryptocurrencies. Management Science, 69(11), 6684–6707. © 2023 INFORMS. (p. 6698)._')
+        with st.expander("_Source_"):
+            st.markdown('_Sockin, M., & Xiong, W. (2023). A Model of Cryptocurrencies. Management Science, 69(11), 6684–6707. © 2023 INFORMS. (p. 6698)._')
+            
+        
         
 elif app_mode == "Vesting & Release Schedule":
     st.title("Vesting & Release Schedule")
@@ -858,7 +861,7 @@ elif app_mode == "Investment KPIs 💰":
             status_text.text("%i%% Complete" % int(i / len(months) * 100))
             chart.plotly_chart(fig, use_container_width=True)
             progress_bar.progress(int(i / len(months) * 100))
-            time.sleep(0.1)
+            time.sleep(0.04)
 
         progress_bar.empty()
         status_text.empty()
@@ -1135,8 +1138,8 @@ The graph presents the cumulative token release schedule for $PiP over a 48-mont
                     
                     """)
 
-            with st.expander("View Data"):
-                st.write(df_release)
+            # with st.expander("View Data"):
+            #     st.write(df_release)
                 
 
         with col2:
@@ -1208,8 +1211,25 @@ The graph presents the cumulative token release schedule for $PiP over a 48-mont
 
             st.plotly_chart(plot_token_release(df_release), use_container_width=True)
 
-            # st.expander("View Data").write(df_release)
-    
+        def trigger_balloons():
+            st.balloons()
+
+        # Create columns for the expander and the button
+        col1, col2 = st.columns([9, 1])
+
+        # Place the expander in the first column
+        with col1:
+            with st.expander("View Data"):
+                st.write(df_release, use_container_width=True)
+
+        # Place the button in the second column
+        with col2:
+            if st.button("🥚"):
+                trigger_balloons()
+                st.toast('Easter Egg Unlocked')
+        # with st.expander("View Data"):
+        #         st.write(df_release, use_container_width=True)
+                
     with tab3:
         st.header("Funding Overview by Round")
         st.write("""

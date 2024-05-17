@@ -1213,6 +1213,10 @@ The graph presents the cumulative token release schedule for $PiP over a 48-mont
 
         def trigger_balloons():
             st.balloons()
+            st.session_state.button_clicked = True
+        
+        if 'button_clicked' not in st.session_state:
+            st.session_state.button_clicked = False
 
         # Create columns for the expander and the button
         col1, col2 = st.columns([9, 1])
@@ -1224,8 +1228,9 @@ The graph presents the cumulative token release schedule for $PiP over a 48-mont
 
         # Place the button in the second column
         with col2:
-            if st.button("🥚"):
-                trigger_balloons()
+            if not st.session_state.button_clicked:
+                if st.button("🥚"):
+                    trigger_balloons()
         # with st.expander("View Data"):
         #         st.write(df_release, use_container_width=True)
                 

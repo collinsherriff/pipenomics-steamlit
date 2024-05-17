@@ -1226,7 +1226,6 @@ The graph presents the cumulative token release schedule for $PiP over a 48-mont
         with col2:
             if st.button("🥚"):
                 trigger_balloons()
-                st.toast('Easter Egg Unlocked')
         # with st.expander("View Data"):
         #         st.write(df_release, use_container_width=True)
                 

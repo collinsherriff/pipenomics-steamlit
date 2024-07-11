@@ -120,7 +120,7 @@ import plotly.graph_objects as go
     # streamlit_analytics.start_tracking()
 
 
-st.set_page_config(layout="wide", page_title="$PiP Tokenomics", page_icon=":coin:")
+st.set_page_config(layout="wide", page_title="$PiPW Tokenomics", page_icon=":coin:")
 
 custom_css = """
 <style>
@@ -174,12 +174,12 @@ token_prices = np.random.rand(10) * 10
 market_caps = np.random.rand(10) * 1000
 
 if app_mode == "Token Supply & Distribution":
-    st.title("$PiP Token Supply and Distribution")
+    st.title("$PiPW Token Supply and Distribution")
     
     st.write("""
 
 
-The $PiP token lies at the heart of the PiP World ecosystem, carefully designed to incentivise participation, reward learning, and foster a vibrant, self-sustaining economy. Our tokenomics model has been meticulously crafted to ensure the long-term sustainability of the platform, align the interests of all stakeholders, and support the growth and adoption of PiP World.
+The $PiPW token lies at the heart of the PiP World ecosystem, carefully designed to incentivise participation, reward learning, and foster a vibrant, self-sustaining economy. Our tokenomics model has been meticulously crafted to ensure the long-term sustainability of the platform, align the interests of all stakeholders, and support the growth and adoption of PiP World.
 
 
                 """)
@@ -239,7 +239,7 @@ The token distribution has been carefully allocated to support the ecosystems's 
 4. **Public Sale(10%)**: The Public round allows the wider community to participate in the project and benefit from its growth. By setting a higher price point than the previous rounds, we aim to ensure that the project is fairly valued while still providing an attractive opportunity for public investors.
 5. **Team and Advisors (13%)**: Allocating tokens to the team and advisors helps align their interests with the long-term success of the project. The -year vesting schedule with a 1-year cliff ensures that the team is committed to the project's growth and development over an extended period.
 6. **Ecosystem (28%)**: The Ecosystem Fund is a crucial component of the tokenomics model, designed to support the development of the platform, incentivise user adoption, and forge strategic partnerships. This fund is instrumental in ensuring that PiP World has the resources necessary to grow and thrive.
-7. **Liquidity (10%)**: Allocating tokens for liquidity provision on decentralised exchanges is essential for maintaining a healthy and stable market for $PiP tokens. This strategy aims to ensure wide accessibility and stable token prices, supporting the ecosystem's liquidity needs.
+7. **Liquidity (10%)**: Allocating tokens for liquidity provision on decentralised exchanges is essential for maintaining a healthy and stable market for $PiPW tokens. This strategy aims to ensure wide accessibility and stable token prices, supporting the ecosystem's liquidity needs.
 8. **Reserve (15%)**: The Reserve serves as a strategic asset for PiP World, offering the flexibility to address challenges or capitalise on opportunities as they arise. This fund supports operational needs, market interventions, future expansions, and is managed with full transparency and community involvement in allocation decisions.
     """)   
 
@@ -264,9 +264,9 @@ The token distribution has been carefully allocated to support the ecosystems's 
         with col1:
                 st.header("Token Sale Roadmap")
                 st.write("""
-        The $PiP token supply and distribution have been carefully crafted to support the long-term success and sustainability of the PiP World project. By strategically allocating tokens to key stakeholders, providing robust incentives for participation and adoption, and implementing transparent vesting and release schedules, PiP World is well-positioned to create a vibrant, rewarding, and enduring ecosystem that empowers users worldwide with the knowledge and skills to achieve financial freedom.
+        The $PiPW token supply and distribution have been carefully crafted to support the long-term success and sustainability of the PiP World project. By strategically allocating tokens to key stakeholders, providing robust incentives for participation and adoption, and implementing transparent vesting and release schedules, PiP World is well-positioned to create a vibrant, rewarding, and enduring ecosystem that empowers users worldwide with the knowledge and skills to achieve financial freedom.
 
-        In the following sections of the whitepaper, we will delve into the **governance and community** aspects of the PiP World ecosystem, showcasing how $PiP token holders will have the opportunity to actively shape the direction and evolution of the project through decentralised decision-making and collaboration.
+        In the following sections of the whitepaper, we will delve into the **governance and community** aspects of the PiP World ecosystem, showcasing how $PiPW token holders will have the opportunity to actively shape the direction and evolution of the project through decentralised decision-making and collaboration.
                 """)
     
     with tab2:
@@ -338,9 +338,9 @@ To ensure the long-term alignment of interests and commitment to the project, th
 &nbsp;
                 """)
     st.write("""
-This vesting schedule ensures that the team and advisors have a strong incentive to drive the project's success over an extended period and provides transparency and predictability for the $PiP token supply.
+This vesting schedule ensures that the team and advisors have a strong incentive to drive the project's success over an extended period and provides transparency and predictability for the $PiPW token supply.
 
-In addition to the team and advisor vesting, the Ecosystem Fund tokens will be released gradually over a 4-year period following the vesting period of the TGE. This controlled release schedule ensures that the Ecosystem Fund can sustainably support the long-term growth and development of the PiP World platform without causing undue inflationary pressure on the $PiP token price.
+In addition to the team and advisor vesting, the Ecosystem Fund tokens will be released gradually over a 4-year period following the vesting period of the TGE. This controlled release schedule ensures that the Ecosystem Fund can sustainably support the long-term growth and development of the PiP World platform without causing undue inflationary pressure on the $PiPW token price.
 
 """)
     with col2:
@@ -517,7 +517,7 @@ elif app_mode == "Monetary & Fiscal Policies":
     st.write("""
             &nbsp;
 
-In navigating the complex terrain of digital currency economics, PiP World employs a nuanced blend of monetary and fiscal policies designed to maintain a healthy token supply, control inflation, and stimulate demand for the $PiP token. These policies are meticulously crafted to ensure the long-term sustainability and growth of the ecosystem.
+In navigating the complex terrain of digital currency economics, PiP World employs a nuanced blend of monetary and fiscal policies designed to maintain a healthy token supply, control inflation, and stimulate demand for the $PiPW token. These policies are meticulously crafted to ensure the long-term sustainability and growth of the ecosystem.
             """)
     col1, space, col2 = st.columns([1,0.1,1])
     with col1:
@@ -525,11 +525,11 @@ In navigating the complex terrain of digital currency economics, PiP World emplo
         
 #### Managing Token Supply:
 
-For $PiP, we implements several key mechanisms to manage the token supply effectively:
+For $PiPW, we implements several key mechanisms to manage the token supply effectively:
 
 - **Token Buyback:** A deflationary measure where a portion of the token supply is periodically removed from circulation. This mechanism is employed to counteract inflationary pressures and enhance the token's scarcity and value over time.
 
-- **Vesting Schedules:** To align the interests of team members, advisors, and early investors with the long-term success of the ecosystem, $PiP World incorporates vesting schedules into its tokenomics. These schedules dictate the gradual release of tokens over a specified period, preventing market flooding and ensuring a steady, controlled increase in token circulation.
+- **Vesting Schedules:** To align the interests of team members, advisors, and early investors with the long-term success of the ecosystem, $PiPW World incorporates vesting schedules into its tokenomics. These schedules dictate the gradual release of tokens over a specified period, preventing market flooding and ensuring a steady, controlled increase in token circulation.
 
 - **Staking Rewards:** Encouraging token holders to stake their tokens not only secures the network but also reduces the velocity of money within the ecosystem. Staked tokens are temporarily removed from circulation, which can have a deflationary effect by decreasing the available supply, thus potentially increasing the token's price.
             """)
@@ -537,16 +537,16 @@ For $PiP, we implements several key mechanisms to manage the token supply effect
         st.write("""
 #### Inflation Control and Demand Stimulation:
 
-To mitigate the risk of inflation and stimulate demand for the $PiP token, PiP World adopts the following policies:
+To mitigate the risk of inflation and stimulate demand for the $PiPW token, PiP World adopts the following policies:
 
 
-- **Inflation Rate Management:** While the $PiP token has a capped supply, mechanisms for releasing tokens into the ecosystem, such as rewards for staking or participation in governance, are designed with a cap to ensure they do not dilute the token's value. The governance model allows for adjustments to these mechanisms, ensuring flexibility to respond to changing economic conditions.
-- **Demand Stimulation Initiatives:** Beyond the utility provided within the ecosystem, PiP World engages in strategies to stimulate demand for the $PiP token. These include partnerships that expand the token's use cases, marketing campaigns to raise awareness and adoption, and liquidity provisioning on exchanges to facilitate easy trading.
+- **Inflation Rate Management:** While the $PiPW token has a capped supply, mechanisms for releasing tokens into the ecosystem, such as rewards for staking or participation in governance, are designed with a cap to ensure they do not dilute the token's value. The governance model allows for adjustments to these mechanisms, ensuring flexibility to respond to changing economic conditions.
+- **Demand Stimulation Initiatives:** Beyond the utility provided within the ecosystem, PiP World engages in strategies to stimulate demand for the $PiPW token. These include partnerships that expand the token's use cases, marketing campaigns to raise awareness and adoption, and liquidity provisioning on exchanges to facilitate easy trading.
             """)
     st.write("""
 &nbsp;
 
-By integrating these monetary and fiscal policies, PiP World aims to maintain a balanced and thriving economy. Managing the token supply through locking, vesting, and staking, alongside strategic measures to control inflation and stimulate demand, positions the $PiP token for sustained value and utility within the ecosystem.
+By integrating these monetary and fiscal policies, PiP World aims to maintain a balanced and thriving economy. Managing the token supply through locking, vesting, and staking, alongside strategic measures to control inflation and stimulate demand, positions the $PiPW token for sustained value and utility within the ecosystem.
             
             """)
     st.divider()
@@ -554,11 +554,11 @@ By integrating these monetary and fiscal policies, PiP World aims to maintain a 
     with col1:
         st.header("🔒 Token Locking and Linear Claiming")
         st.write("""
-Token locking for all participants, including public presale, secures $PiP tokens for 12 months, reducing market volatility. The linear claiming strategy allows for real-time, second-by-second token release, mitigating bulk sell-off risks and stabilising token price.
+Token locking for all participants, including public presale, secures $PiPW tokens for 12 months, reducing market volatility. The linear claiming strategy allows for real-time, second-by-second token release, mitigating bulk sell-off risks and stabilising token price.
                 """)
         st.header("⏱️ Staking Protocol with Diverse Rewards")
         st.write("""
-Our staking protocol incentivises token holding by offering rewards in stablecoins or WETH, alongside $PiP tokens. Allocating USDT from revenue streams into the staking rewards pool ensures a continuous incentive for token holders, promoting long-term holding and ecosystem stability.
+Our staking protocol incentivises token holding by offering rewards in stablecoins or WETH, alongside $PiPW tokens. Allocating USDT from revenue streams into the staking rewards pool ensures a continuous incentive for token holders, promoting long-term holding and ecosystem stability.
             """)
     with col2:
         st.header("🖼️ NFT Integration for Enhanced Utility")
@@ -708,7 +708,7 @@ elif app_mode == "Staking & Liquidity":
 
     st.write("""
             
-            PiP World introduces a strategic staking and rewards mechanism that not only incentivises long-term holding of the $PiP token but also significantly contributes to the stability and liquidity of the ecosystem. This approach is carefully designed to balance rewarding token holders while ensuring the health and growth of the platform.
+            PiP World introduces a strategic staking and rewards mechanism that not only incentivises long-term holding of the $PiPW token but also significantly contributes to the stability and liquidity of the ecosystem. This approach is carefully designed to balance rewarding token holders while ensuring the health and growth of the platform.
 
 ### Staking Models & Rewards:
 PiP World offers a flexible staking model that allows token holders to lock their tokens for varying periods, thereby earning staking rewards. The model is structured to offer higher rewards for longer lock-up periods, thus encouraging long-term holding.
@@ -719,12 +719,12 @@ The rewards are distributed from a designated staking rewards pool (reserve fund
     col1, space, col2 = st.columns([1,0.1,1])
     with col1:
         st.write("""#### Long-term Holding Incentive""")
-        st.write("""By providing higher rewards for longer staking periods, token holders are encouraged to commit their tokens over extended periods. This reduces the circulating supply of $PiP, increasing their value and providing a financial incentive for holders to align with the ecosystem's long-term success.""")
+        st.write("""By providing higher rewards for longer staking periods, token holders are encouraged to commit their tokens over extended periods. This reduces the circulating supply of $PiPW, increasing their value and providing a financial incentive for holders to align with the ecosystem's long-term success.""")
         
         
     with col2:
         st.write("""#### Ecosystem Stability""")
-        st.write("""The predictable nature of staking rewards, coupled with the commitment of tokens for staking, lends stability to the $PiP token's market. It mitigates the impact of speculative trading and short-term volatility, fostering a more stable economic environment.""")
+        st.write("""The predictable nature of staking rewards, coupled with the commitment of tokens for staking, lends stability to the $PiPW token's market. It mitigates the impact of speculative trading and short-term volatility, fostering a more stable economic environment.""")
     # st.latex(r'''multiplier = 1.05^x''')
     
     
@@ -735,10 +735,10 @@ The rewards are distributed from a designated staking rewards pool (reserve fund
     st.write("### Impact on Token Velocity and Ecosystem Liquidity")
     st.write("""
             
-            The staking mechanism directly influences the velocity of the $PiP token and the liquidity within the ecosystem:
+            The staking mechanism directly influences the velocity of the $PiPW token and the liquidity within the ecosystem:
             
-- **Reduced Token Velocity:** Staking rewards encourage holders to lock their tokens, reducing the frequency with which the token changes hands. A lower velocity (V↓) is beneficial for $PiPs value, as it suggests a preference for holding over trading.  
-- **Enhanced Ecosystem Liquidity:** Part of the staking strategy includes provisions for liquidity provisioning. Stakers might have the opportunity to contribute to liquidity pools, earning additional rewards while enhancing the liquidity of $PiP tokens on DEXs. This not only benefits the stakers but also improves the trading experience for all users by reducing slippage and ensuring fair market prices.
+- **Reduced Token Velocity:** Staking rewards encourage holders to lock their tokens, reducing the frequency with which the token changes hands. A lower velocity (V↓) is beneficial for $PiPWs value, as it suggests a preference for holding over trading.  
+- **Enhanced Ecosystem Liquidity:** Part of the staking strategy includes provisions for liquidity provisioning. Stakers might have the opportunity to contribute to liquidity pools, earning additional rewards while enhancing the liquidity of $PiPW tokens on DEXs. This not only benefits the stakers but also improves the trading experience for all users by reducing slippage and ensuring fair market prices.
 
 PiP World's staking and rewards mechanism is designed to encourage long-term holding and contribute to ecosystem stability. By carefully balancing incentives for token holders with the needs of the ecosystem, PiP World ensures a vibrant community of stakeholders invested in its long-term success, while managing token velocity and enhancing liquidity.
 
@@ -753,10 +753,10 @@ elif app_mode == "Investment KPIs 💰":
 
     st.title("Investment KPIs")
 
-    tab1, tab2, tab3, tab4 = st.tabs(["$PiP Token Price", "Token Emmissions", "Investor Rounds","Tokenomics Tables"])
+    tab1, tab2, tab3, tab4 = st.tabs(["$PiPW Token Price", "Token Emmissions", "Investor Rounds","Tokenomics Tables"])
     
     with tab1:
-        st.write("## $PiP Token Price")
+        st.write("## $PiPW Token Price")
         
         col1, spacer, col2 = st.columns([1, 0.1, 1])
 
@@ -764,7 +764,7 @@ elif app_mode == "Investment KPIs 💰":
         with col1:
             st.write("""
                     
-                    To make an informed decision about the optimal timing for investing in $PiP tokens, consider the detailed metrics outlined below. These metrics are crucial in assessing the viability and potential profitability of such investments within specified monthly periods. By carefully analysing the proposed market capitalisation figures and trends over these ranges, you can identify the most favorable moments to allocate resources to the PiP Ecosystem. 
+                    To make an informed decision about the optimal timing for investing in $PiPW tokens, consider the detailed metrics outlined below. These metrics are crucial in assessing the viability and potential profitability of such investments within specified monthly periods. By carefully analysing the proposed market capitalisation figures and trends over these ranges, you can identify the most favorable moments to allocate resources to the PiP Ecosystem. 
                     
                     This strategic approach not only has the potential to maximise your investment potential but also minimise risk by relying on data-driven insights and projections. Keep in mind that understanding the dynamics of market capitalisation, including factors that influence fluctuations and growth prospects, is essential in making educated investment choices.
                     
@@ -993,7 +993,7 @@ This graph presents a projected market capitalisation growth based on a growth r
         st.header("Token Emissions")
         st.write("""
             
-The graph below outlines the phased distribution strategy for $PiP tokens, aligning with the ecosystem's long-term vision for growth and sustainability. Across a span of 48 months, this visualsation demonstrates the deliberate and strategic release of tokens into the ecosystem, highlighting categories such as Angel, Seed, KOL, Public, Ecosystem, Team, Reserve, Advisors, and Liquidity.
+The graph below outlines the phased distribution strategy for $PiPW tokens, aligning with the ecosystem's long-term vision for growth and sustainability. Across a span of 48 months, this visualsation demonstrates the deliberate and strategic release of tokens into the ecosystem, highlighting categories such as Angel, Seed, KOL, Public, Ecosystem, Team, Reserve, Advisors, and Liquidity.
 
 Each line represents a different category emission, not showcasing the initial lump-sum releases (of Liquidity and initial percentages for Angel, Seed, KOL, and Public rounds) followed by a linear release model tailored to each category's specific role within the PiP ecosystem. This ensures a balanced injection of tokens, facilitating ecosystem development, rewarding early backers, and fostering a vibrant community engagement while maintaining market stability.
 
@@ -1079,7 +1079,7 @@ This release strategy underscores PiP's commitment to transparency and a steady 
         with col1:
             st.header("Cumulative Token Emissions")
             st.write(""" 
-The graph presents the cumulative token release schedule for $PiP over a 48-month horison, detailing the progressive distribution of tokens across various categories. 
+The graph presents the cumulative token release schedule for $PiPW over a 48-month horison, detailing the progressive distribution of tokens across various categories. 
                     
                     """)
 
@@ -1150,7 +1150,7 @@ The graph presents the cumulative token release schedule for $PiP over a 48-mont
         with col2:
             st.header("Token Supply Growth Per Category")
             # st.plotly_chart(fig2, use_container_width=True)
-            st.write("""The graph depicts the rollout of $PiP tokens over 48 months, highlighting the escalating sum of tokens dispensed across distinct allocation categories.""")
+            st.write("""The graph depicts the rollout of $PiPW tokens over 48 months, highlighting the escalating sum of tokens dispensed across distinct allocation categories.""")
 
 
             def calculate_token_release(max_supply=500e6, months=49):
@@ -1243,7 +1243,7 @@ The graph presents the cumulative token release schedule for $PiP over a 48-mont
         st.header("Funding Overview by Round")
         st.write("""
                 
-            The chart presents an overview of the planned fundraising structure for PiP across various rounds. It outlines the projected amounts raised in each round, ranging from strategic partnerships to public offerings. This breakdown demonstrates the approach to securing financial support from a mix of stakeholders, including early backers, key opinion leaders, and the broader community. The distribution of funding sources establishes a solid foundation for $PiP's growth and reflects a strategic plan to engage a wide range of contributors in the ecosystem's journey.
+            The chart presents an overview of the planned fundraising structure for PiP across various rounds. It outlines the projected amounts raised in each round, ranging from strategic partnerships to public offerings. This breakdown demonstrates the approach to securing financial support from a mix of stakeholders, including early backers, key opinion leaders, and the broader community. The distribution of funding sources establishes a solid foundation for $PiPW's growth and reflects a strategic plan to engage a wide range of contributors in the ecosystem's journey.
             
             &nbsp;     
                 
@@ -1311,7 +1311,7 @@ The graph presents the cumulative token release schedule for $PiP over a 48-mont
 
             fig = go.Figure(data=go.Scatter(x=df["Round"], y=df["Price ($)"], mode='lines+markers',line=dict(color='#5e28d5')))
 
-            fig.update_layout(title='Price of $PiP at Each Funding Round',
+            fig.update_layout(title='Price of $PiPW at Each Funding Round',
                             xaxis_title='Round',
                             yaxis_title='Price ($)',
                             height=530, width=750)

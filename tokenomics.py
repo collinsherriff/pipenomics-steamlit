@@ -319,10 +319,10 @@ By dissecting the relationships between token supply, speculator activity, and p
         with st.expander("_Source_"):
             st.markdown('_Sockin, M., & Xiong, W. (2023). A Model of Cryptocurrencies. Management Science, 69(11), 6684–6707. © 2023 INFORMS. (p. 6698)._')
     
-    st.header("$PiPs Token Simulation")
-    st.write("Gain an edge with $PiPS tokens: our data-driven insights help you pinpoint the best times to invest, maximising returns and minimising risk. Choose your preferred timeframe to access tailored projections for market cap, token price, and supply—empowering you to make confident, strategic investments in the PiP Ecosystem ")
-    if st.button("Start Simulation"):
-            app_mode = "Investment KPIs 💰"
+    # st.header("$PiPs Token Simulation")
+    # st.write("Gain an edge with $PiPS tokens: our data-driven insights help you pinpoint the best times to invest, maximising returns and minimising risk. Choose your preferred timeframe to access tailored projections for market cap, token price, and supply—empowering you to make confident, strategic investments in the PiP Ecosystem ")
+    # if st.button("Start Simulation"):
+    #         app_mode = "Investment KPIs 💰"
         
 elif app_mode == "Vesting & Release Schedule":
     st.title("Vesting & Release Schedule")

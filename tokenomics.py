@@ -9,7 +9,7 @@ import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 
-st.set_page_config(layout="wide", page_title="$PiPS Tokenomics", page_icon=":coin:")
+st.set_page_config(layout="wide", page_title="$PiPS Tokenomics", page_icon="💰")
 
 custom_css = """
 <style>

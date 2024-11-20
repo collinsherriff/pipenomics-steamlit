@@ -9,7 +9,7 @@ import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 
-st.set_page_config(layout="wide", page_title="$PiPS Tokenomics", page_icon=":coin:")
+st.set_page_config(layout="wide", page_title="$PiPS Tokenomics", page_icon="💰")
 
 custom_css = """
 <style>
@@ -633,269 +633,274 @@ elif app_mode == "Token Simulation 💰":
     tab1, tab2, tab3, tab4 = st.tabs(["$PiPS Token Price", "Token Emmissions", "Investor Rounds","Tokenomics Tables"])
     
     with tab1:
-        st.write("## $PiPS Token Price")
+        st.write("## $PiPS Token Price Coming Soon")
+        st.write("Here you will be able to simulate the token price based on the market cap and circulating supply.")
         
-        col1, spacer, col2 = st.columns([1, 0.1, 1])
+        #TOKEN SIM HIDE MAIN SECTION 638 to 902 AND 1362 to 
+#     with tab1:
+#         st.write("## $PiPS Token Price")
+        
+#         col1, spacer, col2 = st.columns([1, 0.1, 1])
 
 
-        with col1:
-            st.write("""
+#         with col1:
+#             st.write("""
                     
-                    To make an informed decision about the optimal timing for investing in $PiPS tokens, consider the detailed metrics outlined below. These metrics are crucial in assessing the viability and potential profitability of such investments within specified monthly periods. By carefully analysing the proposed market capitalisation figures and trends over these ranges, you can identify the most favorable moments to allocate resources to the PiP Ecosystem. 
+#                     To make an informed decision about the optimal timing for investing in $PiPS tokens, consider the detailed metrics outlined below. These metrics are crucial in assessing the viability and potential profitability of such investments within specified monthly periods. By carefully analysing the proposed market capitalisation figures and trends over these ranges, you can identify the most favorable moments to allocate resources to the PiP Ecosystem. 
                     
-                    This strategic approach not only has the potential to maximise your investment potential but also minimise risk by relying on data-driven insights and projections. Keep in mind that understanding the dynamics of market capitalisation, including factors that influence fluctuations and growth prospects, is essential in making educated investment choices.
+#                     This strategic approach not only has the potential to maximise your investment potential but also minimise risk by relying on data-driven insights and projections. Keep in mind that understanding the dynamics of market capitalisation, including factors that influence fluctuations and growth prospects, is essential in making educated investment choices.
                     
-                    :blue[*Select the desired range of months, as well as the market cap to view the potential corresponding token price and circulating supply figures, enabling you to make well-informed investment decisions*:]
-                    &nbsp;
-                    """)
+#                     :blue[*Select the desired range of months, as well as the market cap to view the potential corresponding token price and circulating supply figures, enabling you to make well-informed investment decisions*:]
+#                     &nbsp;
+#                     """)
 
-        with col2:
+#         with col2:
     
     
-        # NEW VERSION WITH 2 SLIDERS
-            #OLD: monthly_release = np.array([68250000.0, 4083333.0, 4083333.0, 4083333.0, 5843567.0, 5843567.0, 5843567.0, 7602827.0, 7602827.0, 7602827.0, 11978183.0, 11978183.0, 11978183.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0])
-            #WRONG: monthly_release = np.array([68250000, 6250000, 6250000, 6250000, 6694444, 6694444, 6694444, 8083333, 8083333, 8083333, 8467949, 8467949, 8467949, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889])
-            #OLD Nov2024 monthly_release = np.array([68250000, 6250000, 6250000, 6250000, 6694444, 6694444, 6694444, 8480159, 8480159, 8480159, 8864774, 8864774, 8864774, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 6475885, 6475885, 6475885, 6475885, 6475885, 6475885, 6475885, 6475885, 6475885, 6475885, 6475885, 6475885])
-            monthly_release = np.array([
-                43000000.00, 4166666.67, 4166666.67, 4166666.67,
-                10466666.67, 10466666.67, 10466666.67,
-                12252380.95, 12252380.95, 12252380.95,
-                13919047.62, 13919047.62, 13919047.62,
-                15655158.73, 15655158.73, 15655158.73, 15655158.73, 15655158.73, 15655158.73,
-                9355158.73, 9355158.73, 9355158.73, 9355158.73, 9355158.73, 9355158.73,
-                7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06,
-                7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06,
-                7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06
-            ])
+#         # NEW VERSION WITH 2 SLIDERS
+#             #OLD: monthly_release = np.array([68250000.0, 4083333.0, 4083333.0, 4083333.0, 5843567.0, 5843567.0, 5843567.0, 7602827.0, 7602827.0, 7602827.0, 11978183.0, 11978183.0, 11978183.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 9589294.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 5598553.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0, 3825049.0])
+#             #WRONG: monthly_release = np.array([68250000, 6250000, 6250000, 6250000, 6694444, 6694444, 6694444, 8083333, 8083333, 8083333, 8467949, 8467949, 8467949, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 10568643, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 6079060, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889, 1388889])
+#             #OLD Nov2024 monthly_release = np.array([68250000, 6250000, 6250000, 6250000, 6694444, 6694444, 6694444, 8480159, 8480159, 8480159, 8864774, 8864774, 8864774, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 10965469, 6475885, 6475885, 6475885, 6475885, 6475885, 6475885, 6475885, 6475885, 6475885, 6475885, 6475885, 6475885])
+#             monthly_release = np.array([
+#                 43000000.00, 4166666.67, 4166666.67, 4166666.67,
+#                 10466666.67, 10466666.67, 10466666.67,
+#                 12252380.95, 12252380.95, 12252380.95,
+#                 13919047.62, 13919047.62, 13919047.62,
+#                 15655158.73, 15655158.73, 15655158.73, 15655158.73, 15655158.73, 15655158.73,
+#                 9355158.73, 9355158.73, 9355158.73, 9355158.73, 9355158.73, 9355158.73,
+#                 7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06,
+#                 7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06,
+#                 7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06, 7688492.06
+#             ])
 
-            max_supply = 500e6  
-            total_months = 49  
+#             max_supply = 500e6  
+#             total_months = 49  
         
-            # User Inputs
-            market_cap_million = st.slider("Market Cap ($M)", min_value=1, max_value=2000, value=50, step=1, format='%dM')
-            selected_months = st.slider("Select Month Range (TGE included at M1)", min_value=1, max_value=total_months, value=(1, total_months), step=1)
+#             # User Inputs
+#             market_cap_million = st.slider("Market Cap ($M)", min_value=1, max_value=2000, value=50, step=1, format='%dM')
+#             selected_months = st.slider("Select Month Range (TGE included at M1)", min_value=1, max_value=total_months, value=(1, total_months), step=1)
             
-            col1, spacer, col2 = st.columns([1, 0.1, 1])
-            with col1:
-                # OLD
-                # number = st.number_input("Select Demand Multiplier", min_value=0.06, max_value=0.1, value=0.075, step=0.01)
-                # formatted_number = f"{number:.5f}"
-                # st.write("The current growth rate is ", formatted_number)
+#             col1, spacer, col2 = st.columns([1, 0.1, 1])
+#             with col1:
+#                 # OLD
+#                 # number = st.number_input("Select Demand Multiplier", min_value=0.06, max_value=0.1, value=0.075, step=0.01)
+#                 # formatted_number = f"{number:.5f}"
+#                 # st.write("The current growth rate is ", formatted_number)
                 
                 
-                growth_options = {
-                    "Conservative Growth": 0.07,
-                    "Balanced Expansion": 0.075,
-                    "Aggressive Growth": 0.085,
-                    "Breakout Potential": 0.11
-                }
+#                 growth_options = {
+#                     "Conservative Growth": 0.07,
+#                     "Balanced Expansion": 0.075,
+#                     "Aggressive Growth": 0.085,
+#                     "Breakout Potential": 0.11
+#                 }
 
-                option = st.selectbox(
-                    "Select Demand Multiplier",
-                    options=list(growth_options.keys()),
-                    index=1,
-                )
+#                 option = st.selectbox(
+#                     "Select Demand Multiplier",
+#                     options=list(growth_options.keys()),
+#                     index=1,
+#                 )
 
-                selected_growth_rate = growth_options[option]
+#                 selected_growth_rate = growth_options[option]
                 
     
-            with col2:
-                st.write("&nbsp;")
+#             with col2:
+#                 st.write("&nbsp;")
                 
                 
-            # growth_rate_slider = st.slider("Growth Rate", min_value=0.05, max_value=0.07, value=0.06, step=0.001)
+#             # growth_rate_slider = st.slider("Growth Rate", min_value=0.05, max_value=0.07, value=0.06, step=0.001)
             
-                with st.spinner("Modelling..."):
-                    time.sleep(2)
-            st.success(f"Completed! You selected {option}, which corresponds to a growth rate of {selected_growth_rate}*") 
+#                 with st.spinner("Modelling..."):
+#                     time.sleep(2)
+#             st.success(f"Completed! You selected {option}, which corresponds to a growth rate of {selected_growth_rate}*") 
             
-        st.divider()
+#         st.divider()
 
-        circulating_supply = np.cumsum(monthly_release[:(selected_months[1])])
-        circulating_supply = circulating_supply[(selected_months[0]-1):]
+#         circulating_supply = np.cumsum(monthly_release[:(selected_months[1])])
+#         circulating_supply = circulating_supply[(selected_months[0]-1):]
             
 
-        initial_market_cap = market_cap_million * 1e6
-        growth_rate = selected_growth_rate #growth_rate_slider
+#         initial_market_cap = market_cap_million * 1e6
+#         growth_rate = selected_growth_rate #growth_rate_slider
         
         
-        months = np.arange(selected_months[0], selected_months[1] + 1) 
-        market_cap = initial_market_cap * (1 + growth_rate) ** (months - selected_months[0])
+#         months = np.arange(selected_months[0], selected_months[1] + 1) 
+#         market_cap = initial_market_cap * (1 + growth_rate) ** (months - selected_months[0])
 
-        token_price = market_cap / circulating_supply
-
-
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(x=months, y=token_price, mode='lines+markers', name='Token Price', line=dict(color='blue'), stackgroup='one'))
-        fig.add_trace(go.Scatter(x=months, y=circulating_supply, mode='lines+markers', name='Circulating Supply', line=dict(color='grey'), yaxis='y2'))
-
-        fig.update_layout(title="Token Price vs Circulating Supply (Selected Range)",
-                        xaxis_title="Months",
-                        yaxis_title="Token Price ($)",
-                        yaxis=dict(tickformat=".2f"),
-                        yaxis2=dict(title='Circulating Supply', titlefont=dict(color='white'),
-                                    tickfont=dict(color='white'), overlaying='y', side='right'),
-                        showlegend=True, height=550, width=780)
-
-        # Display the initial chart
-        chart = st.plotly_chart(fig, use_container_width=True)
-
-        # Add animation and incremental updates
-        progress_bar = st.sidebar.progress(0)
-        status_text = st.sidebar.empty()
-
-        for i in range(1, len(months)):
-            # Update the chart data incrementally
-            fig.data[0].x = months[:i+1]
-            fig.data[0].y = token_price[:i+1]
-            fig.data[1].x = months[:i+1]
-            fig.data[1].y = circulating_supply[:i+1]
-
-            # Update the chart in Streamlit
-            status_text.text("%i%% Complete" % int(i / len(months) * 100))
-            chart.plotly_chart(fig, use_container_width=True)
-            progress_bar.progress(int(i / len(months) * 100))
-            time.sleep(0.04)
-
-        progress_bar.empty()
-        status_text.empty()
+#         token_price = market_cap / circulating_supply
 
 
-        token_price_start = token_price[0]
-        token_price_end = token_price[-1]
-        supply_start = circulating_supply[0] / 1e6  
-        supply_end = circulating_supply[-1] / 1e6
-        expected_price_growth = (token_price_end - token_price_start) * 100
+#         fig = go.Figure()
+#         fig.add_trace(go.Scatter(x=months, y=token_price, mode='lines+markers', name='Token Price', line=dict(color='blue'), stackgroup='one'))
+#         fig.add_trace(go.Scatter(x=months, y=circulating_supply, mode='lines+markers', name='Circulating Supply', line=dict(color='grey'), yaxis='y2'))
+
+#         fig.update_layout(title="Token Price vs Circulating Supply (Selected Range)",
+#                         xaxis_title="Months",
+#                         yaxis_title="Token Price ($)",
+#                         yaxis=dict(tickformat=".2f"),
+#                         yaxis2=dict(title='Circulating Supply', titlefont=dict(color='white'),
+#                                     tickfont=dict(color='white'), overlaying='y', side='right'),
+#                         showlegend=True, height=550, width=780)
+
+#         # Display the initial chart
+#         chart = st.plotly_chart(fig, use_container_width=True)
+
+#         # Add animation and incremental updates
+#         progress_bar = st.sidebar.progress(0)
+#         status_text = st.sidebar.empty()
+
+#         for i in range(1, len(months)):
+#             # Update the chart data incrementally
+#             fig.data[0].x = months[:i+1]
+#             fig.data[0].y = token_price[:i+1]
+#             fig.data[1].x = months[:i+1]
+#             fig.data[1].y = circulating_supply[:i+1]
+
+#             # Update the chart in Streamlit
+#             status_text.text("%i%% Complete" % int(i / len(months) * 100))
+#             chart.plotly_chart(fig, use_container_width=True)
+#             progress_bar.progress(int(i / len(months) * 100))
+#             time.sleep(0.04)
+
+#         progress_bar.empty()
+#         status_text.empty()
+
+
+#         token_price_start = token_price[0]
+#         token_price_end = token_price[-1]
+#         supply_start = circulating_supply[0] / 1e6  
+#         supply_end = circulating_supply[-1] / 1e6
+#         expected_price_growth = (token_price_end - token_price_start) * 100
         
 
     
 
-        block_style = """
-        <style>
-        .metric-block {
-            border: 0.7px solid #CFCFCF;  /* Off white border */
-            border-radius: 1px !important;  /* Rounded corners */
-            padding: 10px;
-            text-align: center;
-            margin: 10px;
-            background-color: #f5f5f5;  /* Off white background */
-        }
-        </style>
-        """
+#         block_style = """
+#         <style>
+#         .metric-block {
+#             border: 0.7px solid #CFCFCF;  /* Off white border */
+#             border-radius: 1px !important;  /* Rounded corners */
+#             padding: 10px;
+#             text-align: center;
+#             margin: 10px;
+#             background-color: #f5f5f5;  /* Off white background */
+#         }
+#         </style>
+#         """
 
 
-        st.markdown(block_style, unsafe_allow_html=True)
+#         st.markdown(block_style, unsafe_allow_html=True)
 
-        col1, col2 = st.columns(2)
-        with col1:
-            st.markdown(f"""
-            <div class="metric-block">
-                <h3>Token Price (Start of Range)</h3>
-                <h2>${token_price_start:.2f}</h3>
-            </div>
-            """, unsafe_allow_html=True)
+#         col1, col2 = st.columns(2)
+#         with col1:
+#             st.markdown(f"""
+#             <div class="metric-block">
+#                 <h3>Token Price (Start of Range)</h3>
+#                 <h2>${token_price_start:.2f}</h3>
+#             </div>
+#             """, unsafe_allow_html=True)
 
-        with col2:
-            st.markdown(f"""
-            <div class="metric-block">
-                <h3>Token Price (End of Range)</h3>
-                <h2>${token_price_end:.2f}</h2>
-            </div>
-            """, unsafe_allow_html=True)
+#         with col2:
+#             st.markdown(f"""
+#             <div class="metric-block">
+#                 <h3>Token Price (End of Range)</h3>
+#                 <h2>${token_price_end:.2f}</h2>
+#             </div>
+#             """, unsafe_allow_html=True)
 
-        col3, col4 = st.columns(2)
-        with col3:
-            st.markdown(f"""
-            <div class="metric-block">
-                <h3>Supply at Start of Range</h3>
-                <h2>{supply_start:.0f}M Tokens</h2>
-            </div>
-            """, unsafe_allow_html=True)
+#         col3, col4 = st.columns(2)
+#         with col3:
+#             st.markdown(f"""
+#             <div class="metric-block">
+#                 <h3>Supply at Start of Range</h3>
+#                 <h2>{supply_start:.0f}M Tokens</h2>
+#             </div>
+#             """, unsafe_allow_html=True)
 
-        with col4:
-            st.markdown(f"""
-            <div class="metric-block">
-                <h3>Supply at End of Range</h3>
-                <h2>{supply_end:.0f}M Tokens</h2>
-            </div>
-            """, unsafe_allow_html=True)
+#         with col4:
+#             st.markdown(f"""
+#             <div class="metric-block">
+#                 <h3>Supply at End of Range</h3>
+#                 <h2>{supply_end:.0f}M Tokens</h2>
+#             </div>
+#             """, unsafe_allow_html=True)
 
-        st.write("&nbsp;")
+#         st.write("&nbsp;")
         
-        # st.plotly_chart(fig, use_container_width=True)
+#         # st.plotly_chart(fig, use_container_width=True)
 
         
-        st.divider()
+#         st.divider()
         
-        col1, space, col2 = st.columns([1, 0.1, 1])
-        with col1:
-            st.header("Token Price Growth Over Selected Period")
+#         col1, space, col2 = st.columns([1, 0.1, 1])
+#         with col1:
+#             st.header("Token Price Growth Over Selected Period")
         
         
-            # NEW SECTION
-            months2 = np.arange(selected_months[0], selected_months[1])
-            token_prices2 = np.linspace(token_price_start, token_price_end, len(months2))
+#             # NEW SECTION
+#             months2 = np.arange(selected_months[0], selected_months[1])
+#             token_prices2 = np.linspace(token_price_start, token_price_end, len(months2))
 
 
-            price_change_percent = ((token_price_end - token_price_start) / token_price_start) * 100
+#             price_change_percent = ((token_price_end - token_price_start) / token_price_start) * 100
 
 
-            fig = go.Figure()
-            fig.add_trace(go.Scatter(x=months2, y=token_prices2, mode='lines+markers', name='Token Price Growth', line=dict(color='#5e28d5')))
-            fig.update_layout(title="Token Price Growth Over Selected Period", xaxis_title="Months", yaxis_title="Token Price ($)")
+#             fig = go.Figure()
+#             fig.add_trace(go.Scatter(x=months2, y=token_prices2, mode='lines+markers', name='Token Price Growth', line=dict(color='#5e28d5')))
+#             fig.update_layout(title="Token Price Growth Over Selected Period", xaxis_title="Months", yaxis_title="Token Price ($)")
 
 
-            st.plotly_chart(fig, use_container_width=True)
+#             st.plotly_chart(fig, use_container_width=True)
             
-            st.markdown(f"""
-            <div class="metric-block">
-                <h3>Estimated Price Change</h3>
-                <h2><span style='color:green'>{price_change_percent:,.0f}%</span></h2>
-            </div>
-            """, unsafe_allow_html=True)
+#             st.markdown(f"""
+#             <div class="metric-block">
+#                 <h3>Estimated Price Change</h3>
+#                 <h2><span style='color:green'>{price_change_percent:,.0f}%</span></h2>
+#             </div>
+#             """, unsafe_allow_html=True)
         
-        with col2:
-            st.header("Market Cap Growth Over Selected Period")
-            fig2 = go.Figure()
-            fig2.add_trace(go.Scatter(x=months, y=market_cap, mode='lines+markers', name='Market Cap', line=dict(color='#5e28d5')))
-            fig2.update_layout(title="Market Cap Growth Over Selected Period", xaxis_title="Months", yaxis_title="Market Cap ($)",
-                            yaxis=dict(tickformat=",.0f"))
+#         with col2:
+#             st.header("Market Cap Growth Over Selected Period")
+#             fig2 = go.Figure()
+#             fig2.add_trace(go.Scatter(x=months, y=market_cap, mode='lines+markers', name='Market Cap', line=dict(color='#5e28d5')))
+#             fig2.update_layout(title="Market Cap Growth Over Selected Period", xaxis_title="Months", yaxis_title="Market Cap ($)",
+#                             yaxis=dict(tickformat=",.0f"))
             
-            st.plotly_chart(fig2, use_container_width=True)
+#             st.plotly_chart(fig2, use_container_width=True)
             
-            with st.expander("*Market Cap Growth Rate"):
-                st.write("""
-This graph presents a projected market capitalisation growth based on a growth rate range between 0.07 and 0.1 selected by you. While we've assumed a steady increase over time for this estimate, actual market cap fluctuations could lead to different token pricing outcomes.
-                """)
-                df = pd.DataFrame({"Months": months, "Market Cap ($M)": market_cap / 1e6})
-                st.write(df)
+#             with st.expander("*Market Cap Growth Rate"):
+#                 st.write("""
+# This graph presents a projected market capitalisation growth based on a growth rate range between 0.07 and 0.1 selected by you. While we've assumed a steady increase over time for this estimate, actual market cap fluctuations could lead to different token pricing outcomes.
+#                 """)
+#                 df = pd.DataFrame({"Months": months, "Market Cap ($M)": market_cap / 1e6})
+#                 st.write(df)
                 
-            # with st.expander("Important **Disclaimer**"):
-            st.warning("""
+#             # with st.expander("Important **Disclaimer**"):
+#             st.warning("""
                         
-                        The information provided on this page is based on economic principles and formulae and is not intended to provide the true picture of the token price. It should not be considered as financial advice. Make sure to conduct thorough research and consult with a financial advisor before making any investment decisions.  
+#                         The information provided on this page is based on economic principles and formulae and is not intended to provide the true picture of the token price. It should not be considered as financial advice. Make sure to conduct thorough research and consult with a financial advisor before making any investment decisions.  
                             
-                            """)
-    st.divider()
-    st.header("My Token Value Calculator")    
-    st.write("""
-             Enter the number of $PiPS tokens you own to estimate their current value in USD based on your selected values above:
+#                             """)
+#     st.divider()
+#     st.header("My Token Value Calculator")    
+#     st.write("""
+#              Enter the number of $PiPS tokens you own to estimate their current value in USD based on your selected values above:
              
-             &nbsp;
+#              &nbsp;
              
-             """)
+#              """)
     
-    col1, space, col2 = st.columns([1, 0.1, 1])
-    with col1:
-            number = st.number_input("Number of tokens", min_value=0, value=0, step=1)
-    with col2:
-            # st.write("The value of your tokens at the end of the selected:")
-            st.metric(
-            label="The value of your tokens at the end of the selected:",
-            value=f"${number * token_price_end:.2f}",  
-            delta=f"${number * token_price_end - number * token_price_start:.2f}", 
-            delta_color="normal"
-        )
+#     col1, space, col2 = st.columns([1, 0.1, 1])
+#     with col1:
+#             number = st.number_input("Number of tokens", min_value=0, value=0, step=1)
+#     with col2:
+#             # st.write("The value of your tokens at the end of the selected:")
+#             st.metric(
+#             label="The value of your tokens at the end of the selected:",
+#             value=f"${number * token_price_end:.2f}",  
+#             delta=f"${number * token_price_end - number * token_price_start:.2f}", 
+#             delta_color="normal"
+#         )
 
     with tab2:
         st.header("Token Emissions")
@@ -1355,33 +1360,31 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
         # streamlit_analytics.track(unsafe_password="test123")
         # streamlit_analytics.stop_tracking() 
     
-    block_style = """
-        <style>
-        .metric-block {
-            border: 0.7px solid #f5f5f5;  /* Off white border */
-            border-radius: 8px !important;  /* Rounded corners */
-            padding: 10px;
-            text-align: center;
-            margin: 10px;
-            background-color: #878787;  /* Off white background */
-        }
-        </style>
-        """
-    st.sidebar.markdown(block_style, unsafe_allow_html=True)
+    #TOKEN SIM HIDE MAIN SECTION 638 to 902 AND 1362 to 1389
+    # block_style = """
+    #     <style>
+    #     .metric-block {
+    #         border: 0.7px solid #f5f5f5;  /* Off white border */
+    #         border-radius: 8px !important;  /* Rounded corners */
+    #         padding: 10px;
+    #         text-align: center;
+    #         margin: 10px;
+    #         background-color: #878787;  /* Off white background */
+    #     }
+    #     </style>
+    #     """
+    # st.sidebar.markdown(block_style, unsafe_allow_html=True)
 
-    st.sidebar.markdown(f"""
-            <div class="metric-block">
-                <h3>Selected MCAP</h3>
-                <h2>${market_cap_million:}M</h3>
-            </div>
-            """, unsafe_allow_html=True)
+    # st.sidebar.markdown(f"""
+    #         <div class="metric-block">
+    #             <h3>Selected MCAP</h3>
+    #             <h2>${market_cap_million:}M</h3>
+    #         </div>
+    #         """, unsafe_allow_html=True)
     
-    st.sidebar.markdown(f"""
-            <div class="metric-block">
-                <h3>Selected Month Range</h3>
-                <h2>{selected_months:}</h3>
-            </div>
-            """, unsafe_allow_html=True)
-            
-    
-    
+    # st.sidebar.markdown(f"""
+    #         <div class="metric-block">
+    #             <h3>Selected Month Range</h3>
+    #             <h2>{selected_months:}</h3>
+    #         </div>
+    #         """, unsafe_allow_html=True)

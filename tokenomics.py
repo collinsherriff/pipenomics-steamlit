@@ -59,6 +59,9 @@ st.sidebar.markdown("""
 For more details on PiP World, explore our ecosystem [here](https://ecosystem.pip.world).
 """)
 
+sizeABC = [10, 10, 29, 14, 20, 5, 2, 10]
+labelsABC = ['Seed', 'Series A', 'Network Incentives', 'Team', 'Treasury', 'Advisors', 'Community Sale', 'Liquidity']
+
 def create_chart(data, title, ylabel):
     fig, ax = plt.subplots()
     ax.plot(data, marker='o')
@@ -77,9 +80,9 @@ if app_mode == "Token Supply & Distribution":
     
     col1, space, col2 = st.columns([1, 0.1, 1])
     with col1:
-            labels = ['Pre-seed', 'Seed', 'Advisors', 'Team', 'Liquidity', 'Ecosystem', 'Reserve']
-            sizes = [11, 10, 5, 12.5, 6.5, 40, 15]
-            colors = ['#6A0DAD', '#FF6347', '#3CB371', '#000000', '#FFD700', '#1E90FF', '#4682B4'] 
+            labels = labelsABC
+            sizes = sizeABC
+            colors = ['#6A0DAD', '#FF6347', '#3CB311', '#000000', '#FFD700', '#1E90FF', '#4682B4', '#3CB371']  
 
             fig = go.Figure(data=[go.Pie(labels=labels, 
                                         values=sizes, 
@@ -96,15 +99,14 @@ if app_mode == "Token Supply & Distribution":
     with col2:
         import pandas as pd
 
-        # Data for the DataFrame
+        labels = labelsABC
         data = {
-            "Category": ["Ecosystem Fund", "Team Allocation", "Reserve Allocation", "Advisors Allocation", 
-                        "Pre-seed Round", "Seed Round", "Liquidity Provision", "Total"],
-            "Allocation": ["40%", "12.50%", "15%", "5%", "11%", "10%", "6.50%", "100%"],
-            "Tokens": [200000000, 62500000, 75000000, 25000000, 55000000, 50000000, 32500000, 500000000],
-            "Price": ["-", "-", "-", "-", "$0.07", "$0.13", "-", "-"],
-            "USD Value": ["-", "-", "-", "-", "$3,850,000", "$6,500,000", "-", "$10,350,000"],
-            "Fully Diluted Valuation": ["-", "-", "-", "-", "$35,000,000", "$65,000,000", "-", "-"]
+            "Category": labels,
+            "Allocation %": [10, 10, 29, 14, 20, 5, 2, 10],
+            "Tokens": [int(allocation / 100 * 500000000) for allocation in [10, 10, 29, 14, 20, 5, 2, 10]],
+            "Price": ["$0.07", "$0.13", "-", "-", "-", "-", "-", "-"],
+            "USD Value": ["$3,500,000", "$6,500,000", "-", "-","-", "-", "-", "-"],
+            "Fully Diluted Valuation": ["$150,000,000", "$150,000,000", "-", "-", "-", "-", "-", "-"]
         }
 
         df = pd.DataFrame(data)
@@ -158,8 +160,8 @@ if app_mode == "Token Supply & Distribution":
                  
                  &nbsp;""")
                 data = {
-                    "Round": ["Pre-seed", "Seed"],
-                    "Dates": ["Q1 2025", "Q1 2025"],
+                    "Round": ["Seed", "Series A"],
+                    "Dates": ["Q2 2025", "Q3 2025"],
                     "Token Price": ["$0.07", "$0.13"],
                     "Discount": ["72%", "48%"],
                     "Fundraising Goal": ["$3.85M", "$6.50M"]
@@ -238,11 +240,11 @@ By implementing strategic lock-up periods and gradual token releases, we aim to 
 """)
         # st.divider()
         st.write("""
-To ensure the long-term alignment of interests and commitment to the project, the team and advisor tokens are subject to a 4-year vesting schedule with a 1-year cliff and 2-year vesting and a 9-month cliff respectively. This means that:
+To ensure the long-term alignment of interests and commitment to the project, the team and advisor tokens are subject to a 2-year vesting schedule with a 1-year cliff and 3-year vesting and a 18-month cliff respectively. This means that:
 
-- No team tokens will be released during the 12 months following the token generation event.
-- No advisor tokens will be released during the 9 months following the token generation event.
-- After the cliff, 25% of the team tokens will be released in year 1.
+- No team tokens will be released during the 18 months following the token generation event.
+- No advisor tokens will be released during the 12 months following the token generation event.
+- After the 1.5 year cliff, 33% of the team tokens will be released in year 1.
 - The remaining team/advisor tokens will be released in equal monthly instalments over the following years.
 
 &nbsp;
@@ -250,24 +252,24 @@ To ensure the long-term alignment of interests and commitment to the project, th
     st.write("""
 This vesting schedule ensures that the team and advisors have a strong incentive to drive the project's success over an extended period and provides transparency and predictability for the $PiPS token supply.
 
-In addition to the team and advisor vesting, the Ecosystem Fund tokens will be released gradually over a 4-year period following the vesting period of the TGE. This controlled release schedule ensures that the Ecosystem Fund can sustainably support the long-term growth and development of the PiP World platform without causing undue inflationary pressure on the $PiPS token price.
+In addition to the team and advisor vesting, the Network Incentives fund tokens will be released gradually over a 2-year period following the vesting period of the TGE. This controlled release schedule ensures that the fund can sustainably support the long-term growth and development of the PiP World platform without causing undue inflationary pressure on the $PiPS token price.
 
 """)
     with col2:
         st.write("""
                 
             &nbsp;
-                
-| Category  | % in Total Supply | Sale in $   | Cliff (m) | Lock (m) |
-|-----------|-------------------|-------------|-----------|----------|
-| Ecosystem | 40.00%            | $0          | 0         | 48       |
-| Team      | 12.50%            | $0          | 12        | 48       |
-| Reserve   | 15.00%            | $0          | 6         | 48       |
-| Advisors  | 5.00%             | $0          | 9         | 24       |
-| Pre-seed  | 11.00%            | $3,850,000  | 3         | 18       |
-| Seed      | 10.00%            | $6,500,000  | 3         | 18       |
-| Liquidity | 6.50%             | $0          | 0         | 0        |
-| **Total** | **100.00%**       | **$10,350,000** | -     | -        |
+| Category          | % in Total Supply | Sale in $   | Cliff (m) | Lock (m) |
+|-------------------|-------------------|-------------|-----------|----------|
+| Network Incentives| 29.00%            | $0          | 0         | 24       |
+| Team              | 14.00%            | $0          | 18        | 36       |
+| Treasury          | 20.00%            | $0          | 0         | 48       |
+| Advisors          | 5.00%             | $0          | 12        | 24       |
+| Seed              | 10.00%            | $3,500,000  | 12        | 18       |
+| Series A          | 10.00%            | $6,500,000  | 12        | 18       |
+| Community Sale    | 2.00%             | $0          | 3         | 18       |
+| Liquidity         | 10.00%            | $0          | 0         | 0        |
+| **Total**         | **100.00%**       | **$10,350,000** | -     | -        |
 
             """)
         
@@ -275,20 +277,21 @@ In addition to the team and advisor vesting, the Ecosystem Fund tokens will be r
     
     st.header("Token Release and Vesting Schedule")
     
-    st.write("Our token release schedule, spanning 48 months, is meticulously designed to support the ecosystems's long-term sustainability and health. The graph illustrates the phased release of tokens in categories like Angel, Seed, Public, and more, underlining our commitment to gradual market introduction. This strategy, integral to our vesting approach, ensures stakeholders are aligned with PiP World's.")
+    st.write("Our token release schedule, spanning 48 months, is meticulously designed to support the ecosystems's long-term sustainability and health. The graph illustrates the phased release of tokens in categories like Seed, Series A, Treasury, and more, underlining our commitment to gradual market introduction. This strategy, integral to our vesting approach, ensures stakeholders are aligned with PiP World's.")
 
     col1, space, col2 = st.columns([1,0.1,1])
     with col1:
 
         def calculate_token_release(max_supply=500e6, months=49):
             allocations = {
-                'Pre-seed': 11,
                 'Seed': 10,
-                'Ecosystem': 40,
-                'Team': 12.5,
-                'Reserve': 15,
+                'Series A': 10,
+                'Network Incentives': 29,
+                'Team': 14,
+                'Community Sale': 2,
                 'Advisors': 5,
-                'Liquidity': 6.5,
+                'Liquidity': 10,
+                'Treasury': 20,
             }
             
             df = pd.DataFrame(index=range(1, months+1))
@@ -305,12 +308,13 @@ In addition to the team and advisor vesting, the Ecosystem Fund tokens will be r
                 df.loc[start_month:end_month, category] += monthly_amount
 
             # Schedules
-            linear_release(4, 18, 11, 'Pre-seed')  # Start at month 4, end at month 18
-            linear_release(4, 18, 10, 'Seed')  # Start at month 4, end at month 18
-            linear_release(1, 48, 40, 'Ecosystem')  # Start immediately, end at month 48
-            linear_release(13, 48, 12.5, 'Team')  # Start at month 13, end at month 48
-            linear_release(7, 48, 15, 'Reserve')  # Start at month 7, end at month 48
-            linear_release(10, 24, 5, 'Advisors')  # Start at month 10, end at month 24
+            linear_release(13, 18, 10, 'Seed')  # Start at month 13, end at month 18
+            linear_release(13, 18, 10, 'Series A')  # Start at month 13, end at month 18
+            linear_release(1, 24, 29, 'Network Incentives')  # Start immediately, end at month 24
+            linear_release(19, 36, 14, 'Team')  # Start at month 19, end at month 36
+            linear_release(13, 24, 5, 'Advisors')  # Start at month 13, end at month 24
+            linear_release(4, 18, 2, 'Community Sale')  # Start at month 10, end at month 24
+            linear_release(1, 48, 20, 'Treasury')  # Start at month 1, end at month 48
             
             return df.cumsum()
 
@@ -337,12 +341,12 @@ In addition to the team and advisor vesting, the Ecosystem Fund tokens will be r
     with col2:
         # Updated data with the newest allocation details
         data = {
-            "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Pre-seed", "Seed"],
-            "Token Amount": [200000000, 62500000, 75000000, 25000000, 55000000, 50000000],
-            "Monthly Release": [0.020833333, 0.027777778, 0.023809524, 0.066666667, 0.06, 0.06],  # Converted percentages to decimals
-            "Initial Release": [0.0, 0.0, 0.0, 0.0, 0.1, 0.1],  # Converted percentages to decimals
-            "Start Month": [1, 13, 7, 10, 4, 4],
-            "End Month": [48, 48, 48, 24, 18, 18]
+            "Category": ["Seed", "Series A", "Network Incentives", "Team", "Treasury", "Advisors", "Community Sale"],
+            "Token Amount": [50000000, 50000000, 145000000, 70000000, 100000000, 25000000, 10000000],
+            "Monthly Release": [0.15, 0.15, 0.0417, 0.0556, 0.0208, 0.0833, 0.0],  # Converted percentages to decimals
+            "Initial Release": [0.1, 0.1, 0.0, 0.0, 0.0, 0.0, 1],  # Converted percentages to decimals
+            "Start Month": [13, 13, 1, 19, 1, 13, 4],
+            "End Month": [18, 18, 24, 36, 48, 24, 18]
         }
 
         df_data = pd.DataFrame(data)
@@ -383,11 +387,11 @@ In addition to the team and advisor vesting, the Ecosystem Fund tokens will be r
     st.divider()
     st.header("Private Round Vesting")
     st.write("""
-For the initial investment phases, including Pre-seed and Seed Rounds, we have crafted a vesting schedule that balances the necessity for early-stage backing with the imperative of sustained engagement. These rounds are critical as they involve stakeholders who contribute not only capital but also strategic insights and promotional support, which are vital during the foundational stages of our project.
+For the initial investment phases, including Seed and Series A Rounds, we have crafted a vesting schedule that balances the necessity for early-stage backing with the imperative of sustained engagement. These rounds are critical as they involve stakeholders who contribute not only capital but also strategic insights and promotional support, which are vital during the foundational stages of our project.
 &nbsp;
 
-- **Pre-seed Round**: A 3-month cliff followed by an 18-month lock to encourage and secure long-term commitment from our earliest supporters.
-- **Seed Round**: A similar structure, with a 3-month cliff and an 18-month lock, ensures these pivotal investors are aligned with our long-term vision while preventing early token liquidation.
+- **Seed Round**: A 12-month cliff followed by an 18-month lock to encourage and secure long-term commitment from our earliest supporters.
+- **Series A Round**: The same structure, with a 12-month cliff and an 18-month lock, ensures these pivotal investors are aligned with our long-term vision while preventing early token liquidation.
 """)
 
 elif app_mode == "Monetary & Fiscal Policies":
@@ -444,7 +448,7 @@ NFTs within PiP World not only serve as digital art assets but also play a cruci
     """)
         st.header("🚜 Ecosystem Growth and Social Farming Initiatives")
         st.write("""
-The Short-term Ecosystem Growth Fund (EGF) explores social farming as a method to engage the community and drive ecosystem growth, potentially incorporating rewards that align with deflationary objectives.
+The ecosystem growth fund (netrowk incentives) explores social farming as a method to engage the community and drive ecosystem growth, potentially incorporating rewards that align with deflationary objectives.
     """)
     st.divider()
     st.header("Supply Shocks and Pricing Dynamics")
@@ -636,7 +640,7 @@ elif app_mode == "Token Simulation 💰":
         st.write("## $PiPS Token Price Coming Soon")
         st.write("Here you will be able to simulate the token price based on the market cap and circulating supply.")
         
-        #TOKEN SIM HIDE MAIN SECTION 638 to 902 AND 1362 to 
+ #TOKEN SIM HIDE MAIN SECTION 643 to 907 AND 1447 to 1474
 #     with tab1:
 #         st.write("## $PiPS Token Price")
         
@@ -905,9 +909,9 @@ elif app_mode == "Token Simulation 💰":
     with tab2:
         st.header("Token Emissions")
         st.write("""
-The graph below outlines the phased distribution strategy for $PiPS tokens, aligning with the ecosystem's long-term vision for growth and sustainability. Across a span of 48 months, this visualization demonstrates the deliberate and strategic release of tokens into the ecosystem, highlighting categories such as Pre-seed, Seed, Ecosystem, Team, Reserve, Advisors, and Liquidity.
+The graph below outlines the phased distribution strategy for $PiPS tokens, aligning with the ecosystem's long-term vision for growth and sustainability. Across a span of 48 months, this visualization demonstrates the deliberate and strategic release of tokens into the ecosystem, highlighting categories such as Seed, Series A, Treasury, Team, Reserve, Advisors, Network Incentives, and Liquidity.
 
-Each line represents a different category emission, not showcasing the initial lump-sum releases (such as the complete immediate release for Liquidity and initial releases for Pre-seed and Seed rounds) followed by a linear release model tailored to each category's specific role within the PiP ecosystem. This ensures a balanced injection of tokens, facilitating ecosystem development, rewarding early backers, and fostering a vibrant community engagement while maintaining market stability.
+Each line represents a different category emission, not showcasing the initial lump-sum releases (such as the complete immediate release for Liquidity and initial releases for Seed and Series A rounds) followed by a linear release model tailored to each category's specific role within the PiP ecosystem. This ensures a balanced injection of tokens, facilitating ecosystem development, rewarding early backers, and fostering a vibrant community engagement while maintaining market stability.
 
 This release strategy underscores PiP's commitment to transparency and a steady value proposition for token holders. By moderating the supply influx and aligning token releases with ecosystem milestones and growth phases, PiP World ensures a sustainable economic model that rewards long-term participants and supports the overall health and expansion of the ecosystem.         
 """)
@@ -927,12 +931,12 @@ This release strategy underscores PiP's commitment to transparency and a steady 
         ##NEW
         
         data = {
-            "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Pre-seed", "Seed", "Liquidity"],
-            "Token Amount": [200000000, 62500000, 75000000, 25000000, 55000000, 50000000, 50000000],
-            "Monthly Release": [0.020833333, 0.027777778, 0.023809524, 0.066666667, 0.06, 0.06, 0.0],  # Converted percentages to decimals
-            "Initial Release": [0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 1.0],  # Converted percentages to decimals
-            "Start Month": [1, 13, 7, 10, 4, 4, 0],
-            "End Month": [48, 48, 48, 24, 18, 18, 0]
+            "Category": ["Seed", "Series A", "Network Incentives", "Team", "Treasury", "Advisors", "Community Sale"],
+            "Token Amount": [50000000, 50000000, 145000000, 70000000, 100000000, 25000000, 10000000],
+            "Monthly Release": [0.15, 0.15, 0.0417, 0.0556, 0.0208, 0.0833, 0.0],  # Converted percentages to decimals
+            "Initial Release": [0.1, 0.1, 0.0, 0.0, 0.0, 0.0, 1],  # Converted percentages to decimals
+            "Start Month": [13, 13, 1, 19, 1, 13, 4],
+            "End Month": [18, 18, 24, 36, 48, 24, 18]
         }
 
         df_data = pd.DataFrame(data)
@@ -995,12 +999,12 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
 
             
             data = {
-            "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Pre-seed", "Seed", "Liquidity"],
-            "Token Amount": [200000000, 62500000, 75000000, 25000000, 55000000, 50000000, 50000000],
-            "Monthly Release": [0.020833333, 0.027777778, 0.023809524, 0.066666667, 0.06, 0.06, 0.0],  # Converted percentages to decimals
-            "Initial Release": [0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 1.0],  # Converted percentages to decimals
-            "Start Month": [1, 13, 7, 10, 4, 4, 0],
-            "End Month": [48, 48, 48, 24, 18, 18, 0]
+            "Category": ["Seed", "Series A", "Network Incentives", "Team", "Treasury", "Advisors", "Community Sale"],
+            "Token Amount": [50000000, 50000000, 145000000, 70000000, 100000000, 25000000, 10000000],
+            "Monthly Release": [0.15, 0.15, 0.0417, 0.0556, 0.0208, 0.0833, 0.0],  # Converted percentages to decimals
+            "Initial Release": [0.1, 0.1, 0.0, 0.0, 0.0, 0.0, 1],  # Converted percentages to decimals
+            "Start Month": [13, 13, 1, 19, 1, 13, 4],
+            "End Month": [18, 18, 24, 36, 48, 24, 18]
             }
 
             df_data = pd.DataFrame(data)
@@ -1067,13 +1071,14 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
             def calculate_token_release(max_supply=500e6, months=49):
                 # Updated allocations with the new percentages and categories
                 allocations = {
-                    'Pre-seed': 11,
                     'Seed': 10,
-                    'Ecosystem': 40,
-                    'Team': 12.5,
-                    'Reserve': 15,
+                    'Series A': 10,
+                    'Network Incentives': 29,
+                    'Team': 14,
+                    'Community Sale': 2,
                     'Advisors': 5,
-                    'Liquidity': 6.5,
+                    'Liquidity': 10,
+                    'Treasury': 20,
                 }
 
                 # Create a DataFrame to hold the release data
@@ -1092,12 +1097,13 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
                     df.loc[start_month:end_month, category] += monthly_amount
 
                 # Setup linear releases according to the updated schedule
-                linear_release(4, 18, 11, 'Pre-seed')  # Pre-seed linear release from month 4 to 18
-                linear_release(4, 18, 10, 'Seed')  # Seed linear release from month 4 to 18
-                linear_release(1, 48, 40, 'Ecosystem')  # Ecosystem linear release from month 1 to 48
-                linear_release(13, 48, 12.5, 'Team')  # Team linear release from month 13 to 48
-                linear_release(7, 48, 15, 'Reserve')  # Reserve linear release from month 7 to 48
-                linear_release(10, 24, 5, 'Advisors')  # Advisors linear release from month 10 to 24
+                linear_release(13, 18, 10, 'Seed')  # Start at month 13, end at month 18
+                linear_release(13, 18, 10, 'Series A')  # Start at month 13, end at month 18
+                linear_release(1, 24, 29, 'Network Incentives')  # Start immediately, end at month 24
+                linear_release(19, 36, 14, 'Team')  # Start at month 19, end at month 36
+                linear_release(13, 24, 5, 'Advisors')  # Start at month 13, end at month 24
+                linear_release(4, 18, 2, 'Community Sale')  # Start at month 10, end at month 24
+                linear_release(1, 48, 20, 'Treasury')  # Start at month 1, end at month 48
 
                 return df.cumsum()
 
@@ -1175,7 +1181,7 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
             # rounds = ['KOL Round', 'Angel Round', 'Seed Round', 'Public Round']
             # amounts = [350000, 2800000, 9750000, 12500000]
             # sizes = [20, 40, 60, 80]  
-            rounds = ['Pre-seed Round', 'Seed Round']
+            rounds = ['Seed Round', 'Series A Round']
             amounts = [3850000, 6500000]  # Updated funding amounts based on recent data
             sizes = [40, 60]  # Assuming sizes relate to the significance or capacity of each round
 
@@ -1199,7 +1205,7 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
             # }   
             
             table1 = {
-                "Round": ["Pre-seed Round", "Seed Round"],
+                "Round": ['Seed Round', 'Series A Round'],
                 "Amount Raised": ["$3,850,000", "$6,500,000"]
             }
 
@@ -1219,7 +1225,7 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
             # }
             
             data = {
-                "Round": ["Pre-seed Round", "Seed Round"],
+                "Round": ['Seed Round', 'Series A Round'],
                 "Price ($)": [0.07, 0.13]
             }
 
@@ -1245,73 +1251,151 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
         
         
     with tab4:
-        #OLD NOV FOR PIES
+        #OLD SINCE JAN 22 - for pie charts
         # table_data = {
-        #     "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Angel", "Seed", "KOL", "Public", "Liquidity", "Total"],
-        #     "Allocation% in Total Supply": ["28.00%", "10.00%", "15.00%", "3.00%", "8.00%", "15.00%", "1.00%", "10.00%", "10.00%", "100.00%"],
-        #     "Price": ["-", "-", "-", "-", "$0.07", "$0.13", "$0.07", "$0.25", "-", "-"],
-        #     "Token Amount": ["140,000,000", "50,000,000", "75,000,000", "15,000,000", "40,000,000", "75,000,000", "5,000,000", "50,000,000", "50,000,000", "500,000,000"],
-        #     "Token Price at Public Round": ["18,750,000", "12,500,000", "23,750,000", "3,750,000", "10,000,000", "18,750,000", "1,250,000", "12,500,000", "12,500,000", "-"],
-        #     "Sale in $": ["-", "-", "-", "-", "$2,800,000", "$9,750,000", "$350,000", "$12,500,000", "-", "$25,400,000"],
-        #     "Cliff (m)": ["0", "12", "6", "9", "12", "12", "3", "0", "0", "-"],
-        #     "Lock (m)": ["48", "48", "48", "48", "36", "36", "12", "12", "0", "-"],
-        #     "Unlock on TGE %": ["0.00%", "0.00%", "0.00%", "0.00%", "5.00%", "7.00%", "20.00%", "20.00%", "100.00%", "13.65%"],
-        #     "Tokens Unlock on TGE": ["0", "0", "0", "0", "2,000,000", "5,250,000", "1,000,000", "10,000,000", "50,000,000", "68,250,000"],
-        #     "Unlocked in $": ["$0", "$0", "$0", "$0", "$500,000", "$1,312,500", "$250,000", "$2,500,000", "$12,500,000", "$17,062,500"],
-        #     "Unlock % pm": ["2.08%", "2.78%", "2.38%", "2.56%", "3.96%", "3.44%", "8.89%", "6.67%", "0.00%", "2.88%"],
-        #     "Token Unlock pm": ["2,916,667", "1,388,889", "1,785,714", "384,615", "1,583,333", "2,583,333", "444,444", "3,333,333", "0", "14,420,330"],
-        #     "Unlock pm $TGE": ["$729,167", "$347,222", "$446,429", "$96,154", "$395,833", "$645,833", "$111,111", "$833,333", "$0", "$3,605,082"]
+        #     "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Pre-seed", "Seed", "Liquidity", "Total"],
+        #     "Allocation% in Total Supply": ["40.00%", "12.50%", "15.00%", "5.00%", "11.00%", "10.00%", "6.50%", "100.00%"],
+        #     "Price": ["-", "-", "-", "-", "$0.07", "$0.13", "-", "-"],
+        #     "Token Amount": ["200,000,000", "62,500,000", "75,000,000", "25,000,000", "55,000,000", "50,000,000", "32,500,000", "500,000,000"],
+        #     "Token Price at Public Round": ["$50,000,000", "$15,625,000", "$18,750,000", "$6,250,000", "$13,750,000", "$12,500,000", "$8,125,000", "-"],
+        #     "Sale in $": ["-", "-", "-", "-", "$3,850,000", "$6,500,000", "-", "$10,350,000"],
+        #     "Cliff (m)": ["0", "12", "6", "9", "3", "3", "0", "-"],
+        #     "Lock (m)": ["48", "48", "48", "24", "18", "18", "0", "-"],
+        #     "Unlock on TGE %": ["0.00%", "0.00%", "0.00%", "0.00%", "10.00%", "10.00%", "100.00%", "8.60%"],
+        #     "Tokens Unlock on TGE": ["0", "0", "0", "0", "5,500,000", "5,000,000", "32,500,000", "43,000,000"],
+        #     "Unlocked in $": ["$0", "$0", "$0", "$0", "$1,375,000", "$1,250,000", "$8,125,000", "$10,750,000"],
+        #     "Unlock % pm": ["2.08%", "2.78%", "2.38%", "6.67%", "6.00%", "6.00%", "0.00%", "3.13%"],
+        #     "Token Unlock pm": ["4,166,667", "1,736,111", "1,785,714", "1,666,667", "3,300,000", "3,000,000", "0", "15,655,159"],
+        #     "Unlock pm $TGE": ["$1,041,667", "$434,028", "$446,429", "$416,667", "$825,000", "$750,000", "$0", "$3,913,790"]
         # }
+        
         table_data = {
-            "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Pre-seed", "Seed", "Liquidity", "Total"],
-            "Allocation% in Total Supply": ["40.00%", "12.50%", "15.00%", "5.00%", "11.00%", "10.00%", "6.50%", "100.00%"],
-            "Price": ["-", "-", "-", "-", "$0.07", "$0.13", "-", "-"],
-            "Token Amount": ["200,000,000", "62,500,000", "75,000,000", "25,000,000", "55,000,000", "50,000,000", "32,500,000", "500,000,000"],
-            "Token Price at Public Round": ["$50,000,000", "$15,625,000", "$18,750,000", "$6,250,000", "$13,750,000", "$12,500,000", "$8,125,000", "-"],
-            "Sale in $": ["-", "-", "-", "-", "$3,850,000", "$6,500,000", "-", "$10,350,000"],
-            "Cliff (m)": ["0", "12", "6", "9", "3", "3", "0", "-"],
-            "Lock (m)": ["48", "48", "48", "24", "18", "18", "0", "-"],
-            "Unlock on TGE %": ["0.00%", "0.00%", "0.00%", "0.00%", "10.00%", "10.00%", "100.00%", "8.60%"],
-            "Tokens Unlock on TGE": ["0", "0", "0", "0", "5,500,000", "5,000,000", "32,500,000", "43,000,000"],
-            "Unlocked in $": ["$0", "$0", "$0", "$0", "$1,375,000", "$1,250,000", "$8,125,000", "$10,750,000"],
-            "Unlock % pm": ["2.08%", "2.78%", "2.38%", "6.67%", "6.00%", "6.00%", "0.00%", "3.13%"],
-            "Token Unlock pm": ["4,166,667", "1,736,111", "1,785,714", "1,666,667", "3,300,000", "3,000,000", "0", "15,655,159"],
-            "Unlock pm $TGE": ["$1,041,667", "$434,028", "$446,429", "$416,667", "$825,000", "$750,000", "$0", "$3,913,790"]
+            "Category": [
+                "Network Incentives", "Team", "Treasury", "Advisors", "Seed", 
+                "Series A", "Community Sale", "Liquidity", "Total"
+            ],
+            "Allocation% in Total Supply": [
+                "29.00%", "14.00%", "20.00%", "5.00%", "10.00%", 
+                "10.00%", "2.00%", "10.00%", "100.00%"
+            ],
+            "Price": [
+                "-", "-", "-", "-", "$0.07", 
+                "$0.13", "-", "-", "-"
+            ],
+            "Token Amount": [
+                "145,000,000", "70,000,000", "100,000,000", "25,000,000", "50,000,000", 
+                "50,000,000", "10,000,000", "50,000,000", "500,000,000"
+            ],
+            "Token Price at Public Round": [
+                "-", "-", "-", "-", "$3,500,000", 
+                "$6,500,000", "-", "-", "$10,000,000"
+            ],
+            "Sale in $": [
+                "-", "-", "-", "-", "$3,500,000", 
+                "$6,500,000", "-", "$0", "$10,000,000"
+            ],
+            "Cliff (m)": [
+                "0", "18", "0", "12", "12", 
+                "12", "3", "0", "-"
+            ],
+            "Lock (m)": [
+                "24", "36", "48", "24", "18", 
+                "18", "18", "0", "-"
+            ],
+            "Unlock on TGE %": [
+                "0.00%", "0.00%", "0.00%", "0.00%", "10.00%", 
+                "10.00%", "100.00%", "100.00%", "8.60%"
+            ],
+            "Tokens Unlock on TGE": [
+                "0", "0", "0", "0", "5,000,000", 
+                "5,000,000", "10,000,000", "50,000,000", "70,000,000"
+            ],
+            "Unlocked in $": [
+                "$0", "$0", "$0", "$0", "$1,250,000", 
+                "$1,250,000", "$0", "$0", "$7,274,306"
+            ],
+            "Unlock % pm": [
+                "4.17%", "5.56%", "2.08%", "8.33%", "15.00%", 
+                "15.00%", "0.00%", "0.00%", "5.82%"
+            ],
+            "Token Unlock pm": [
+                "6,041,667", "3,888,889", "2,083,333", "2,083,333", "7,500,000", 
+                "7,500,000", "0", "0", "29,097,222"
+            ],
+            "Unlock pm $TGE": [
+                "$1,510,417", "$972,222", "$520,833", "$520,833", "$1,875,000", 
+                "$1,875,000", "$0", "$0", "$7,274,306"
+            ]
         }
 
-        
-
-        # OLD NOV
+        #Old for table as of Jan 22
         # table_data2 = {
-        #     "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Angel", "Seed", "KOL", "Public", "Liquidity", "Total"],
-        #     "Allocation% in Total Supply": ["28.00%", "10.00%", "15.00%", "3.00%", "8.00%", "15.00%", "1.00%", "10.00%", "10.00%", "100.00%"],
-        #     "Price": ["-", "-", "-", "-", "$0.07", "$0.13", "$0.07", "$0.25", "-", "-"],
-        #     "Token Amount": ["140,000,000", "50,000,000", "75,000,000", "15,000,000", "40,000,000", "75,000,000", "5,000,000", "50,000,000", "50,000,000", "500,000,000"],
-        #     "Token Price at Public Round": ["35,000,000", "12,500,000", "18,750,000", "3,750,000", "10,000,000", "18,750,000", "1,250,000", "12,500,000", "12,500,000", "-"],
-        #     "Sale in $": ["-", "-", "-", "-", "$2,800,000", "$9,750,000", "$350,000", "$12,500,000", "-", "$25,400,000"],
-        #     "Cliff (m)": ["0", "12", "6", "9", "12", "12", "3", "0", "0", "-"],
-        #     "Lock (m)": ["48", "48", "48", "48", "36", "36", "12", "12", "0", "-"],
-        #     "Circulating supply % @ TGE pm": ["0.00%", "0.00%", "0.00%", "0.00%", "0.40%", "1.05%", "0.20%", "2.00%", "-", "3.65%"],
-            
-        #     "Tokens Unlock on TGE": ["0", "0", "0", "0", "2,000,000", "5,250,000", "1,000,000", "10,000,000", "50,000,000", "68,250,000"],
-        #     "Unlocked in $": ["$0", "$0", "$0", "$0", "$500,000", "$1,312,500", "$250,000", "$2,500,000", "$12,500,000", "$17,062,500"],
-        #     "Unlock % pm": ["2.08%", "2.78%", "2.38%", "2.56%", "3.96%", "3.44%", "8.89%", "6.67%", "0.00%", "2.88%"],
-        #     "Unlock pm $TGE": ["-", "-", "-", "-", "$395,833", "$645,833", "$111,111", "$833,333", "$0", "$1,986,110"]
+        #     "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Pre-seed", "Seed", "Liquidity"],
+        #     "Allocation% in Total Supply": ["40.00%", "12.50%", "15.00%", "5.00%", "11.00%", "10.00%", "6.50%"],
+        #     "Price": ["-", "-", "-", "-", "$0.07", "$0.13", "-"],
+        #     "Token Amount": ["200,000,000", "62,500,000", "75,000,000", "25,000,000", "55,000,000", "50,000,000", "32,500,000"],
+        #     "Token Price at Public Round": ["$50,000,000", "$15,625,000", "$18,750,000", "$6,250,000", "$13,750,000", "$12,500,000", "$8,125,000"],
+        #     "Sale in $": ["-", "-", "-", "-", "$3,850,000", "$6,500,000", "-"],
+        #     "Cliff (m)": ["0", "12", "6", "9", "3", "3", "0"],
+        #     "Lock (m)": ["48", "48", "48", "24", "18", "18", "0"],
+        #     "Tokens Unlock on TGE": ["0", "0", "0", "0", "5,500,000", "5,000,000", "32,500,000"],
+        #     "Unlocked in $": ["$0", "$0", "$0", "$0", "$1,375,000", "$1,250,000", "$8,125,000"],
+        #     "Unlock % pm": ["2.08%", "2.78%", "2.38%", "6.67%", "6.00%", "6.00%", "0.00%"],
+        #     "Unlock pm $TGE": ["$1,041,667", "$434,028", "$446,429", "$416,667", "$825,000", "$750,000", "$0"]
         # }
-        
         table_data2 = {
-            "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Pre-seed", "Seed", "Liquidity"],
-            "Allocation% in Total Supply": ["40.00%", "12.50%", "15.00%", "5.00%", "11.00%", "10.00%", "6.50%"],
-            "Price": ["-", "-", "-", "-", "$0.07", "$0.13", "-"],
-            "Token Amount": ["200,000,000", "62,500,000", "75,000,000", "25,000,000", "55,000,000", "50,000,000", "32,500,000"],
-            "Token Price at Public Round": ["$50,000,000", "$15,625,000", "$18,750,000", "$6,250,000", "$13,750,000", "$12,500,000", "$8,125,000"],
-            "Sale in $": ["-", "-", "-", "-", "$3,850,000", "$6,500,000", "-"],
-            "Cliff (m)": ["0", "12", "6", "9", "3", "3", "0"],
-            "Lock (m)": ["48", "48", "48", "24", "18", "18", "0"],
-            "Tokens Unlock on TGE": ["0", "0", "0", "0", "5,500,000", "5,000,000", "32,500,000"],
-            "Unlocked in $": ["$0", "$0", "$0", "$0", "$1,375,000", "$1,250,000", "$8,125,000"],
-            "Unlock % pm": ["2.08%", "2.78%", "2.38%", "6.67%", "6.00%", "6.00%", "0.00%"],
-            "Unlock pm $TGE": ["$1,041,667", "$434,028", "$446,429", "$416,667", "$825,000", "$750,000", "$0"]
+            "Category": [
+                "Network Incentives", "Team", "Treasury", "Advisors", "Seed", 
+                "Series A", "Community Sale", "Liquidity", "Total"
+            ],
+            "Allocation% in Total Supply": [
+                "29.00%", "14.00%", "20.00%", "5.00%", "10.00%", 
+                "10.00%", "2.00%", "10.00%", "100.00%"
+            ],
+            "Price": [
+                "-", "-", "-", "-", "$0.07", 
+                "$0.13", "-", "-", "-"
+            ],
+            "Token Amount": [
+                "145,000,000", "70,000,000", "100,000,000", "25,000,000", "50,000,000", 
+                "50,000,000", "10,000,000", "50,000,000", "500,000,000"
+            ],
+            "Token Price at Public Round": [
+                "-", "-", "-", "-", "$3,500,000", 
+                "$6,500,000", "-", "-", "$10,000,000"
+            ],
+            "Sale in $": [
+                "-", "-", "-", "-", "$3,500,000", 
+                "$6,500,000", "-", "$0", "$10,000,000"
+            ],
+            "Cliff (m)": [
+                "0", "18", "0", "12", "12", 
+                "12", "3", "0", "-"
+            ],
+            "Lock (m)": [
+                "24", "36", "48", "24", "18", 
+                "18", "18", "0", "-"
+            ],
+            "Tokens Unlock on TGE": [
+                "0", "0", "0", "0", "5,000,000", 
+                "5,000,000", "10,000,000", "50,000,000", "70,000,000"
+            ],
+            "Unlocked in $": [
+                "$0", "$0", "$0", "$0", "$1,250,000", 
+                "$1,250,000", "$0", "$0", "$7,274,306"
+            ],
+            "Unlock % pm": [
+                "4.17%", "5.56%", "2.08%", "8.33%", "15.00%", 
+                "15.00%", "0.00%", "0.00%", "5.82%"
+            ],
+            "Token Unlock pm": [
+                "6,041,667", "3,888,889", "2,083,333", "2,083,333", "7,500,000", 
+                "7,500,000", "0", "0", "29,097,222"
+            ],
+            "Unlock pm $TGE": [
+                "$1,510,417", "$972,222", "$520,833", "$520,833", "$1,875,000", 
+                "$1,875,000", "$0", "$0", "$7,274,306"
+            ]
         }
 
         
@@ -1321,7 +1405,7 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
         colors = ['#9747FF','#0038FF','#48FF63','#000000','#9747FF','#0038FF','#000000', '#9747FF', '#48FF63']
         
         st.header('Token Allocation Table')
-        st.dataframe(df, height=280)
+        st.dataframe(df, height=350)
         
         col1, space, col2 = st.columns([1,0.1,1])
 
@@ -1360,7 +1444,7 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
         # streamlit_analytics.track(unsafe_password="test123")
         # streamlit_analytics.stop_tracking() 
     
-    #TOKEN SIM HIDE MAIN SECTION 638 to 902 AND 1362 to 1389
+    #TOKEN SIM HIDE MAIN SECTION 643 to 907 AND 1447 to 1474
     # block_style = """
     #     <style>
     #     .metric-block {

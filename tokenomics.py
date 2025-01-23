@@ -8,17 +8,16 @@ import plotly.express as px
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
+from openai import OpenAI
 
 st.set_page_config(layout="wide", page_title="$PiPS Tokenomics", page_icon="💰")
 
-custom_css = """
-<style>
-body {
-    cursor: url('http://www.rw-designer.com/cursor-extern.php?id=151729'), pointer;
-</style>
-"""
-# this is windows old CURSOR instead of PiP: http://www.rw-designer.com/cursor-extern.php?id=151729
-# pip curser data: data:image/x-icon;base64,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
+# custom_css = """
+# <style>
+# body {
+#     cursor: url('http://www.rw-designer.com/cursor-extern.php?id=151729'), pointer;
+# </style>
+# """
 
 st.markdown("""
     <style>
@@ -26,38 +25,88 @@ st.markdown("""
         @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
         body {
-            font-family: 'Space Mono', monospace;
+            font-family: 'Space Mono', monospace !important;
         }
 
         h1, h2, h3, h4, h5, h6 {
-            font-family: 'VT323', monospace;
-            font-weight: 400;
-            color: blue;
+            font-family: 'VT323', monospace !important;
+            font-weight: 400 !important;
+            color: black !important;
             
         }
     </style>
 """, unsafe_allow_html=True)
 
 
-st.sidebar.image("logopixel.png", use_column_width=True)
+st.sidebar.image("logopixel.png", use_container_width=True)
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 st.sidebar.title("Navigation")
 app_mode = st.sidebar.radio("Tokenomics section",
-                                ["Token Supply & Distribution", "Vesting & Release Schedule", "Monetary & Fiscal Policies", "Staking & Liquidity", "Token Simulation 💰"])
+                                ["Token Supply & Distribution", "Vesting & Release Schedule", "Monetary & Fiscal Policies", "Staking & Liquidity"])
 
 
 if "app_mode" not in st.session_state:
     st.session_state.app_mode = "Token Supply & Distribution"
 
-# Sidebar radio for app mode selection
 st.session_state.app_mode = app_mode
 
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 
+
+# OpenAI starts
+with st.sidebar:
+    st.title("PiP Tokenomics AI")
+    openai_api_key = st.text_input("Add Your OpenAI API Key", key="chatbot_api_key", type="password", placeholder="Not saved or stored by us")
+    "[Get an OpenAI API key](https://platform.openai.com/account/api-keys)"
+
+#Start of OpenAI    
+    @st.dialog("PiP World Tokenomics AI Expert")
+    def tokenomics_chat_modal():
+        if "messages" not in st.session_state:
+
+            st.session_state["messages"] = [
+                {"role": "system", "content": """
+                Give short answers and memorise this: PiiP World is a gamified financial ecosystem that combines blockchain technology and AI to help users develop financial literacy, learn trading strategies, and interact with dynamic AI agents in a risk-free environment, offering real-world opportunities for top performers, the Tokenomics is:
+                The PiP World tokenomics allocates 29% of the total supply to Network Incentives, with a 24-month lock and no cliff period. 14% is allocated to the Team, with an 18-month cliff and a 36-month lock. 20% is allocated to the Treasury, with a 48-month lock and no cliff period. 5% is allocated to Advisors, with a 12-month cliff and a 24-month lock. 10% is allocated to Seed, with a 12-month cliff and an 18-month lock. 10% is allocated to Series A, with a 12-month cliff and an 18-month lock. 2% is allocated to the Community Sale, which has a 3-month cliff and an 18-month lock. 10% is allocated to Liquidity, with no cliff and no lock period. The total allocation across all categories sums up to 100% of the supply.
+                """}
+            ]
+
+        for msg in st.session_state.messages:
+            if msg["role"] != "system":  # Skip the system message when rendering the chat
+                st.chat_message(msg["role"]).write(msg["content"])
+
+        if prompt := st.chat_input(placeholder="Ask PiP World Tokenomics AI Expert"):
+            if not openai_api_key:
+                st.info("Please add your OpenAI API key to continue.")
+                st.stop()
+
+            client = OpenAI(api_key=openai_api_key)
+            
+            st.session_state.messages.append({"role": "user", "content": prompt})
+            st.chat_message("user").write(prompt)
+            
+            response = client.chat.completions.create(
+                model="gpt-3.5-turbo", messages=st.session_state.messages
+            )
+            
+            msg = response.choices[0].message.content
+            st.session_state.messages.append({"role": "assistant", "content": msg})
+            st.chat_message("assistant").write(msg)
+            
+    if st.button("Open PiP World Tokenomics AI Expert", type="primary"):
+            tokenomics_chat_modal()
+#End of OpenAI
+
+# OpenAI end
+st.sidebar.markdown("<hr>", unsafe_allow_html=True)
+
 st.sidebar.markdown("""
 ## Links
-For more details on PiP World, explore our ecosystem [here](https://ecosystem.pip.world).
+[Whitepaper](https://ecosystem.pip.world)
 """)
+
+sizeABC = [10, 10, 29, 14, 20, 5, 2, 10]
+labelsABC = ['Seed', 'Series A', 'Network Incentives', 'Team', 'Treasury', 'Advisors', 'Community Sale', 'Liquidity']
 
 def create_chart(data, title, ylabel):
     fig, ax = plt.subplots()
@@ -73,13 +122,14 @@ market_caps = np.random.rand(10) * 1000
 if app_mode == "Token Supply & Distribution":
     st.title("$PiPS Token Supply and Distribution")
     
+    
     st.write("""The $PiPS token lies at the heart of the PiP World ecosystem, carefully designed to incentivise participation, reward learning, and foster a vibrant, self-sustaining economy. Our tokenomics model has been meticulously crafted to ensure the long-term sustainability of the platform, align the interests of all stakeholders, and support the growth and adoption of PiP World. """)
     
     col1, space, col2 = st.columns([1, 0.1, 1])
     with col1:
-            labels = ['Pre-seed', 'Seed', 'Advisors', 'Team', 'Liquidity', 'Ecosystem', 'Reserve']
-            sizes = [11, 10, 5, 12.5, 6.5, 40, 15]
-            colors = ['#6A0DAD', '#FF6347', '#3CB371', '#000000', '#FFD700', '#1E90FF', '#4682B4'] 
+            labels = labelsABC
+            sizes = sizeABC
+            colors = ['#6A0DAD', '#FF6347', '#3CB311', '#000000', '#FFD700', '#1E90FF', '#4682B4', '#3CB371']  
 
             fig = go.Figure(data=[go.Pie(labels=labels, 
                                         values=sizes, 
@@ -96,15 +146,14 @@ if app_mode == "Token Supply & Distribution":
     with col2:
         import pandas as pd
 
-        # Data for the DataFrame
+        labels = labelsABC
         data = {
-            "Category": ["Ecosystem Fund", "Team Allocation", "Reserve Allocation", "Advisors Allocation", 
-                        "Pre-seed Round", "Seed Round", "Liquidity Provision", "Total"],
-            "Allocation": ["40%", "12.50%", "15%", "5%", "11%", "10%", "6.50%", "100%"],
-            "Tokens": [200000000, 62500000, 75000000, 25000000, 55000000, 50000000, 32500000, 500000000],
-            "Price": ["-", "-", "-", "-", "$0.07", "$0.13", "-", "-"],
-            "USD Value": ["-", "-", "-", "-", "$3,850,000", "$6,500,000", "-", "$10,350,000"],
-            "Fully Diluted Valuation": ["-", "-", "-", "-", "$35,000,000", "$65,000,000", "-", "-"]
+            "Category": labels,
+            "Allocation %": [10, 10, 29, 14, 20, 5, 2, 10],
+            "Tokens": [int(allocation / 100 * 500000000) for allocation in [10, 10, 29, 14, 20, 5, 2, 10]],
+            "Price": ["$0.07", "$0.13", "-", "-", "-", "-", "-", "-"],
+            "USD Value": ["$3,500,000", "$6,500,000", "-", "-","-", "-", "-", "-"],
+            "Fully Diluted Valuation": ["$150,000,000", "$150,000,000", "-", "-", "-", "-", "-", "-"]
         }
 
         df = pd.DataFrame(data)
@@ -117,526 +166,16 @@ if app_mode == "Token Supply & Distribution":
                  &nbsp;""")
         st.dataframe(df, height=320)
         
-#         st.write("""
-# &nbsp;
-
-# | Category           | Allocation | Tokens        | Price   | USD Value    | Fully Diluted Valuation |
-# |--------------------|------------|---------------|---------|--------------|-------------------------|
-# | Ecosystem Fund     | 40%        | 200,000,000   | -       | -            | -                       |
-# | Team Allocation    | 12.50%     | 62,500,000    | -       | -            | -                       |
-# | Reserve Allocation | 15%        | 75,000,000    | -       | -            | -                       |
-# | Advisors Allocation| 5%         | 25,000,000    | -       | -            | -                       |
-# | Pre-seed Round     | 11%        | 55,000,000    | $0.07   | $3,850,000   | $35,000,000             |
-# | Seed Round         | 10%        | 50,000,000    | $0.13   | $6,500,000   | $65,000,000             |
-# | Liquidity Provision| 6.50%      | 32,500,000    | -       | -            | -                       |
-# | **Total**          | **100%**   | **500,000,000** | -     | **$10,350,000** | -                     |
-
-# &nbsp;
-# """)
-        
-#         with st.expander("Distribution Breakdown"):
-            
-#             st.write("""
-# The token distribution has been carefully allocated to support the ecosystems's development, incentivise adoption, and ensure a healthy and sustainable ecosystem.
-
-# 1. **Angel Round (8%)**: This round is designed to onboard key partners and advisors who bring significant value to the project. By allocating tokens at a lower price point, we can attract strategic investors who are committed to the long-term success of PiP World.
-# 2. **Seed Round (15%)**: The seed round provides early supporters with an opportunity to contribute to the project's development. These investors play a crucial role in helping PiP World establish a strong foundation and gain traction in the early stages.
-# 3. **KOL Round (1%)**: Targeted at Key Opinion Leaders in the crypto and blockchain space, this round acknowledges the pivotal role influencers and thought leaders play in disseminating information and generating awareness for PiP World, leveraging their reach to foster community engagement.
-# 4. **Public Sale(10%)**: The Public round allows the wider community to participate in the project and benefit from its growth. By setting a higher price point than the previous rounds, we aim to ensure that the project is fairly valued while still providing an attractive opportunity for public investors.
-# 5. **Team and Advisors (13%)**: Allocating tokens to the team and advisors helps align their interests with the long-term success of the project. The -year vesting schedule with a 1-year cliff ensures that the team is committed to the project's growth and development over an extended period.
-# 6. **Ecosystem (28%)**: The Ecosystem Fund is a crucial component of the tokenomics model, designed to support the development of the platform, incentivise user adoption, and forge strategic partnerships. This fund is instrumental in ensuring that PiP World has the resources necessary to grow and thrive.
-# 7. **Liquidity (10%)**: Allocating tokens for liquidity provision on decentralised exchanges is essential for maintaining a healthy and stable market for $PiPS tokens. This strategy aims to ensure wide accessibility and stable token prices, supporting the ecosystem's liquidity needs.
-# 8. **Reserve (15%)**: The Reserve serves as a strategic asset for PiP World, offering the flexibility to address challenges or capitalise on opportunities as they arise. This fund supports operational needs, market interventions, future expansions, and is managed with full transparency and community involvement in allocation decisions.
-#     """)   
-    
-    tab1, tab2 = st.tabs(["Token Sale Roadmap", "Token Supply Dynamics"])
-    
-    with tab1:
-        col1, space, col2 = st.columns([1, 0.1, 1])
-        with col2:
-                st.write("""
-                 
-                 &nbsp;""")
-                data = {
-                    "Round": ["Pre-seed", "Seed"],
-                    "Dates": ["Q1 2025", "Q1 2025"],
-                    "Token Price": ["$0.07", "$0.13"],
-                    "Discount": ["72%", "48%"],
-                    "Fundraising Goal": ["$3.85M", "$6.50M"]
-                }
-                df = pd.DataFrame(data)
-                st.dataframe(df, height=110) 
-                
-        with col1:
-                st.header("Token Sale Roadmap")
-                st.write("""
-        The $PiPS token supply and distribution have been carefully crafted to support the long-term success and sustainability of the PiP World project. By strategically allocating tokens to key stakeholders, providing robust incentives for participation and adoption, and implementing transparent vesting and release schedules, PiP World is well-positioned to create a vibrant, rewarding, and enduring ecosystem that empowers users worldwide with the knowledge and skills to achieve financial freedom.
-
-        In the following sections of the whitepaper, we will delve into the **governance and community** aspects of the PiP World ecosystem, showcasing how $PiPS token holders will have the opportunity to actively shape the direction and evolution of the project through decentralised decision-making and collaboration.
-                """)
-    
-    with tab2:
-        st.header("Token Supply Dynamics")
-        st.write("""
-                Understanding the intricate relationship between token supply and market dynamics is crucial for our ecosystem. Although we acknowledge the significance of a flexible token supply schedule, our approach diverges from this model. We have committed to a fixed token supply with the foresight to potentially adjust inflation mechanisms in the future. 
-
-This decision underlines our commitment to balancing the need for ecosystem incentives with the goal of achieving optimal performance and supply growth management, while remaining fully aware of market implications we aim to follow this cumulative distribution function:
-&nbsp;
-                """)
-        st.latex(r'''\Phi(y_t) = \Phi(y_{t-1}) + \iota''')
-        st.write("""                 
-&nbsp;
-
-
-The ecosystem is energised by a continuum of speculators — both atomistic and myopic — who trade tokens for speculative gains, injecting liquidity into the market. This trading is decentralised, meaning participants act independently without the consideration of the collective impact on the market.
-
-Speculators, external to the ecosystems operational core, may lack direct insights into the ecosystems fundamentals. They might engage in trading based on overconfident assessments of noisy or spurious information, as suggested by Sockin (2023) and evidenced by subsequent studies.
-
-To encapsulate speculators' market behavior, we understand a demand curve as:
-                """)
-
-        st.latex(r'''X^S=Φ(y_t)−Φ(y_{t+1}+λlog(RP_t)−ζ_t)''')
-        st.write("""
-
-&nbsp;
-
-Here, *(ζt)* represents a sentiment shock among speculators about future token prices, influencing demand and, by extension, the availability of tokens for users. High optimism (*ζt)* among speculators tightens token supply for users, while higher prices deter speculator demand, increasing user supply.
-
-Market equilibrium is achieved when user demand and speculator behavior balance, leading to an equilibrium token price expressed as:
-                """)
-        st.latex(r'''P_t=1/Rexp{(\sqrt{Tϵ/λ}(A_t−A_t∗)−λy_t+λζ_t)}''')
-        st.write("""
-&nbsp;
-
-This formula demonstrates the token price (*Pt)* as a log-linear function dependent on the ecosystems demand fundamentals (*At)*, user participation threshold (*At*)*, token supply (*Yt)*, and speculator sentiment *(ζt)*.
-
-By dissecting the relationships between token supply, speculator activity, and price dynamics, we gain insights into the underlying forces shaping the cryptocurrency market. This knowledge empowers us to make informed decisions in managing our token economy, ensuring its robustness and sustainability.
-
-                """)
-        st.divider()
-        with st.expander("_Source_"):
-            st.markdown('_Sockin, M., & Xiong, W. (2023). A Model of Cryptocurrencies. Management Science, 69(11), 6684–6707. © 2023 INFORMS. (p. 6698)._')
-    
-    # st.header("$PiPs Token Simulation")
-    # st.write("Gain an edge with $PiPS tokens: our data-driven insights help you pinpoint the best times to invest, maximising returns and minimising risk. Choose your preferred timeframe to access tailored projections for market cap, token price, and supply—empowering you to make confident, strategic investments in the PiP Ecosystem ")
-    # if st.button("Start Simulation"):
-    #         app_mode = "Investment KPIs 💰"
-        
-elif app_mode == "Vesting & Release Schedule":
-    st.title("Vesting & Release Schedule")
-    
-    col1, space, col2 = st.columns([1,0.1,1])
-    with col1:
-        st.write("""
-&nbsp;
-
-At PiP World, we believe in aligning the interests of all stakeholders with the long-term vision and sustainability of our ecosystem. Our vesting schedule is meticulously designed to foster a deep commitment to the project's success, ensuring that contributors, team members, and advisors are invested in the growth and development of PiP World over time. 
-
-By implementing strategic lock-up periods and gradual token releases, we aim to mitigate market volatility and reward enduring participation. This approach not only stabilises the token economy but also embodies our ethos of community-driven growth, transparency, and mutual success. Through this, we lay the foundation for a robust and thriving ecosystem, where each stakeholder's contribution is recognised and valued in our journey towards a decentralised future.
-
-&nbsp;
-""")
-        # st.divider()
-        st.write("""
-To ensure the long-term alignment of interests and commitment to the project, the team and advisor tokens are subject to a 4-year vesting schedule with a 1-year cliff and 2-year vesting and a 9-month cliff respectively. This means that:
-
-- No team tokens will be released during the 12 months following the token generation event.
-- No advisor tokens will be released during the 9 months following the token generation event.
-- After the cliff, 25% of the team tokens will be released in year 1.
-- The remaining team/advisor tokens will be released in equal monthly instalments over the following years.
-
-&nbsp;
-                """)
-    st.write("""
-This vesting schedule ensures that the team and advisors have a strong incentive to drive the project's success over an extended period and provides transparency and predictability for the $PiPS token supply.
-
-In addition to the team and advisor vesting, the Ecosystem Fund tokens will be released gradually over a 4-year period following the vesting period of the TGE. This controlled release schedule ensures that the Ecosystem Fund can sustainably support the long-term growth and development of the PiP World platform without causing undue inflationary pressure on the $PiPS token price.
-
-""")
-    with col2:
-        st.write("""
-                
-            &nbsp;
-                
-| Category  | % in Total Supply | Sale in $   | Cliff (m) | Lock (m) |
-|-----------|-------------------|-------------|-----------|----------|
-| Ecosystem | 40.00%            | $0          | 0         | 48       |
-| Team      | 12.50%            | $0          | 12        | 48       |
-| Reserve   | 15.00%            | $0          | 6         | 48       |
-| Advisors  | 5.00%             | $0          | 9         | 24       |
-| Pre-seed  | 11.00%            | $3,850,000  | 3         | 18       |
-| Seed      | 10.00%            | $6,500,000  | 3         | 18       |
-| Liquidity | 6.50%             | $0          | 0         | 0        |
-| **Total** | **100.00%**       | **$10,350,000** | -     | -        |
-
-            """)
-        
-    st.divider()
-    
-    st.header("Token Release and Vesting Schedule")
-    
-    st.write("Our token release schedule, spanning 48 months, is meticulously designed to support the ecosystems's long-term sustainability and health. The graph illustrates the phased release of tokens in categories like Angel, Seed, Public, and more, underlining our commitment to gradual market introduction. This strategy, integral to our vesting approach, ensures stakeholders are aligned with PiP World's.")
-
-    col1, space, col2 = st.columns([1,0.1,1])
-    with col1:
-
-        def calculate_token_release(max_supply=500e6, months=49):
-            allocations = {
-                'Pre-seed': 11,
-                'Seed': 10,
-                'Ecosystem': 40,
-                'Team': 12.5,
-                'Reserve': 15,
-                'Advisors': 5,
-                'Liquidity': 6.5,
-            }
-            
-            df = pd.DataFrame(index=range(1, months+1))
-            
-            for category, percent in allocations.items():
-                df[category] = 0
-            
-            # Immediate allocations
-            df.loc[1, 'Liquidity'] = max_supply * (allocations['Liquidity'] / 100)  # Immediate release for liquidity
-            
-            # Define linear_release function within calculate_token_release
-            def linear_release(start_month, end_month, percentage, category):
-                monthly_amount = (max_supply * (percentage / 100)) / (end_month - start_month + 1)
-                df.loc[start_month:end_month, category] += monthly_amount
-
-            # Schedules
-            linear_release(4, 18, 11, 'Pre-seed')  # Start at month 4, end at month 18
-            linear_release(4, 18, 10, 'Seed')  # Start at month 4, end at month 18
-            linear_release(1, 48, 40, 'Ecosystem')  # Start immediately, end at month 48
-            linear_release(13, 48, 12.5, 'Team')  # Start at month 13, end at month 48
-            linear_release(7, 48, 15, 'Reserve')  # Start at month 7, end at month 48
-            linear_release(10, 24, 5, 'Advisors')  # Start at month 10, end at month 24
-            
-            return df.cumsum()
-
-        df_release = calculate_token_release()
-
-        def plot_token_release(df_release):
-            fig = go.Figure()
-            for category in df_release.columns:
-                fig.add_trace(go.Scatter(x=df_release.index, y=df_release[category], mode='lines', name=category, fill='tozeroy'))
-                
-            fig.update_layout(
-                title='Cumulative Token Release Schedule Over 48 Months',
-                xaxis_title='Month',
-                yaxis_title='Number of Tokens',
-                legend_title='Category',
-                showlegend=True,
-                height=600,
-                width=800,
-            )
-            return fig
-
-        st.plotly_chart(plot_token_release(df_release), use_container_width=True)
-
-    with col2:
-        # Updated data with the newest allocation details
-        data = {
-            "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Pre-seed", "Seed"],
-            "Token Amount": [200000000, 62500000, 75000000, 25000000, 55000000, 50000000],
-            "Monthly Release": [0.020833333, 0.027777778, 0.023809524, 0.066666667, 0.06, 0.06],  # Converted percentages to decimals
-            "Initial Release": [0.0, 0.0, 0.0, 0.0, 0.1, 0.1],  # Converted percentages to decimals
-            "Start Month": [1, 13, 7, 10, 4, 4],
-            "End Month": [48, 48, 48, 24, 18, 18]
-        }
-
-        df_data = pd.DataFrame(data)
-
-        total_months = 49
-
-        # Create a DataFrame to hold the release data
-        df_release = pd.DataFrame(0, index=np.arange(1, total_months+1), columns=df_data['Category'])
-
-        # Function to calculate the token release for each category
-        def calculate_release(row):
-            if row['Start Month'] == 0:
-                df_release.loc[1, row['Category']] += row['Token Amount'] * row['Initial Release']
-            else:
-                monthly_tokens = row['Token Amount'] * row['Monthly Release']
-                release_months = np.arange(row['Start Month'], row['End Month'] + 1)
-                df_release.loc[release_months, row['Category']] += monthly_tokens
-
-        # Apply the function across the DataFrame
-        df_data.apply(calculate_release, axis=1)
-
-        # Plot using Plotly
-        fig = go.Figure()
-        for category in df_release.columns:
-            fig.add_trace(go.Scatter(x=df_release.index, y=df_release[category], mode='lines', name=category, fill='tozeroy'))
-
-        fig.update_layout(
-            title='Fixed Token Release Schedule Per Month Over 48 Months (Default Excluding TGE)',
-            xaxis_title='Month',
-            yaxis_title='Tokens Released Per Month',
-            legend_title='Category',
-            height=600, width=800,
-        )
-
-        # Display the plot in Streamlit
-        st.plotly_chart(fig, use_container_width=True)
-
-    st.divider()
-    st.header("Private Round Vesting")
-    st.write("""
-For the initial investment phases, including Pre-seed and Seed Rounds, we have crafted a vesting schedule that balances the necessity for early-stage backing with the imperative of sustained engagement. These rounds are critical as they involve stakeholders who contribute not only capital but also strategic insights and promotional support, which are vital during the foundational stages of our project.
-&nbsp;
-
-- **Pre-seed Round**: A 3-month cliff followed by an 18-month lock to encourage and secure long-term commitment from our earliest supporters.
-- **Seed Round**: A similar structure, with a 3-month cliff and an 18-month lock, ensures these pivotal investors are aligned with our long-term vision while preventing early token liquidation.
-""")
-
-elif app_mode == "Monetary & Fiscal Policies":
-    st.title("Monetary & Fiscal Policies")
-    st.write("""
-
-In navigating the complex terrain of digital currency economics, PiP World employs a nuanced blend of monetary and fiscal policies designed to maintain a healthy token supply, control inflation, and stimulate demand for the $PiPS token. These policies are meticulously crafted to ensure the long-term sustainability and growth of the ecosystem.
-            """)
-    col1, space, col2 = st.columns([1,0.1,1])
-    with col1:
-        st.write("""
-        
-#### Managing Token Supply:
-
-For $PiPS, we aim to potentially implement several key mechanisms to manage the token supply effectively:
-
-- **Token Buyback:** A deflationary measure where a portion of the token supply is periodically removed from circulation. This mechanism is employed to counteract inflationary pressures and enhance the token's scarcity and value over time.
-
-- **Vesting Schedules:** To align the interests of team members, advisors, and early investors with the long-term success of the ecosystem, $PiPS World incorporates vesting schedules into its tokenomics. These schedules dictate the gradual release of tokens over a specified period, preventing market flooding and ensuring a steady, controlled increase in token circulation.
-
-- **Staking Rewards:** Encouraging token holders to stake their tokens not only secures the network but also reduces the velocity of money within the ecosystem. Staked tokens are temporarily removed from circulation, which can have a deflationary effect by decreasing the available supply, thus potentially increasing the token's price.
-            """)
-    with col2:  
-        st.write("""
-#### Inflation Control and Demand Stimulation:
-
-To mitigate the risk of inflation and stimulate demand for the $PiPS token, PiP World aims to adopts the following policies:
-
-
-- **Inflation Rate Management:** While the $PiPS token has a capped supply, mechanisms for releasing tokens into the ecosystem, such as rewards for staking or participation in governance, are designed with a cap to ensure they do not dilute the token's value. The governance model allows for adjustments to these mechanisms, ensuring flexibility to respond to changing economic conditions.
-- **Demand Stimulation Initiatives:** Beyond the utility provided within the ecosystem, PiP World engages in strategies to stimulate demand for the $PiPS token. These include partnerships that expand the token's use cases, marketing campaigns to raise awareness and adoption, and liquidity provisioning on exchanges to facilitate easy trading.
-            """)
-    st.write("""
-&nbsp;
-
-By integrating these monetary and fiscal policies, PiP World aims to maintain a balanced and thriving economy. Managing the token supply through locking, vesting, and staking, alongside strategic measures to control inflation and stimulate demand, positions the $PiPS token for sustained value and utility within the ecosystem.
-            
-            """)
-    st.divider()
-    col1, space, col2 = st.columns([1,0.1,1])
-    with col1:
-        st.header("🔒 Token Locking and Linear Claiming")
-        st.write("""
-Token locking for all participants secures $PiPS tokens, reducing market volatility. The linear claiming strategy allows for real-time, second-by-second token release, mitigating bulk sell-off risks and stabilising token price.
-                """)
-        st.header("⏱️ Staking Protocol with Diverse Rewards")
-        st.write("""
-Our staking protocol incentivises token holding by potentially offering rewards in stablecoins, alongside $PiPS tokens. Allocating USDT from revenue streams into the staking rewards pool ensures a continuous incentive for token holders, promoting long-term holding and ecosystem stability.
-            """)
-    with col2:
-        st.header("🖼️ NFT Integration for Enhanced Utility")
-        st.write("""
-NFTs within PiP World not only serve as digital art assets but also play a crucial role in the deflationary framework. Increasing staking reward claim frequency based on NFT holdings and enabling NFT staking for PiP rewards add layers of utility, driving both NFT acquisition and token retention.
-    """)
-        st.header("🚜 Ecosystem Growth and Social Farming Initiatives")
-        st.write("""
-The Short-term Ecosystem Growth Fund (EGF) explores social farming as a method to engage the community and drive ecosystem growth, potentially incorporating rewards that align with deflationary objectives.
-    """)
-    st.divider()
-    st.header("Supply Shocks and Pricing Dynamics")
-    
-    col1, space, col2 = st.columns([1,0.1,1])
-    with col1:
-        st.write("""
-                
-&nbsp;
-
-In the realm of cryptocurrency, a critical event that significantly impacts the price of a token is the occurrence of supply shocks. These are moments when a substantial portion of tokens, previously locked or unavailable, is suddenly released into circulation. The introduction of these tokens can lead to dramatic shifts in market dynamics, predominantly influencing the token's price.
-            """)
-        st.write("""
-
-A study of various projects, including Optimism, Sandbox, Axie Infinity, and Immutable X, provided a clear illustration of how supply shocks correlate with price movements. For instance, significant supply shocks, where a large percentage of the token supply was released, consistently led to notable price declines. 
-
-
-This observation stems from a fundamental economic principle: if the circulating supply of a token increases and the market cap remains constant, the price per token must decrease.
-
-&nbsp;
-            
-:blue[⎯⎯ Aggregate Demand Curve]
-
-:violet[⎯⎯ Initial Short Run Aggregate Supply Curve]
-
-:red[------ Increased SR Aggregate Supply Curve]
-
-            """)
-
-    with col2:
-        quantity = np.arange(1, 105, 1)
-
-
-        demand_price = 120 - (1 * quantity)  
-        supply_price_initial = 20 + (1 * quantity)  
-        supply_price_increased = 1 + (1 * quantity)  
-
-
-        fig = go.Figure()
-
-
-        fig.add_trace(go.Scatter(x=quantity, y=demand_price,
-                                mode='lines',
-                                name='Aggregate Demand Curve',
-                                line=dict(color='blue')))
-
-
-        fig.add_trace(go.Scatter(x=quantity, y=supply_price_initial,
-                                mode='lines',
-                                name='Initial SR Aggregate Supply Curve',
-                                line=dict(color='violet')))
-
-
-        fig.add_trace(go.Scatter(x=quantity, y=supply_price_increased,
-                                mode='lines',
-                                name='Increased SR Aggregate Supply Curve',
-                                line=dict(color='red', dash='dash')))
-
-
-        fig.update_layout(title='Supply and Demand Curves',
-                        xaxis_title='Quantity (Millions)',
-                        yaxis_title='Price (Cents)',
-                        showlegend=False,
-                        height=550, width=700)
-
-
-        st.plotly_chart(fig, use_container_width=True)
-    
-    st.write("""
-### Predicting Price Drop from Supply Shock
-
-The relationship between supply shock and the subsequent price drop is deeply rooted in tokenomics principles. Through extensive analysis of various projects experiencing significant changes in their circulating supply, a strong correlation has been observed between the percentage of supply shock and the resultant price drops. This analysis underpins the concept that sudden increases in token supply can lead to substantial decreases in token price, due to market dynamics of supply and demand.
-
-The precise impact of supply shock on price can vary based on a multitude of factors, including the project's market cap, liquidity, and investor sentiment. However, historical data from multiple projects consistently demonstrates a tangible link between these supply changes and market reactions. This relationship highlights the importance of carefully planned token distribution schedules to mitigate potential adverse effects on market price.
-
-Understanding this correlation is pivotal for PiP World ecosystem teams and investors, as it underscores the potential market implications of token unlock events and other supply-related activities. It encourages a strategic approach to token releases, ensuring they align with long-term project goals and market stability.
-
-&nbsp;
-
-        """)
-    st.header("Case Studies and Analysis")
-    
-    col1, space, col2 = st.columns([1,0.1,1])
-    with col1:
-        st.write("""
-The table below showcases specific instances of supply shocks across various projects and their subsequent impact on token prices:
-
-| Project | Date of Supply Shock | Supply Shock (%) | Outcome (% Drop) |
-| --- | --- | --- | --- |
-| Optimism | 30/05/2023 | 130 | -26 |
-| Sandbox (Ex. 1) | 14/02/2022 | 43.8 | -40 |
-| Sandbox (Ex. 2) | 14/08/2022 | 30.5 | -36.5 |
-| Sandbox (Ex. 3) | 14/02/2023 | 20.9 | -40.2 |
-| Axie Infinity | 28/04/2022 | 20.7 | -58.7 |
-| Immutable X | Not Specified | 56.1 | -42.2 |
-            """)
-        st.write("""
-&nbsp;
-
-By understanding and applying this equation, investors and our teams can better navigate the complex interplay between token supply and market behavior, allowing for more informed decision-making in the volatile landscape of cryptocurrency.
-            
-            """)
-    with col2:
-
-        projects = ["Optimism", "Sandbox (Ex. 1)", "Sandbox (Ex. 2)", "Sandbox (Ex. 3)", "Axie Infinity", "Immutable X"]
-        supply_shock = [130, 43.8, 30.5, 20.9, 20.7, 56.1]
-        outcome = [-26, -40, -36.5, -40.2, -58.7, -42.2]  
-
-
-        fig = go.Figure()
-
-
-        for project, shock, out in zip(projects, supply_shock, outcome):
-            fig.add_trace(go.Scatter(x=[shock], y=[out],
-                                    mode='markers+text',
-                                    name=project,
-                                    text=[project],
-                                    textposition="top center"))
-
-
-        fig.update_layout(title='Supply Shock and Outcome Across Projects',
-                        xaxis_title='Supply Shock (%)',
-                        yaxis_title='Outcome (% Drop)',
-                        showlegend=False,
-                        height=500, width=700)
-
-
-        fig.update_xaxes(range=[0, 130+ 10])
-        fig.update_yaxes(range=[min([o for o in outcome if o is not None]) - 10, -10]) 
-
-
-        st.plotly_chart(fig, use_container_width=True)
-
-    # st.pyplot(create_chart(market_caps, "Market Cap Over Time", "Market Cap ($)"))
-
-elif app_mode == "Staking & Liquidity":
-    st.title("Staking and Liquidity Provisions")
-
-    st.write("""
-            
-            PiP World aims to introduce a strategic staking and rewards mechanism that not only incentivises long-term holding of the $PiPS token but also significantly contributes to the stability and liquidity of the ecosystem. This approach is carefully designed to balance rewarding token holders while ensuring the health and growth of the platform.
-
-### Staking Models & Rewards:
-PiP World aims to offers a flexible staking model that allows token holders to lock their tokens for varying periods, thereby earning staking rewards. The model is deigned to offer higher rewards for longer lock-up periods, thus encouraging long-term holding.
-The rewards are distributed from a designated staking rewards pool (reserve fund), ensuring a consistent and predictable supply of rewards to stakeholders. This model serves dual purposes:
-            
-            """)
-    st.divider()
-    col1, space, col2 = st.columns([1,0.1,1])
-    with col1:
-        st.write("""#### Long-term Holding Incentive""")
-        st.write("""By providing higher rewards for longer staking periods, token holders are encouraged to commit their tokens over extended periods. This reduces the circulating supply of $PiPS, increasing their value and providing a financial incentive for holders to align with the ecosystem's long-term success.""")
-        
-        
-    with col2:
-        st.write("""#### Ecosystem Stability""")
-        st.write("""The predictable nature of staking rewards, coupled with the commitment of tokens for staking, lends stability to the $PiPS token's market. It mitigates the impact of speculative trading and short-term volatility, fostering a more stable economic environment.""")
-    # st.latex(r'''multiplier = 1.05^x''')
     
     
-    
-    
-    st.divider()
-    
-    st.write("### Impact on Token Velocity and Ecosystem Liquidity")
-    st.write("""
-            
-            A staking mechanism directly influences the velocity of the $PiPS token and the liquidity within the ecosystem:
-            
-- **Reduced Token Velocity:** Staking rewards encourage holders to lock their tokens, reducing the frequency with which the token changes hands. A lower velocity (V↓) is beneficial for $PiPS value, as it suggests a preference for holding over trading.  
-- **Enhanced Ecosystem Liquidity:** Part of the staking strategy includes provisions for liquidity provisioning. Stakers might have the opportunity to contribute to liquidity pools, earning additional rewards while enhancing the liquidity of $PiPS tokens on DEXs. This not only benefits the stakers but also improves the trading experience for all users by reducing slippage and ensuring fair market prices.
-
-PiP World's future staking and rewards mechanism is designed to encourage long-term holding and contribute to ecosystem stability. By carefully balancing incentives for token holders with the needs of the ecosystem, PiP World ensures a vibrant community of stakeholders invested in its long-term success, while managing token velocity and enhancing liquidity.
-
-### 🔮 Future NFT Vesting Accelerators
-At PiP World we are exploring into an exciting innovation: using NFTs to offer unique vesting and staking advantages. These NFTs aim to provide two key benefits: the ability to accelerate vesting periods, allowing investors quicker access to their tokens, and the option to stake these NFTs for additional rewards. This initiative reflects our commitment to leveraging best-in-class technology for greater ecosystem flexibility and community engagement, offering stakeholders more control and added value within the PiP ecosystem.
-
-&nbsp;
-            """)
-    
-
-elif app_mode == "Token Simulation 💰":
-
-    st.title("Token Simulation 💰")
-
-    tab1, tab2, tab3, tab4 = st.tabs(["$PiPS Token Price", "Token Emmissions", "Investor Rounds","Tokenomics Tables"])
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["$PiPS Token Price 💰", "Token Emmissions", "Investor Rounds","Tokenomics Tables", "Token Sale Roadmap", "Token Supply Dynamics"])
     
     with tab1:
         st.write("## $PiPS Token Price Coming Soon")
         st.write("Here you will be able to simulate the token price based on the market cap and circulating supply.")
+        st.markdown("<hr>", unsafe_allow_html=True)
         
-        #TOKEN SIM HIDE MAIN SECTION 638 to 902 AND 1362 to 
+ #TOKEN SIM HIDE MAIN SECTION
 #     with tab1:
 #         st.write("## $PiPS Token Price")
         
@@ -905,9 +444,9 @@ elif app_mode == "Token Simulation 💰":
     with tab2:
         st.header("Token Emissions")
         st.write("""
-The graph below outlines the phased distribution strategy for $PiPS tokens, aligning with the ecosystem's long-term vision for growth and sustainability. Across a span of 48 months, this visualization demonstrates the deliberate and strategic release of tokens into the ecosystem, highlighting categories such as Pre-seed, Seed, Ecosystem, Team, Reserve, Advisors, and Liquidity.
+The graph below outlines the phased distribution strategy for $PiPS tokens, aligning with the ecosystem's long-term vision for growth and sustainability. Across a span of 48 months, this visualization demonstrates the deliberate and strategic release of tokens into the ecosystem, highlighting categories such as Seed, Series A, Treasury, Team, Reserve, Advisors, Network Incentives, and Liquidity.
 
-Each line represents a different category emission, not showcasing the initial lump-sum releases (such as the complete immediate release for Liquidity and initial releases for Pre-seed and Seed rounds) followed by a linear release model tailored to each category's specific role within the PiP ecosystem. This ensures a balanced injection of tokens, facilitating ecosystem development, rewarding early backers, and fostering a vibrant community engagement while maintaining market stability.
+Each line represents a different category emission, not showcasing the initial lump-sum releases (such as the complete immediate release for Liquidity and initial releases for Seed and Series A rounds) followed by a linear release model tailored to each category's specific role within the PiP ecosystem. This ensures a balanced injection of tokens, facilitating ecosystem development, rewarding early backers, and fostering a vibrant community engagement while maintaining market stability.
 
 This release strategy underscores PiP's commitment to transparency and a steady value proposition for token holders. By moderating the supply influx and aligning token releases with ecosystem milestones and growth phases, PiP World ensures a sustainable economic model that rewards long-term participants and supports the overall health and expansion of the ecosystem.         
 """)
@@ -927,12 +466,12 @@ This release strategy underscores PiP's commitment to transparency and a steady 
         ##NEW
         
         data = {
-            "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Pre-seed", "Seed", "Liquidity"],
-            "Token Amount": [200000000, 62500000, 75000000, 25000000, 55000000, 50000000, 50000000],
-            "Monthly Release": [0.020833333, 0.027777778, 0.023809524, 0.066666667, 0.06, 0.06, 0.0],  # Converted percentages to decimals
-            "Initial Release": [0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 1.0],  # Converted percentages to decimals
-            "Start Month": [1, 13, 7, 10, 4, 4, 0],
-            "End Month": [48, 48, 48, 24, 18, 18, 0]
+            "Category": ["Seed", "Series A", "Network Incentives", "Team", "Treasury", "Advisors", "Community Sale"],
+            "Token Amount": [50000000, 50000000, 145000000, 70000000, 100000000, 25000000, 10000000],
+            "Monthly Release": [0.15, 0.15, 0.0417, 0.0556, 0.0208, 0.0833, 0.0],  # Converted percentages to decimals
+            "Initial Release": [0.1, 0.1, 0.0, 0.0, 0.0, 0.0, 1],  # Converted percentages to decimals
+            "Start Month": [13, 13, 1, 19, 1, 13, 4],
+            "End Month": [18, 18, 24, 36, 48, 24, 18]
         }
 
         df_data = pd.DataFrame(data)
@@ -995,12 +534,12 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
 
             
             data = {
-            "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Pre-seed", "Seed", "Liquidity"],
-            "Token Amount": [200000000, 62500000, 75000000, 25000000, 55000000, 50000000, 50000000],
-            "Monthly Release": [0.020833333, 0.027777778, 0.023809524, 0.066666667, 0.06, 0.06, 0.0],  # Converted percentages to decimals
-            "Initial Release": [0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 1.0],  # Converted percentages to decimals
-            "Start Month": [1, 13, 7, 10, 4, 4, 0],
-            "End Month": [48, 48, 48, 24, 18, 18, 0]
+            "Category": ["Seed", "Series A", "Network Incentives", "Team", "Treasury", "Advisors", "Community Sale"],
+            "Token Amount": [50000000, 50000000, 145000000, 70000000, 100000000, 25000000, 10000000],
+            "Monthly Release": [0.15, 0.15, 0.0417, 0.0556, 0.0208, 0.0833, 0.0],  # Converted percentages to decimals
+            "Initial Release": [0.1, 0.1, 0.0, 0.0, 0.0, 0.0, 1],  # Converted percentages to decimals
+            "Start Month": [13, 13, 1, 19, 1, 13, 4],
+            "End Month": [18, 18, 24, 36, 48, 24, 18]
             }
 
             df_data = pd.DataFrame(data)
@@ -1067,13 +606,14 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
             def calculate_token_release(max_supply=500e6, months=49):
                 # Updated allocations with the new percentages and categories
                 allocations = {
-                    'Pre-seed': 11,
                     'Seed': 10,
-                    'Ecosystem': 40,
-                    'Team': 12.5,
-                    'Reserve': 15,
+                    'Series A': 10,
+                    'Network Incentives': 29,
+                    'Team': 14,
+                    'Community Sale': 2,
                     'Advisors': 5,
-                    'Liquidity': 6.5,
+                    'Liquidity': 10,
+                    'Treasury': 20,
                 }
 
                 # Create a DataFrame to hold the release data
@@ -1092,12 +632,13 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
                     df.loc[start_month:end_month, category] += monthly_amount
 
                 # Setup linear releases according to the updated schedule
-                linear_release(4, 18, 11, 'Pre-seed')  # Pre-seed linear release from month 4 to 18
-                linear_release(4, 18, 10, 'Seed')  # Seed linear release from month 4 to 18
-                linear_release(1, 48, 40, 'Ecosystem')  # Ecosystem linear release from month 1 to 48
-                linear_release(13, 48, 12.5, 'Team')  # Team linear release from month 13 to 48
-                linear_release(7, 48, 15, 'Reserve')  # Reserve linear release from month 7 to 48
-                linear_release(10, 24, 5, 'Advisors')  # Advisors linear release from month 10 to 24
+                linear_release(13, 18, 10, 'Seed')  # Start at month 13, end at month 18
+                linear_release(13, 18, 10, 'Series A')  # Start at month 13, end at month 18
+                linear_release(1, 24, 29, 'Network Incentives')  # Start immediately, end at month 24
+                linear_release(19, 36, 14, 'Team')  # Start at month 19, end at month 36
+                linear_release(13, 24, 5, 'Advisors')  # Start at month 13, end at month 24
+                linear_release(4, 18, 2, 'Community Sale')  # Start at month 10, end at month 24
+                linear_release(1, 48, 20, 'Treasury')  # Start at month 1, end at month 48
 
                 return df.cumsum()
 
@@ -1122,10 +663,8 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
         if 'button_clicked' not in st.session_state:
             st.session_state.button_clicked = False
 
-        # Create columns for the expander and the button
         col1, col2 = st.columns([9, 1])
 
-        # Place the expander in the first column
         with col1:
             with st.expander("View Data"):
                 st.write(df_release, use_container_width=True)
@@ -1175,7 +714,7 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
             # rounds = ['KOL Round', 'Angel Round', 'Seed Round', 'Public Round']
             # amounts = [350000, 2800000, 9750000, 12500000]
             # sizes = [20, 40, 60, 80]  
-            rounds = ['Pre-seed Round', 'Seed Round']
+            rounds = ['Seed Round', 'Series A Round']
             amounts = [3850000, 6500000]  # Updated funding amounts based on recent data
             sizes = [40, 60]  # Assuming sizes relate to the significance or capacity of each round
 
@@ -1199,7 +738,7 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
             # }   
             
             table1 = {
-                "Round": ["Pre-seed Round", "Seed Round"],
+                "Round": ['Seed Round', 'Series A Round'],
                 "Amount Raised": ["$3,850,000", "$6,500,000"]
             }
 
@@ -1219,7 +758,7 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
             # }
             
             data = {
-                "Round": ["Pre-seed Round", "Seed Round"],
+                "Round": ['Seed Round', 'Series A Round'],
                 "Price ($)": [0.07, 0.13]
             }
 
@@ -1245,73 +784,151 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
         
         
     with tab4:
-        #OLD NOV FOR PIES
+        #OLD SINCE JAN 22 - for pie charts
         # table_data = {
-        #     "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Angel", "Seed", "KOL", "Public", "Liquidity", "Total"],
-        #     "Allocation% in Total Supply": ["28.00%", "10.00%", "15.00%", "3.00%", "8.00%", "15.00%", "1.00%", "10.00%", "10.00%", "100.00%"],
-        #     "Price": ["-", "-", "-", "-", "$0.07", "$0.13", "$0.07", "$0.25", "-", "-"],
-        #     "Token Amount": ["140,000,000", "50,000,000", "75,000,000", "15,000,000", "40,000,000", "75,000,000", "5,000,000", "50,000,000", "50,000,000", "500,000,000"],
-        #     "Token Price at Public Round": ["18,750,000", "12,500,000", "23,750,000", "3,750,000", "10,000,000", "18,750,000", "1,250,000", "12,500,000", "12,500,000", "-"],
-        #     "Sale in $": ["-", "-", "-", "-", "$2,800,000", "$9,750,000", "$350,000", "$12,500,000", "-", "$25,400,000"],
-        #     "Cliff (m)": ["0", "12", "6", "9", "12", "12", "3", "0", "0", "-"],
-        #     "Lock (m)": ["48", "48", "48", "48", "36", "36", "12", "12", "0", "-"],
-        #     "Unlock on TGE %": ["0.00%", "0.00%", "0.00%", "0.00%", "5.00%", "7.00%", "20.00%", "20.00%", "100.00%", "13.65%"],
-        #     "Tokens Unlock on TGE": ["0", "0", "0", "0", "2,000,000", "5,250,000", "1,000,000", "10,000,000", "50,000,000", "68,250,000"],
-        #     "Unlocked in $": ["$0", "$0", "$0", "$0", "$500,000", "$1,312,500", "$250,000", "$2,500,000", "$12,500,000", "$17,062,500"],
-        #     "Unlock % pm": ["2.08%", "2.78%", "2.38%", "2.56%", "3.96%", "3.44%", "8.89%", "6.67%", "0.00%", "2.88%"],
-        #     "Token Unlock pm": ["2,916,667", "1,388,889", "1,785,714", "384,615", "1,583,333", "2,583,333", "444,444", "3,333,333", "0", "14,420,330"],
-        #     "Unlock pm $TGE": ["$729,167", "$347,222", "$446,429", "$96,154", "$395,833", "$645,833", "$111,111", "$833,333", "$0", "$3,605,082"]
+        #     "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Pre-seed", "Seed", "Liquidity", "Total"],
+        #     "Allocation% in Total Supply": ["40.00%", "12.50%", "15.00%", "5.00%", "11.00%", "10.00%", "6.50%", "100.00%"],
+        #     "Price": ["-", "-", "-", "-", "$0.07", "$0.13", "-", "-"],
+        #     "Token Amount": ["200,000,000", "62,500,000", "75,000,000", "25,000,000", "55,000,000", "50,000,000", "32,500,000", "500,000,000"],
+        #     "Token Price at Public Round": ["$50,000,000", "$15,625,000", "$18,750,000", "$6,250,000", "$13,750,000", "$12,500,000", "$8,125,000", "-"],
+        #     "Sale in $": ["-", "-", "-", "-", "$3,850,000", "$6,500,000", "-", "$10,350,000"],
+        #     "Cliff (m)": ["0", "12", "6", "9", "3", "3", "0", "-"],
+        #     "Lock (m)": ["48", "48", "48", "24", "18", "18", "0", "-"],
+        #     "Unlock on TGE %": ["0.00%", "0.00%", "0.00%", "0.00%", "10.00%", "10.00%", "100.00%", "8.60%"],
+        #     "Tokens Unlock on TGE": ["0", "0", "0", "0", "5,500,000", "5,000,000", "32,500,000", "43,000,000"],
+        #     "Unlocked in $": ["$0", "$0", "$0", "$0", "$1,375,000", "$1,250,000", "$8,125,000", "$10,750,000"],
+        #     "Unlock % pm": ["2.08%", "2.78%", "2.38%", "6.67%", "6.00%", "6.00%", "0.00%", "3.13%"],
+        #     "Token Unlock pm": ["4,166,667", "1,736,111", "1,785,714", "1,666,667", "3,300,000", "3,000,000", "0", "15,655,159"],
+        #     "Unlock pm $TGE": ["$1,041,667", "$434,028", "$446,429", "$416,667", "$825,000", "$750,000", "$0", "$3,913,790"]
         # }
+        
         table_data = {
-            "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Pre-seed", "Seed", "Liquidity", "Total"],
-            "Allocation% in Total Supply": ["40.00%", "12.50%", "15.00%", "5.00%", "11.00%", "10.00%", "6.50%", "100.00%"],
-            "Price": ["-", "-", "-", "-", "$0.07", "$0.13", "-", "-"],
-            "Token Amount": ["200,000,000", "62,500,000", "75,000,000", "25,000,000", "55,000,000", "50,000,000", "32,500,000", "500,000,000"],
-            "Token Price at Public Round": ["$50,000,000", "$15,625,000", "$18,750,000", "$6,250,000", "$13,750,000", "$12,500,000", "$8,125,000", "-"],
-            "Sale in $": ["-", "-", "-", "-", "$3,850,000", "$6,500,000", "-", "$10,350,000"],
-            "Cliff (m)": ["0", "12", "6", "9", "3", "3", "0", "-"],
-            "Lock (m)": ["48", "48", "48", "24", "18", "18", "0", "-"],
-            "Unlock on TGE %": ["0.00%", "0.00%", "0.00%", "0.00%", "10.00%", "10.00%", "100.00%", "8.60%"],
-            "Tokens Unlock on TGE": ["0", "0", "0", "0", "5,500,000", "5,000,000", "32,500,000", "43,000,000"],
-            "Unlocked in $": ["$0", "$0", "$0", "$0", "$1,375,000", "$1,250,000", "$8,125,000", "$10,750,000"],
-            "Unlock % pm": ["2.08%", "2.78%", "2.38%", "6.67%", "6.00%", "6.00%", "0.00%", "3.13%"],
-            "Token Unlock pm": ["4,166,667", "1,736,111", "1,785,714", "1,666,667", "3,300,000", "3,000,000", "0", "15,655,159"],
-            "Unlock pm $TGE": ["$1,041,667", "$434,028", "$446,429", "$416,667", "$825,000", "$750,000", "$0", "$3,913,790"]
+            "Category": [
+                "Network Incentives", "Team", "Treasury", "Advisors", "Seed", 
+                "Series A", "Community Sale", "Liquidity", "Total"
+            ],
+            "Allocation% in Total Supply": [
+                "29.00%", "14.00%", "20.00%", "5.00%", "10.00%", 
+                "10.00%", "2.00%", "10.00%", "100.00%"
+            ],
+            "Price": [
+                "-", "-", "-", "-", "$0.07", 
+                "$0.13", "-", "-", "-"
+            ],
+            "Token Amount": [
+                "145,000,000", "70,000,000", "100,000,000", "25,000,000", "50,000,000", 
+                "50,000,000", "10,000,000", "50,000,000", "500,000,000"
+            ],
+            "Token Price at Public Round": [
+                "-", "-", "-", "-", "$3,500,000", 
+                "$6,500,000", "-", "-", "$10,000,000"
+            ],
+            "Sale in $": [
+                "-", "-", "-", "-", "$3,500,000", 
+                "$6,500,000", "-", "$0", "$10,000,000"
+            ],
+            "Cliff (m)": [
+                "0", "18", "0", "12", "12", 
+                "12", "3", "0", "-"
+            ],
+            "Lock (m)": [
+                "24", "36", "48", "24", "18", 
+                "18", "18", "0", "-"
+            ],
+            "Unlock on TGE %": [
+                "0.00%", "0.00%", "0.00%", "0.00%", "10.00%", 
+                "10.00%", "100.00%", "100.00%", "8.60%"
+            ],
+            "Tokens Unlock on TGE": [
+                "0", "0", "0", "0", "5,000,000", 
+                "5,000,000", "10,000,000", "50,000,000", "70,000,000"
+            ],
+            "Unlocked in $": [
+                "$0", "$0", "$0", "$0", "$1,250,000", 
+                "$1,250,000", "$0", "$0", "$7,274,306"
+            ],
+            "Unlock % pm": [
+                "4.17%", "5.56%", "2.08%", "8.33%", "15.00%", 
+                "15.00%", "0.00%", "0.00%", "5.82%"
+            ],
+            "Token Unlock pm": [
+                "6,041,667", "3,888,889", "2,083,333", "2,083,333", "7,500,000", 
+                "7,500,000", "0", "0", "29,097,222"
+            ],
+            "Unlock pm $TGE": [
+                "$1,510,417", "$972,222", "$520,833", "$520,833", "$1,875,000", 
+                "$1,875,000", "$0", "$0", "$7,274,306"
+            ]
         }
 
-        
-
-        # OLD NOV
+        #Old for table as of Jan 22
         # table_data2 = {
-        #     "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Angel", "Seed", "KOL", "Public", "Liquidity", "Total"],
-        #     "Allocation% in Total Supply": ["28.00%", "10.00%", "15.00%", "3.00%", "8.00%", "15.00%", "1.00%", "10.00%", "10.00%", "100.00%"],
-        #     "Price": ["-", "-", "-", "-", "$0.07", "$0.13", "$0.07", "$0.25", "-", "-"],
-        #     "Token Amount": ["140,000,000", "50,000,000", "75,000,000", "15,000,000", "40,000,000", "75,000,000", "5,000,000", "50,000,000", "50,000,000", "500,000,000"],
-        #     "Token Price at Public Round": ["35,000,000", "12,500,000", "18,750,000", "3,750,000", "10,000,000", "18,750,000", "1,250,000", "12,500,000", "12,500,000", "-"],
-        #     "Sale in $": ["-", "-", "-", "-", "$2,800,000", "$9,750,000", "$350,000", "$12,500,000", "-", "$25,400,000"],
-        #     "Cliff (m)": ["0", "12", "6", "9", "12", "12", "3", "0", "0", "-"],
-        #     "Lock (m)": ["48", "48", "48", "48", "36", "36", "12", "12", "0", "-"],
-        #     "Circulating supply % @ TGE pm": ["0.00%", "0.00%", "0.00%", "0.00%", "0.40%", "1.05%", "0.20%", "2.00%", "-", "3.65%"],
-            
-        #     "Tokens Unlock on TGE": ["0", "0", "0", "0", "2,000,000", "5,250,000", "1,000,000", "10,000,000", "50,000,000", "68,250,000"],
-        #     "Unlocked in $": ["$0", "$0", "$0", "$0", "$500,000", "$1,312,500", "$250,000", "$2,500,000", "$12,500,000", "$17,062,500"],
-        #     "Unlock % pm": ["2.08%", "2.78%", "2.38%", "2.56%", "3.96%", "3.44%", "8.89%", "6.67%", "0.00%", "2.88%"],
-        #     "Unlock pm $TGE": ["-", "-", "-", "-", "$395,833", "$645,833", "$111,111", "$833,333", "$0", "$1,986,110"]
+        #     "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Pre-seed", "Seed", "Liquidity"],
+        #     "Allocation% in Total Supply": ["40.00%", "12.50%", "15.00%", "5.00%", "11.00%", "10.00%", "6.50%"],
+        #     "Price": ["-", "-", "-", "-", "$0.07", "$0.13", "-"],
+        #     "Token Amount": ["200,000,000", "62,500,000", "75,000,000", "25,000,000", "55,000,000", "50,000,000", "32,500,000"],
+        #     "Token Price at Public Round": ["$50,000,000", "$15,625,000", "$18,750,000", "$6,250,000", "$13,750,000", "$12,500,000", "$8,125,000"],
+        #     "Sale in $": ["-", "-", "-", "-", "$3,850,000", "$6,500,000", "-"],
+        #     "Cliff (m)": ["0", "12", "6", "9", "3", "3", "0"],
+        #     "Lock (m)": ["48", "48", "48", "24", "18", "18", "0"],
+        #     "Tokens Unlock on TGE": ["0", "0", "0", "0", "5,500,000", "5,000,000", "32,500,000"],
+        #     "Unlocked in $": ["$0", "$0", "$0", "$0", "$1,375,000", "$1,250,000", "$8,125,000"],
+        #     "Unlock % pm": ["2.08%", "2.78%", "2.38%", "6.67%", "6.00%", "6.00%", "0.00%"],
+        #     "Unlock pm $TGE": ["$1,041,667", "$434,028", "$446,429", "$416,667", "$825,000", "$750,000", "$0"]
         # }
-        
         table_data2 = {
-            "Category": ["Ecosystem", "Team", "Reserve", "Advisors", "Pre-seed", "Seed", "Liquidity"],
-            "Allocation% in Total Supply": ["40.00%", "12.50%", "15.00%", "5.00%", "11.00%", "10.00%", "6.50%"],
-            "Price": ["-", "-", "-", "-", "$0.07", "$0.13", "-"],
-            "Token Amount": ["200,000,000", "62,500,000", "75,000,000", "25,000,000", "55,000,000", "50,000,000", "32,500,000"],
-            "Token Price at Public Round": ["$50,000,000", "$15,625,000", "$18,750,000", "$6,250,000", "$13,750,000", "$12,500,000", "$8,125,000"],
-            "Sale in $": ["-", "-", "-", "-", "$3,850,000", "$6,500,000", "-"],
-            "Cliff (m)": ["0", "12", "6", "9", "3", "3", "0"],
-            "Lock (m)": ["48", "48", "48", "24", "18", "18", "0"],
-            "Tokens Unlock on TGE": ["0", "0", "0", "0", "5,500,000", "5,000,000", "32,500,000"],
-            "Unlocked in $": ["$0", "$0", "$0", "$0", "$1,375,000", "$1,250,000", "$8,125,000"],
-            "Unlock % pm": ["2.08%", "2.78%", "2.38%", "6.67%", "6.00%", "6.00%", "0.00%"],
-            "Unlock pm $TGE": ["$1,041,667", "$434,028", "$446,429", "$416,667", "$825,000", "$750,000", "$0"]
+            "Category": [
+                "Network Incentives", "Team", "Treasury", "Advisors", "Seed", 
+                "Series A", "Community Sale", "Liquidity", "Total"
+            ],
+            "Allocation% in Total Supply": [
+                "29.00%", "14.00%", "20.00%", "5.00%", "10.00%", 
+                "10.00%", "2.00%", "10.00%", "100.00%"
+            ],
+            "Price": [
+                "-", "-", "-", "-", "$0.07", 
+                "$0.13", "-", "-", "-"
+            ],
+            "Token Amount": [
+                "145,000,000", "70,000,000", "100,000,000", "25,000,000", "50,000,000", 
+                "50,000,000", "10,000,000", "50,000,000", "500,000,000"
+            ],
+            "Token Price at Public Round": [
+                "-", "-", "-", "-", "$3,500,000", 
+                "$6,500,000", "-", "-", "$10,000,000"
+            ],
+            "Sale in $": [
+                "-", "-", "-", "-", "$3,500,000", 
+                "$6,500,000", "-", "$0", "$10,000,000"
+            ],
+            "Cliff (m)": [
+                "0", "18", "0", "12", "12", 
+                "12", "3", "0", "-"
+            ],
+            "Lock (m)": [
+                "24", "36", "48", "24", "18", 
+                "18", "18", "0", "-"
+            ],
+            "Tokens Unlock on TGE": [
+                "0", "0", "0", "0", "5,000,000", 
+                "5,000,000", "10,000,000", "50,000,000", "70,000,000"
+            ],
+            "Unlocked in $": [
+                "$0", "$0", "$0", "$0", "$1,250,000", 
+                "$1,250,000", "$0", "$0", "$7,274,306"
+            ],
+            "Unlock % pm": [
+                "4.17%", "5.56%", "2.08%", "8.33%", "15.00%", 
+                "15.00%", "0.00%", "0.00%", "5.82%"
+            ],
+            "Token Unlock pm": [
+                "6,041,667", "3,888,889", "2,083,333", "2,083,333", "7,500,000", 
+                "7,500,000", "0", "0", "29,097,222"
+            ],
+            "Unlock pm $TGE": [
+                "$1,510,417", "$972,222", "$520,833", "$520,833", "$1,875,000", 
+                "$1,875,000", "$0", "$0", "$7,274,306"
+            ]
         }
 
         
@@ -1321,7 +938,7 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
         colors = ['#9747FF','#0038FF','#48FF63','#000000','#9747FF','#0038FF','#000000', '#9747FF', '#48FF63']
         
         st.header('Token Allocation Table')
-        st.dataframe(df, height=280)
+        st.dataframe(df, height=350)
         
         col1, space, col2 = st.columns([1,0.1,1])
 
@@ -1360,7 +977,7 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
         # streamlit_analytics.track(unsafe_password="test123")
         # streamlit_analytics.stop_tracking() 
     
-    #TOKEN SIM HIDE MAIN SECTION 638 to 902 AND 1362 to 1389
+    #TOKEN SIM HIDE MAIN SECTION 643 to 907 AND 1447 to 1474
     # block_style = """
     #     <style>
     #     .metric-block {
@@ -1388,3 +1005,485 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
     #             <h2>{selected_months:}</h3>
     #         </div>
     #         """, unsafe_allow_html=True)
+    
+    with tab5:
+        col1, space, col2 = st.columns([1, 0.1, 1])
+        with col2:
+                st.write("""
+                 
+                 &nbsp;""")
+                data = {
+                    "Round": ["Seed", "Series A"],
+                    "Dates": ["Q2 2025", "Q3 2025"],
+                    "Token Price": ["$0.07", "$0.13"],
+                    "Discount": ["72%", "48%"],
+                    "Fundraising Goal": ["$3.85M", "$6.50M"]
+                }
+                df = pd.DataFrame(data)
+                st.dataframe(df, height=110) 
+                
+        with col1:
+                st.header("Token Sale Roadmap")
+                st.write("""
+        The $PiPS token supply and distribution have been carefully crafted to support the long-term success and sustainability of the PiP World project. By strategically allocating tokens to key stakeholders, providing robust incentives for participation and adoption, and implementing transparent vesting and release schedules, PiP World is well-positioned to create a vibrant, rewarding, and enduring ecosystem that empowers users worldwide with the knowledge and skills to achieve financial freedom.
+
+        In the following sections of the whitepaper, we will delve into the **governance and community** aspects of the PiP World ecosystem, showcasing how $PiPS token holders will have the opportunity to actively shape the direction and evolution of the project through decentralised decision-making and collaboration.
+                """)
+    
+    with tab6:
+        st.header("Token Supply Dynamics")
+        st.write("""
+                Understanding the intricate relationship between token supply and market dynamics is crucial for our ecosystem. Although we acknowledge the significance of a flexible token supply schedule, our approach diverges from this model. We have committed to a fixed token supply with the foresight to potentially adjust inflation mechanisms in the future. 
+
+This decision underlines our commitment to balancing the need for ecosystem incentives with the goal of achieving optimal performance and supply growth management, while remaining fully aware of market implications we aim to follow this cumulative distribution function:
+&nbsp;
+                """)
+        st.latex(r'''\Phi(y_t) = \Phi(y_{t-1}) + \iota''')
+        st.write("""                 
+&nbsp;
+
+
+The ecosystem is energised by a continuum of speculators — both atomistic and myopic — who trade tokens for speculative gains, injecting liquidity into the market. This trading is decentralised, meaning participants act independently without the consideration of the collective impact on the market.
+
+Speculators, external to the ecosystems operational core, may lack direct insights into the ecosystems fundamentals. They might engage in trading based on overconfident assessments of noisy or spurious information, as suggested by Sockin (2023) and evidenced by subsequent studies.
+
+To encapsulate speculators' market behavior, we understand a demand curve as:
+                """)
+
+        st.latex(r'''X^S=Φ(y_t)−Φ(y_{t+1}+λlog(RP_t)−ζ_t)''')
+        st.write("""
+
+&nbsp;
+
+Here, *(ζt)* represents a sentiment shock among speculators about future token prices, influencing demand and, by extension, the availability of tokens for users. High optimism (*ζt)* among speculators tightens token supply for users, while higher prices deter speculator demand, increasing user supply.
+
+Market equilibrium is achieved when user demand and speculator behavior balance, leading to an equilibrium token price expressed as:
+                """)
+        st.latex(r'''P_t=1/Rexp{(\sqrt{Tϵ/λ}(A_t−A_t∗)−λy_t+λζ_t)}''')
+        st.write("""
+&nbsp;
+
+This formula demonstrates the token price (*Pt)* as a log-linear function dependent on the ecosystems demand fundamentals (*At)*, user participation threshold (*At*)*, token supply (*Yt)*, and speculator sentiment *(ζt)*.
+
+By dissecting the relationships between token supply, speculator activity, and price dynamics, we gain insights into the underlying forces shaping the cryptocurrency market. This knowledge empowers us to make informed decisions in managing our token economy, ensuring its robustness and sustainability.
+
+                """)
+        st.divider()
+        with st.expander("_Source_"):
+            st.markdown('_Sockin, M., & Xiong, W. (2023). A Model of Cryptocurrencies. Management Science, 69(11), 6684–6707. © 2023 INFORMS. (p. 6698)._')
+    
+    # st.header("$PiPs Token Simulation")
+    # st.write("Gain an edge with $PiPS tokens: our data-driven insights help you pinpoint the best times to invest, maximising returns and minimising risk. Choose your preferred timeframe to access tailored projections for market cap, token price, and supply—empowering you to make confident, strategic investments in the PiP Ecosystem ")
+    # if st.button("Start Simulation"):
+    #         app_mode = "Investment KPIs 💰"
+        
+
+elif app_mode == "Vesting & Release Schedule":
+    st.title("Vesting & Release Schedule")
+    
+    col1, space, col2 = st.columns([1,0.1,1])
+    with col1:
+        st.write("""
+&nbsp;
+
+At PiP World, we believe in aligning the interests of all stakeholders with the long-term vision and sustainability of our ecosystem. Our vesting schedule is meticulously designed to foster a deep commitment to the project's success, ensuring that contributors, team members, and advisors are invested in the growth and development of PiP World over time. 
+
+By implementing strategic lock-up periods and gradual token releases, we aim to mitigate market volatility and reward enduring participation. This approach not only stabilises the token economy but also embodies our ethos of community-driven growth, transparency, and mutual success. Through this, we lay the foundation for a robust and thriving ecosystem, where each stakeholder's contribution is recognised and valued in our journey towards a decentralised future.
+
+&nbsp;
+""")
+        # st.divider()
+        st.write("""
+To ensure the long-term alignment of interests and commitment to the project, the team and advisor tokens are subject to a 2-year vesting schedule with a 1-year cliff and 3-year vesting and a 18-month cliff respectively. This means that:
+
+- No team tokens will be released during the 18 months following the token generation event.
+- No advisor tokens will be released during the 12 months following the token generation event.
+- After the 1.5 year cliff, 33% of the team tokens will be released in year 1.
+- The remaining team/advisor tokens will be released in equal monthly instalments over the following years.
+
+&nbsp;
+                """)
+    st.write("""
+This vesting schedule ensures that the team and advisors have a strong incentive to drive the project's success over an extended period and provides transparency and predictability for the $PiPS token supply.
+
+In addition to the team and advisor vesting, the Network Incentives fund tokens will be released gradually over a 2-year period following the vesting period of the TGE. This controlled release schedule ensures that the fund can sustainably support the long-term growth and development of the PiP World platform without causing undue inflationary pressure on the $PiPS token price.
+
+""")
+    with col2:
+        st.write("""
+                
+            &nbsp;
+| Category          | % in Total Supply | Sale in $   | Cliff (m) | Lock (m) |
+|-------------------|-------------------|-------------|-----------|----------|
+| Network Incentives| 29.00%            | $0          | 0         | 24       |
+| Team              | 14.00%            | $0          | 18        | 36       |
+| Treasury          | 20.00%            | $0          | 0         | 48       |
+| Advisors          | 5.00%             | $0          | 12        | 24       |
+| Seed              | 10.00%            | $3,500,000  | 12        | 18       |
+| Series A          | 10.00%            | $6,500,000  | 12        | 18       |
+| Community Sale    | 2.00%             | $0          | 3         | 18       |
+| Liquidity         | 10.00%            | $0          | 0         | 0        |
+| **Total**         | **100.00%**       | **$10,350,000** | -     | -        |
+
+            """)
+        
+    st.divider()
+    
+    st.header("Token Release and Vesting Schedule")
+    
+    st.write("Our token release schedule, spanning 48 months, is meticulously designed to support the ecosystems's long-term sustainability and health. The graph illustrates the phased release of tokens in categories like Seed, Series A, Treasury, and more, underlining our commitment to gradual market introduction. This strategy, integral to our vesting approach, ensures stakeholders are aligned with PiP World's.")
+
+    col1, space, col2 = st.columns([1,0.1,1])
+    with col1:
+
+        def calculate_token_release(max_supply=500e6, months=49):
+            allocations = {
+                'Seed': 10,
+                'Series A': 10,
+                'Network Incentives': 29,
+                'Team': 14,
+                'Community Sale': 2,
+                'Advisors': 5,
+                'Liquidity': 10,
+                'Treasury': 20,
+            }
+            
+            df = pd.DataFrame(index=range(1, months+1))
+            
+            for category, percent in allocations.items():
+                df[category] = 0
+            
+            # Immediate allocations
+            df.loc[1, 'Liquidity'] = max_supply * (allocations['Liquidity'] / 100)  # Immediate release for liquidity
+            
+            # Define linear_release function within calculate_token_release
+            def linear_release(start_month, end_month, percentage, category):
+                monthly_amount = (max_supply * (percentage / 100)) / (end_month - start_month + 1)
+                df.loc[start_month:end_month, category] += monthly_amount
+
+            # Schedules
+            linear_release(13, 18, 10, 'Seed')  # Start at month 13, end at month 18
+            linear_release(13, 18, 10, 'Series A')  # Start at month 13, end at month 18
+            linear_release(1, 24, 29, 'Network Incentives')  # Start immediately, end at month 24
+            linear_release(19, 36, 14, 'Team')  # Start at month 19, end at month 36
+            linear_release(13, 24, 5, 'Advisors')  # Start at month 13, end at month 24
+            linear_release(4, 18, 2, 'Community Sale')  # Start at month 10, end at month 24
+            linear_release(1, 48, 20, 'Treasury')  # Start at month 1, end at month 48
+            
+            return df.cumsum()
+
+        df_release = calculate_token_release()
+
+        def plot_token_release(df_release):
+            fig = go.Figure()
+            for category in df_release.columns:
+                fig.add_trace(go.Scatter(x=df_release.index, y=df_release[category], mode='lines', name=category, fill='tozeroy'))
+                
+            fig.update_layout(
+                title='Cumulative Token Release Schedule Over 48 Months',
+                xaxis_title='Month',
+                yaxis_title='Number of Tokens',
+                legend_title='Category',
+                showlegend=True,
+                height=600,
+                width=800,
+            )
+            return fig
+
+        st.plotly_chart(plot_token_release(df_release), use_container_width=True)
+
+    with col2:
+        # Updated data with the newest allocation details
+        data = {
+            "Category": ["Seed", "Series A", "Network Incentives", "Team", "Treasury", "Advisors", "Community Sale"],
+            "Token Amount": [50000000, 50000000, 145000000, 70000000, 100000000, 25000000, 10000000],
+            "Monthly Release": [0.15, 0.15, 0.0417, 0.0556, 0.0208, 0.0833, 0.0],  # Converted percentages to decimals
+            "Initial Release": [0.1, 0.1, 0.0, 0.0, 0.0, 0.0, 1],  # Converted percentages to decimals
+            "Start Month": [13, 13, 1, 19, 1, 13, 4],
+            "End Month": [18, 18, 24, 36, 48, 24, 18]
+        }
+
+        df_data = pd.DataFrame(data)
+
+        total_months = 49
+
+        # Create a DataFrame to hold the release data
+        df_release = pd.DataFrame(0, index=np.arange(1, total_months+1), columns=df_data['Category'])
+
+        # Function to calculate the token release for each category
+        def calculate_release(row):
+            if row['Start Month'] == 0:
+                df_release.loc[1, row['Category']] += row['Token Amount'] * row['Initial Release']
+            else:
+                monthly_tokens = row['Token Amount'] * row['Monthly Release']
+                release_months = np.arange(row['Start Month'], row['End Month'] + 1)
+                df_release.loc[release_months, row['Category']] += monthly_tokens
+
+        # Apply the function across the DataFrame
+        df_data.apply(calculate_release, axis=1)
+
+        # Plot using Plotly
+        fig = go.Figure()
+        for category in df_release.columns:
+            fig.add_trace(go.Scatter(x=df_release.index, y=df_release[category], mode='lines', name=category, fill='tozeroy'))
+
+        fig.update_layout(
+            title='Fixed Token Release Schedule Per Month Over 48 Months (Default Excluding TGE)',
+            xaxis_title='Month',
+            yaxis_title='Tokens Released Per Month',
+            legend_title='Category',
+            height=600, width=800,
+        )
+
+        # Display the plot in Streamlit
+        st.plotly_chart(fig, use_container_width=True)
+
+    st.divider()
+    st.header("Private Round Vesting")
+    st.write("""
+For the initial investment phases, including Seed and Series A Rounds, we have crafted a vesting schedule that balances the necessity for early-stage backing with the imperative of sustained engagement. These rounds are critical as they involve stakeholders who contribute not only capital but also strategic insights and promotional support, which are vital during the foundational stages of our project.
+&nbsp;
+
+- **Seed Round**: A 12-month cliff followed by an 18-month lock to encourage and secure long-term commitment from our earliest supporters.
+- **Series A Round**: The same structure, with a 12-month cliff and an 18-month lock, ensures these pivotal investors are aligned with our long-term vision while preventing early token liquidation.
+""")
+
+elif app_mode == "Monetary & Fiscal Policies":
+    st.title("Monetary & Fiscal Policies")
+    st.write("""
+
+In navigating the complex terrain of digital currency economics, PiP World employs a nuanced blend of monetary and fiscal policies designed to maintain a healthy token supply, control inflation, and stimulate demand for the $PiPS token. These policies are meticulously crafted to ensure the long-term sustainability and growth of the ecosystem.
+            """)
+    col1, space, col2 = st.columns([1,0.1,1])
+    with col1:
+        st.write("""
+        
+#### Managing Token Supply:
+
+For $PiPS, we aim to potentially implement several key mechanisms to manage the token supply effectively:
+
+- **Token Buyback:** A deflationary measure where a portion of the token supply is periodically removed from circulation. This mechanism is employed to counteract inflationary pressures and enhance the token's scarcity and value over time.
+
+- **Vesting Schedules:** To align the interests of team members, advisors, and early investors with the long-term success of the ecosystem, $PiPS World incorporates vesting schedules into its tokenomics. These schedules dictate the gradual release of tokens over a specified period, preventing market flooding and ensuring a steady, controlled increase in token circulation.
+
+- **Staking Rewards:** Encouraging token holders to stake their tokens not only secures the network but also reduces the velocity of money within the ecosystem. Staked tokens are temporarily removed from circulation, which can have a deflationary effect by decreasing the available supply, thus potentially increasing the token's price.
+            """)
+    with col2:  
+        st.write("""
+#### Inflation Control and Demand Stimulation:
+
+To mitigate the risk of inflation and stimulate demand for the $PiPS token, PiP World aims to adopts the following policies:
+
+
+- **Inflation Rate Management:** While the $PiPS token has a capped supply, mechanisms for releasing tokens into the ecosystem, such as rewards for staking or participation in governance, are designed with a cap to ensure they do not dilute the token's value. The governance model allows for adjustments to these mechanisms, ensuring flexibility to respond to changing economic conditions.
+- **Demand Stimulation Initiatives:** Beyond the utility provided within the ecosystem, PiP World engages in strategies to stimulate demand for the $PiPS token. These include partnerships that expand the token's use cases, marketing campaigns to raise awareness and adoption, and liquidity provisioning on exchanges to facilitate easy trading.
+            """)
+    st.write("""
+&nbsp;
+
+By integrating these monetary and fiscal policies, PiP World aims to maintain a balanced and thriving economy. Managing the token supply through locking, vesting, and staking, alongside strategic measures to control inflation and stimulate demand, positions the $PiPS token for sustained value and utility within the ecosystem.
+            
+            """)
+    st.divider()
+    col1, space, col2 = st.columns([1,0.1,1])
+    with col1:
+        st.header("🔒 Token Locking and Linear Claiming")
+        st.write("""
+Token locking for all participants secures $PiPS tokens, reducing market volatility. The linear claiming strategy allows for real-time, second-by-second token release, mitigating bulk sell-off risks and stabilising token price.
+                """)
+        st.header("⏱️ Staking Protocol with Diverse Rewards")
+        st.write("""
+Our staking protocol incentivises token holding by potentially offering rewards in stablecoins, alongside $PiPS tokens. Allocating USDT from revenue streams into the staking rewards pool ensures a continuous incentive for token holders, promoting long-term holding and ecosystem stability.
+            """)
+    with col2:
+        st.header("🖼️ NFT Integration for Enhanced Utility")
+        st.write("""
+NFTs within PiP World not only serve as digital art assets but also play a crucial role in the deflationary framework. Increasing staking reward claim frequency based on NFT holdings and enabling NFT staking for PiP rewards add layers of utility, driving both NFT acquisition and token retention.
+    """)
+        st.header("🚜 Ecosystem Growth and Social Farming Initiatives")
+        st.write("""
+The ecosystem growth fund (netrowk incentives) explores social farming as a method to engage the community and drive ecosystem growth, potentially incorporating rewards that align with deflationary objectives.
+    """)
+    st.divider()
+    st.header("Supply Shocks and Pricing Dynamics")
+    
+    col1, space, col2 = st.columns([1,0.1,1])
+    with col1:
+        st.write("""
+                
+&nbsp;
+
+In the realm of cryptocurrency, a critical event that significantly impacts the price of a token is the occurrence of supply shocks. These are moments when a substantial portion of tokens, previously locked or unavailable, is suddenly released into circulation. The introduction of these tokens can lead to dramatic shifts in market dynamics, predominantly influencing the token's price.
+            """)
+        st.write("""
+
+A study of various projects, including Optimism, Sandbox, Axie Infinity, and Immutable X, provided a clear illustration of how supply shocks correlate with price movements. For instance, significant supply shocks, where a large percentage of the token supply was released, consistently led to notable price declines. 
+
+
+This observation stems from a fundamental economic principle: if the circulating supply of a token increases and the market cap remains constant, the price per token must decrease.
+
+&nbsp;
+            
+:blue[⎯⎯ Aggregate Demand Curve]
+
+:violet[⎯⎯ Initial Short Run Aggregate Supply Curve]
+
+:red[------ Increased SR Aggregate Supply Curve]
+
+            """)
+
+    with col2:
+        quantity = np.arange(1, 105, 1)
+
+
+        demand_price = 120 - (1 * quantity)  
+        supply_price_initial = 20 + (1 * quantity)  
+        supply_price_increased = 1 + (1 * quantity)  
+
+
+        fig = go.Figure()
+
+
+        fig.add_trace(go.Scatter(x=quantity, y=demand_price,
+                                mode='lines',
+                                name='Aggregate Demand Curve',
+                                line=dict(color='blue')))
+
+
+        fig.add_trace(go.Scatter(x=quantity, y=supply_price_initial,
+                                mode='lines',
+                                name='Initial SR Aggregate Supply Curve',
+                                line=dict(color='violet')))
+
+
+        fig.add_trace(go.Scatter(x=quantity, y=supply_price_increased,
+                                mode='lines',
+                                name='Increased SR Aggregate Supply Curve',
+                                line=dict(color='red', dash='dash')))
+
+
+        fig.update_layout(title='Supply and Demand Curves',
+                        xaxis_title='Quantity (Millions)',
+                        yaxis_title='Price (Cents)',
+                        showlegend=False,
+                        height=550, width=700)
+
+
+        st.plotly_chart(fig, use_container_width=True)
+    
+    st.write("""
+### Predicting Price Drop from Supply Shock
+
+The relationship between supply shock and the subsequent price drop is deeply rooted in tokenomics principles. Through extensive analysis of various projects experiencing significant changes in their circulating supply, a strong correlation has been observed between the percentage of supply shock and the resultant price drops. This analysis underpins the concept that sudden increases in token supply can lead to substantial decreases in token price, due to market dynamics of supply and demand.
+
+The precise impact of supply shock on price can vary based on a multitude of factors, including the project's market cap, liquidity, and investor sentiment. However, historical data from multiple projects consistently demonstrates a tangible link between these supply changes and market reactions. This relationship highlights the importance of carefully planned token distribution schedules to mitigate potential adverse effects on market price.
+
+Understanding this correlation is pivotal for PiP World ecosystem teams and investors, as it underscores the potential market implications of token unlock events and other supply-related activities. It encourages a strategic approach to token releases, ensuring they align with long-term project goals and market stability.
+
+&nbsp;
+
+        """)
+    st.header("Case Studies and Analysis")
+    
+    col1, space, col2 = st.columns([1,0.1,1])
+    with col1:
+        st.write("""
+The table below showcases specific instances of supply shocks across various projects and their subsequent impact on token prices:
+
+| Project | Date of Supply Shock | Supply Shock (%) | Outcome (% Drop) |
+| --- | --- | --- | --- |
+| Optimism | 30/05/2023 | 130 | -26 |
+| Sandbox (Ex. 1) | 14/02/2022 | 43.8 | -40 |
+| Sandbox (Ex. 2) | 14/08/2022 | 30.5 | -36.5 |
+| Sandbox (Ex. 3) | 14/02/2023 | 20.9 | -40.2 |
+| Axie Infinity | 28/04/2022 | 20.7 | -58.7 |
+| Immutable X | Not Specified | 56.1 | -42.2 |
+            """)
+        st.write("""
+&nbsp;
+
+By understanding and applying this equation, investors and our teams can better navigate the complex interplay between token supply and market behavior, allowing for more informed decision-making in the volatile landscape of cryptocurrency.
+            
+            """)
+    with col2:
+
+        projects = ["Optimism", "Sandbox (Ex. 1)", "Sandbox (Ex. 2)", "Sandbox (Ex. 3)", "Axie Infinity", "Immutable X"]
+        supply_shock = [130, 43.8, 30.5, 20.9, 20.7, 56.1]
+        outcome = [-26, -40, -36.5, -40.2, -58.7, -42.2]  
+
+
+        fig = go.Figure()
+
+
+        for project, shock, out in zip(projects, supply_shock, outcome):
+            fig.add_trace(go.Scatter(x=[shock], y=[out],
+                                    mode='markers+text',
+                                    name=project,
+                                    text=[project],
+                                    textposition="top center"))
+
+
+        fig.update_layout(title='Supply Shock and Outcome Across Projects',
+                        xaxis_title='Supply Shock (%)',
+                        yaxis_title='Outcome (% Drop)',
+                        showlegend=False,
+                        height=500, width=700)
+
+
+        fig.update_xaxes(range=[0, 130+ 10])
+        fig.update_yaxes(range=[min([o for o in outcome if o is not None]) - 10, -10]) 
+
+
+        st.plotly_chart(fig, use_container_width=True)
+
+    # st.pyplot(create_chart(market_caps, "Market Cap Over Time", "Market Cap ($)"))
+
+elif app_mode == "Staking & Liquidity":
+    st.title("Staking and Liquidity Provisions")
+
+    st.write("""
+            
+            PiP World aims to introduce a strategic staking and rewards mechanism that not only incentivises long-term holding of the $PiPS token but also significantly contributes to the stability and liquidity of the ecosystem. This approach is carefully designed to balance rewarding token holders while ensuring the health and growth of the platform.
+
+### Staking Models & Rewards:
+PiP World aims to offers a flexible staking model that allows token holders to lock their tokens for varying periods, thereby earning staking rewards. The model is deigned to offer higher rewards for longer lock-up periods, thus encouraging long-term holding.
+The rewards are distributed from a designated staking rewards pool (reserve fund), ensuring a consistent and predictable supply of rewards to stakeholders. This model serves dual purposes:
+            
+            """)
+    st.divider()
+    col1, space, col2 = st.columns([1,0.1,1])
+    with col1:
+        st.write("""#### Long-term Holding Incentive""")
+        st.write("""By providing higher rewards for longer staking periods, token holders are encouraged to commit their tokens over extended periods. This reduces the circulating supply of $PiPS, increasing their value and providing a financial incentive for holders to align with the ecosystem's long-term success.""")
+        
+        
+    with col2:
+        st.write("""#### Ecosystem Stability""")
+        st.write("""The predictable nature of staking rewards, coupled with the commitment of tokens for staking, lends stability to the $PiPS token's market. It mitigates the impact of speculative trading and short-term volatility, fostering a more stable economic environment.""")
+    # st.latex(r'''multiplier = 1.05^x''')
+    
+    
+    
+    
+    st.divider()
+    
+    st.write("### Impact on Token Velocity and Ecosystem Liquidity")
+    st.write("""
+            
+            A staking mechanism directly influences the velocity of the $PiPS token and the liquidity within the ecosystem:
+            
+- **Reduced Token Velocity:** Staking rewards encourage holders to lock their tokens, reducing the frequency with which the token changes hands. A lower velocity (V↓) is beneficial for $PiPS value, as it suggests a preference for holding over trading.  
+- **Enhanced Ecosystem Liquidity:** Part of the staking strategy includes provisions for liquidity provisioning. Stakers might have the opportunity to contribute to liquidity pools, earning additional rewards while enhancing the liquidity of $PiPS tokens on DEXs. This not only benefits the stakers but also improves the trading experience for all users by reducing slippage and ensuring fair market prices.
+
+PiP World's future staking and rewards mechanism is designed to encourage long-term holding and contribute to ecosystem stability. By carefully balancing incentives for token holders with the needs of the ecosystem, PiP World ensures a vibrant community of stakeholders invested in its long-term success, while managing token velocity and enhancing liquidity.
+
+### 🔮 Future NFT Vesting Accelerators
+At PiP World we are exploring into an exciting innovation: using NFTs to offer unique vesting and staking advantages. These NFTs aim to provide two key benefits: the ability to accelerate vesting periods, allowing investors quicker access to their tokens, and the option to stake these NFTs for additional rewards. This initiative reflects our commitment to leveraging best-in-class technology for greater ecosystem flexibility and community engagement, offering stakeholders more control and added value within the PiP ecosystem.
+
+&nbsp;
+            """)
+    
+
+# elif app_mode == "Token Simulation 💰":
+
+#     st.title("Token Simulation 💰")

@@ -38,7 +38,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-st.sidebar.image("logopixel.png", use_container_width=True)
+st.sidebar.image("https://gcdnb.pbrd.co/images/8Qhs6pDef7u0.png?o=1", use_container_width=True)
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 st.sidebar.title("Navigation")
 app_mode = st.sidebar.radio("Tokenomics section",

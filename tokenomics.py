@@ -19,6 +19,17 @@ st.set_page_config(layout="wide", page_title="$PiPS Tokenomics", page_icon="💰
 # </style>
 # """
 
+st.markdown(
+    """
+    <style>
+        section[data-testid="stSidebar"] {
+            width: 100px !important; # Set the width to your desired value
+        }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 st.markdown("""
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
@@ -31,22 +42,21 @@ st.markdown("""
         h1, h2, h3, h4, h5, h6 {
             font-family: 'VT323', monospace !important;
             font-weight: 400 !important;
-            color: black !important;
+            color: #0486A1 !important;
             
         }
     </style>
 """, unsafe_allow_html=True)
 
 
-st.sidebar.image("https://gcdnb.pbrd.co/images/8Qhs6pDef7u0.png?o=1")
+st.sidebar.image("piplogo.png", use_container_width=True)
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
-st.sidebar.title("Navigation")
-app_mode = st.sidebar.radio("Tokenomics section",
-                                ["Token Supply & Distribution", "Vesting & Release Schedule", "Monetary & Fiscal Policies", "Staking & Liquidity"])
-
+st.sidebar.title(":blue[Navigation]")
+app_mode = st.sidebar.radio("",
+                                [":blue[Token Supply]", ":blue[Vesting Schedule]", ":blue[Monetary & Fiscal]", ":blue[Staking & Liquidity]"])
 
 if "app_mode" not in st.session_state:
-    st.session_state.app_mode = "Token Supply & Distribution"
+    st.session_state.app_mode = ":blue[Token Supply]"
 
 st.session_state.app_mode = app_mode
 
@@ -54,56 +64,57 @@ st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 
 
 # OpenAI starts
+st.sidebar.title(":blue[Other]")
 with st.sidebar:
-    st.title("PiP Tokenomics AI")
-    openai_api_key = st.text_input("Add Your OpenAI API Key", key="chatbot_api_key", type="password", placeholder="Not saved or stored by us")
-    "[Get an OpenAI API key](https://platform.openai.com/account/api-keys)"
+    
+    with st.expander(":blue[PiP Tokenomics AI]"):
+        openai_api_key = st.text_input(":blue[Add Your OpenAI API Key]", key="chatbot_api_key", type="password", placeholder="Not saved/stored")
 
-#Start of OpenAI    
-    @st.dialog("PiP World Tokenomics AI Expert")
-    def tokenomics_chat_modal():
-        if "messages" not in st.session_state:
+    #Start of OpenAI    
+        @st.dialog("PiP World Tokenomics AI Expert")
+        def tokenomics_chat_modal():
+            if "messages" not in st.session_state:
 
-            st.session_state["messages"] = [
-                {"role": "system", "content": """
-                Give short answers and memorise this: PiiP World is a gamified financial ecosystem that combines blockchain technology and AI to help users develop financial literacy, learn trading strategies, and interact with dynamic AI agents in a risk-free environment, offering real-world opportunities for top performers, the Tokenomics is:
-                The PiP World tokenomics allocates 29% of the total supply to Network Incentives, with a 24-month lock and no cliff period. 14% is allocated to the Team, with an 18-month cliff and a 36-month lock. 20% is allocated to the Treasury, with a 48-month lock and no cliff period. 5% is allocated to Advisors, with a 12-month cliff and a 24-month lock. 10% is allocated to Seed, with a 12-month cliff and an 18-month lock. 10% is allocated to Series A, with a 12-month cliff and an 18-month lock. 2% is allocated to the Community Sale, which has a 3-month cliff and an 18-month lock. 10% is allocated to Liquidity, with no cliff and no lock period. The total allocation across all categories sums up to 100% of the supply.
-                """}
-            ]
+                st.session_state["messages"] = [
+                    {"role": "system", "content": """
+                    Give short answers and memorise this: PiiP World is a gamified financial ecosystem that combines blockchain technology and AI to help users develop financial literacy, learn trading strategies, and interact with dynamic AI agents in a risk-free environment, offering real-world opportunities for top performers, the Tokenomics is:
+                    The PiP World tokenomics allocates 29% of the total supply to Network Incentives, with a 24-month lock and no cliff period. 14% is allocated to the Team, with an 18-month cliff and a 36-month lock. 20% is allocated to the Treasury, with a 48-month lock and no cliff period. 5% is allocated to Advisors, with a 12-month cliff and a 24-month lock. 10% is allocated to Seed, with a 12-month cliff and an 18-month lock. 10% is allocated to Series A, with a 12-month cliff and an 18-month lock. 2% is allocated to the Community Sale, which has a 3-month cliff and an 18-month lock. 10% is allocated to Liquidity, with no cliff and no lock period. The total allocation across all categories sums up to 100% of the supply.
+                    """}
+                ]
 
-        for msg in st.session_state.messages:
-            if msg["role"] != "system":  # Skip the system message when rendering the chat
-                st.chat_message(msg["role"]).write(msg["content"])
+            for msg in st.session_state.messages:
+                if msg["role"] != "system":  # Skip the system message when rendering the chat
+                    st.chat_message(msg["role"]).write(msg["content"])
 
-        if prompt := st.chat_input(placeholder="Ask PiP World Tokenomics AI Expert"):
-            if not openai_api_key:
-                st.info("Please add your OpenAI API key to continue.")
-                st.stop()
+            if prompt := st.chat_input(placeholder="Ask PiP World Tokenomics AI Expert"):
+                if not openai_api_key:
+                    st.info("Please add your OpenAI API key to continue.")
+                    st.stop()
 
-            client = OpenAI(api_key=openai_api_key)
-            
-            st.session_state.messages.append({"role": "user", "content": prompt})
-            st.chat_message("user").write(prompt)
-            
-            response = client.chat.completions.create(
-                model="gpt-3.5-turbo", messages=st.session_state.messages
-            )
-            
-            msg = response.choices[0].message.content
-            st.session_state.messages.append({"role": "assistant", "content": msg})
-            st.chat_message("assistant").write(msg)
-            
-    if st.button("Open PiP World Tokenomics AI Expert", type="primary"):
-            tokenomics_chat_modal()
-#End of OpenAI
+                client = OpenAI(api_key=openai_api_key)
+                
+                st.session_state.messages.append({"role": "user", "content": prompt})
+                st.chat_message("user").write(prompt)
+                
+                response = client.chat.completions.create(
+                    model="gpt-3.5-turbo", messages=st.session_state.messages
+                )
+                
+                msg = response.choices[0].message.content
+                st.session_state.messages.append({"role": "assistant", "content": msg})
+                st.chat_message("assistant").write(msg)
+                
+        if st.button("Chat with AI", type="primary"):
+                tokenomics_chat_modal()
+    #End of OpenAI
 
 # OpenAI end
-st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 
-st.sidebar.markdown("""
-## Links
-[Whitepaper](https://ecosystem.pip.world)
-""")
+    with st.expander(":blue[Links]"):
+        st.markdown("""[Website](https://pip.world)""")
+        st.markdown("""[Whitepaper](https://pip.world)""")
+        st.markdown("""[Market Run](https://pip.world)""")
+        st.markdown("""[Agent Portal](https://pip.world)""")
 
 sizeABC = [10, 10, 29, 14, 20, 5, 2, 10]
 labelsABC = ['Seed', 'Series A', 'Network Incentives', 'Team', 'Treasury', 'Advisors', 'Community Sale', 'Liquidity']
@@ -119,7 +130,7 @@ def create_chart(data, title, ylabel):
 token_prices = np.random.rand(10) * 10
 market_caps = np.random.rand(10) * 1000
 
-if app_mode == "Token Supply & Distribution":
+if app_mode == ":blue[Token Supply]":
     st.title("$PiPS Token Supply and Distribution")
     
     
@@ -129,7 +140,7 @@ if app_mode == "Token Supply & Distribution":
     with col1:
             labels = labelsABC
             sizes = sizeABC
-            colors = ['#6A0DAD', '#FF6347', '#3CB311', '#000000', '#FFD700', '#1E90FF', '#4682B4', '#3CB371']  
+            colors = ['#01231E', '#965AFF', '#0486A1', '#00F2FF', '#582B88', '#23053f', '#1C9165', '#36FFAB', '#001e35']
 
             fig = go.Figure(data=[go.Pie(labels=labels, 
                                         values=sizes, 
@@ -721,7 +732,7 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
 
 
             fig = go.Figure(data=[
-                go.Scatter(x=rounds, y=amounts, mode='markers', marker=dict(size=sizes, color=['#5e28d5', '#5e28d5', '#5e28d5', '#5e28d5']))
+                go.Scatter(x=rounds, y=amounts, mode='markers', marker=dict(size=sizes, color=['#0486A1', '#0486A1', '#0486A1', '#0486A1']))
             ])
 
             fig.update_layout(title='Amount Raised at Each Funding Round',
@@ -765,7 +776,7 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
             df = pd.DataFrame(data)
 
 
-            fig = go.Figure(data=go.Scatter(x=df["Round"], y=df["Price ($)"], mode='lines+markers',line=dict(color='#5e28d5')))
+            fig = go.Figure(data=go.Scatter(x=df["Round"], y=df["Price ($)"], mode='lines+markers',line=dict(color='#0486A1')))
 
             fig.update_layout(title='Price of $PiPS at Each Funding Round',
                             xaxis_title='Round',
@@ -935,8 +946,8 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
 
         df = pd.DataFrame(table_data2)
         
-        colors = ['#9747FF','#0038FF','#48FF63','#000000','#9747FF','#0038FF','#000000', '#9747FF', '#48FF63']
-        
+        colors = ['#0486A1', '#00F2FF', '#01231E', '#965AFF', '#582B88', '#23053f', '#1C9165', '#36FFAB', '#001e35']
+
         st.header('Token Allocation Table')
         st.dataframe(df, height=350)
         
@@ -1078,7 +1089,7 @@ By dissecting the relationships between token supply, speculator activity, and p
     #         app_mode = "Investment KPIs 💰"
         
 
-elif app_mode == "Vesting & Release Schedule":
+elif app_mode == ":blue[Vesting Schedule]":
     st.title("Vesting & Release Schedule")
     
     col1, space, col2 = st.columns([1,0.1,1])
@@ -1248,7 +1259,7 @@ For the initial investment phases, including Seed and Series A Rounds, we have c
 - **Series A Round**: The same structure, with a 12-month cliff and an 18-month lock, ensures these pivotal investors are aligned with our long-term vision while preventing early token liquidation.
 """)
 
-elif app_mode == "Monetary & Fiscal Policies":
+elif app_mode == ":blue[Monetary & Fiscal]":
     st.title("Monetary & Fiscal Policies")
     st.write("""
 
@@ -1438,7 +1449,7 @@ By understanding and applying this equation, investors and our teams can better 
 
     # st.pyplot(create_chart(market_caps, "Market Cap Over Time", "Market Cap ($)"))
 
-elif app_mode == "Staking & Liquidity":
+elif app_mode == ":blue[Staking & Liquidity]":
     st.title("Staking and Liquidity Provisions")
 
     st.write("""

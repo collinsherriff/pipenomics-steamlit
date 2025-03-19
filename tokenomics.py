@@ -33,30 +33,30 @@ st.markdown(
 st.markdown("""
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
 
         body {
-            font-family: 'Space Mono', monospace !important;
+            font-family: 'Geist', monospace !important;
         }
 
         h1, h2, h3, h4, h5, h6 {
-            font-family: 'VT323', monospace !important;
+            font-family: 'Geist', monospace !important;
             font-weight: 400 !important;
-            color: #0486A1 !important;
+            color: #01231E !important;
             
         }
     </style>
 """, unsafe_allow_html=True)
 
 
-st.sidebar.image("piplogo.png", use_container_width=True)
+st.sidebar.image("piplogogreen.png", use_container_width=True)
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
-st.sidebar.title(":blue[Navigation]")
+st.sidebar.title(":green[Navigation]")
 app_mode = st.sidebar.radio("",
-                                [":blue[Token Supply]", ":blue[Vesting Schedule]", ":blue[Monetary & Fiscal]", ":blue[Staking & Liquidity]"])
+                                [":green[Token Supply]", ":green[Vesting Schedule]", ":green[Monetary & Fiscal]", ":green[Staking & Liquidity]"])
 
 if "app_mode" not in st.session_state:
-    st.session_state.app_mode = ":blue[Token Supply]"
+    st.session_state.app_mode = ":green[Token Supply]"
 
 st.session_state.app_mode = app_mode
 
@@ -64,11 +64,11 @@ st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 
 
 # OpenAI starts
-st.sidebar.title(":blue[Other]")
+st.sidebar.title(":green[Other]")
 with st.sidebar:
     
-    with st.expander(":blue[PiP Tokenomics AI]"):
-        openai_api_key = st.text_input(":blue[Add Your OpenAI API Key]", key="chatbot_api_key", type="password", placeholder="Not saved/stored")
+    with st.expander(":green[PiP Tokenomics AI]"):
+        openai_api_key = st.text_input(":green[Add Your OpenAI API Key]", key="chatbot_api_key", type="password", placeholder="Not saved/stored")
 
     #Start of OpenAI    
         @st.dialog("PiP World Tokenomics AI Expert")
@@ -110,7 +110,7 @@ with st.sidebar:
 
 # OpenAI end
 
-    with st.expander(":blue[Links]"):
+    with st.expander(":green[Links]"):
         st.markdown("""[Website](https://pip.world)""")
         st.markdown("""[Whitepaper](https://pip.world)""")
         st.markdown("""[Market Run](https://pip.world)""")
@@ -130,7 +130,7 @@ def create_chart(data, title, ylabel):
 token_prices = np.random.rand(10) * 10
 market_caps = np.random.rand(10) * 1000
 
-if app_mode == ":blue[Token Supply]":
+if app_mode == ":green[Token Supply]":
     st.title("$PiPS Token Supply and Distribution")
     
     
@@ -140,7 +140,7 @@ if app_mode == ":blue[Token Supply]":
     with col1:
             labels = labelsABC
             sizes = sizeABC
-            colors = ['#01231E', '#965AFF', '#0486A1', '#00F2FF', '#582B88', '#23053f', '#1C9165', '#36FFAB', '#001e35']
+            colors = ['#01231E', '#965AFF', '#0486A1', '#00F2FF', '#1C9165', '#23053f', '#1C9165', '#36FFAB', '#001e35']
 
             fig = go.Figure(data=[go.Pie(labels=labels, 
                                         values=sizes, 
@@ -200,7 +200,7 @@ if app_mode == ":blue[Token Supply]":
                     
 #                     This strategic approach not only has the potential to maximise your investment potential but also minimise risk by relying on data-driven insights and projections. Keep in mind that understanding the dynamics of market capitalisation, including factors that influence fluctuations and growth prospects, is essential in making educated investment choices.
                     
-#                     :blue[*Select the desired range of months, as well as the market cap to view the potential corresponding token price and circulating supply figures, enabling you to make well-informed investment decisions*:]
+#                     :green[*Select the desired range of months, as well as the market cap to view the potential corresponding token price and circulating supply figures, enabling you to make well-informed investment decisions*:]
 #                     &nbsp;
 #                     """)
 
@@ -946,7 +946,7 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
 
         df = pd.DataFrame(table_data2)
         
-        colors = ['#0486A1', '#00F2FF', '#01231E', '#965AFF', '#582B88', '#23053f', '#1C9165', '#36FFAB', '#001e35']
+        colors = ['#01231E', '#965AFF', '#0486A1', '#965AFF', '#23053f', '#23053f', '#00F2FF', '#1C9165', '#001e35']
 
         st.header('Token Allocation Table')
         st.dataframe(df, height=350)
@@ -1089,7 +1089,7 @@ By dissecting the relationships between token supply, speculator activity, and p
     #         app_mode = "Investment KPIs 💰"
         
 
-elif app_mode == ":blue[Vesting Schedule]":
+elif app_mode == ":green[Vesting Schedule]":
     st.title("Vesting & Release Schedule")
     
     col1, space, col2 = st.columns([1,0.1,1])
@@ -1259,7 +1259,7 @@ For the initial investment phases, including Seed and Series A Rounds, we have c
 - **Series A Round**: The same structure, with a 12-month cliff and an 18-month lock, ensures these pivotal investors are aligned with our long-term vision while preventing early token liquidation.
 """)
 
-elif app_mode == ":blue[Monetary & Fiscal]":
+elif app_mode == ":green[Monetary & Fiscal]":
     st.title("Monetary & Fiscal Policies")
     st.write("""
 
@@ -1335,7 +1335,7 @@ This observation stems from a fundamental economic principle: if the circulating
 
 &nbsp;
             
-:blue[⎯⎯ Aggregate Demand Curve]
+:green[⎯⎯ Aggregate Demand Curve]
 
 :violet[⎯⎯ Initial Short Run Aggregate Supply Curve]
 
@@ -1449,7 +1449,7 @@ By understanding and applying this equation, investors and our teams can better 
 
     # st.pyplot(create_chart(market_caps, "Market Cap Over Time", "Market Cap ($)"))
 
-elif app_mode == ":blue[Staking & Liquidity]":
+elif app_mode == ":green[Staking & Liquidity]":
     st.title("Staking and Liquidity Provisions")
 
     st.write("""

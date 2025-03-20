@@ -67,8 +67,8 @@ st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 st.sidebar.title("")
 with st.sidebar:
     
-    with st.expander("PiP Tokenomics AI"):
-        openai_api_key = st.text_input("Add Your OpenAI API Key", key="chatbot_api_key", type="password", placeholder="Not saved/stored")
+    with st.expander("Tokenomics Chatbot"):
+        openai_api_key = st.text_input("Add ChatGPT API Key", key="chatbot_api_key", type="password", placeholder="Not saved!")
 
     #Start of OpenAI    
         @st.dialog("PiP World Tokenomics AI Expert")
@@ -104,13 +104,13 @@ with st.sidebar:
                 st.session_state.messages.append({"role": "assistant", "content": msg})
                 st.chat_message("assistant").write(msg)
                 
-        if st.button("Chat with AI", type="primary"):
+        if st.button("New Chat", type="secondary"):
                 tokenomics_chat_modal()
     #End of OpenAI
 
 # OpenAI end
 
-    with st.expander("Links"):
+    with st.expander("Useful Links"):
         st.write("[Website](https://pip.world)")
         st.markdown("""[Whitepaper](https://pip.world)""")
         st.markdown("""[Market Run](https://pip.world)""")
@@ -489,8 +489,8 @@ This release strategy underscores PiP's commitment to transparency and a steady 
 
         total_months = 49
 
+        # Create the DataFrame for token release
         df_release = pd.DataFrame(0, index=np.arange(tge, total_months+1), columns=df_data['Category'])
-
 
         def calculate_release(row):
             if row['Start Month'] == 0:
@@ -500,26 +500,42 @@ This release strategy underscores PiP's commitment to transparency and a steady 
                 release_months = np.arange(row['Start Month'], row['End Month'] + 1)
                 df_release.loc[release_months, row['Category']] += monthly_tokens
 
-
         df_data.apply(calculate_release, axis=1)
 
+        # Define your custom color palette:
+        colors = [
+            "#36FFAB",  # Green
+            "#1C9165",  # Green
+            "#01231E",  # Green
+            "#00F2FF",  # Blue
+            "#135175",  # Blue
+            "#965AFF",  # Purple
+            "#582B88",  # Purple
+            "#23053F"   # Purple (extra color in case you have more categories)
+        ]
 
+        # Create the Plotly figure
         fig = go.Figure()
-        for category in df_release.columns:
-
-            fig.add_trace(go.Scatter(x=df_release.index[1:], y=df_release[category][1:], mode='lines', name=category))
-
+        for i, category in enumerate(df_release.columns):
+            fig.add_trace(go.Scatter(
+                x=df_release.index[1:],
+                y=df_release[category][1:],
+                mode='lines',
+                name=category,
+                line=dict(color=colors[i % len(colors)])  # Assign custom color
+            ))
 
         fig.update_layout(
             title='Fixed Token Release Schedule Per Month Over 48 Months (Default Excluding TGE)',
             xaxis_title='Month',
             yaxis_title='Tokens Released Per Month',
             legend_title='Category',
-            height=600, width=800
+            height=600,
+            width=800
         )
 
-
         st.plotly_chart(fig, use_container_width=True)
+
         
         col1, space, col2 = st.columns([1,0.1,1])
         
@@ -543,59 +559,66 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
                     
                     """)
 
-            
+            # Sample data setup
             data = {
-            "Category": ["Seed", "Series A", "Network Incentives", "Team", "Treasury", "Advisors", "Community Sale"],
-            "Token Amount": [50000000, 50000000, 145000000, 70000000, 100000000, 25000000, 10000000],
-            "Monthly Release": [0.15, 0.15, 0.0417, 0.0556, 0.0208, 0.0833, 0.0],  # Converted percentages to decimals
-            "Initial Release": [0.1, 0.1, 0.0, 0.0, 0.0, 0.0, 1],  # Converted percentages to decimals
-            "Start Month": [13, 13, 1, 19, 1, 13, 4],
-            "End Month": [18, 18, 24, 36, 48, 24, 18]
+                "Category": ["Seed", "Series A", "Network Incentives", "Team", "Treasury", "Advisors", "Community Sale"],
+                "Token Amount": [50000000, 50000000, 145000000, 70000000, 100000000, 25000000, 10000000],
+                "Monthly Release": [0.15, 0.15, 0.0417, 0.0556, 0.0208, 0.0833, 0.0],
+                "Initial Release": [0.1, 0.1, 0.0, 0.0, 0.0, 0.0, 1],
+                "Start Month": [13, 13, 1, 19, 1, 13, 4],
+                "End Month": [18, 18, 24, 36, 48, 24, 18]
             }
-
             df_data = pd.DataFrame(data)
-
-
             total_months = 49
-
-
             df_release = pd.DataFrame(0, index=np.arange(1, total_months+1), columns=df_data['Category'])
 
-
             def calculate_release(row):
-
                 initial_release_tokens = row['Token Amount'] * row['Initial Release']
                 df_release.loc[1, row['Category']] += initial_release_tokens
-                
-
                 if row['Monthly Release'] > 0:
                     monthly_tokens = row['Token Amount'] * row['Monthly Release']
                     release_months = np.arange(row['Start Month'], row['End Month'] + 1)
                     df_release.loc[release_months, row['Category']] += monthly_tokens
 
-
             df_data.apply(calculate_release, axis=1)
-
-
             df_cumulative = df_release.cumsum()
 
-            # df_cumulative['Total'] = df_cumulative.sum(axis=1)
+            # Define your custom color palette:
+            colors = [
+                "#36FFAB",  # Green
+                "#1C9165",  # Green
+                "#01231E",  # Green
+                "#00F2FF",  # Blue
+                "#135175",  # Blue
+                "#965AFF",  # Purple
+                "#582B88",  # Purple
+                "#23053F"   # Purple (extra color in case you have more categories)
+            ]
 
+            # Create the Plotly figure
             fig = go.Figure()
-            for category in df_cumulative.columns:
-                fig.add_trace(go.Scatter(x=df_cumulative.index, y=df_cumulative[category], mode='lines', name=category, stackgroup='one'))
+            for i, category in enumerate(df_cumulative.columns):
+                fig.add_trace(go.Scatter(
+                    x=df_cumulative.index,
+                    y=df_cumulative[category],
+                    mode='lines',
+                    name=category,
+                    stackgroup='one',
+                    line=dict(color=colors[i % len(colors)])  # Assign a color for each trace
+                ))
 
-
+            # Update layout and plot
             fig.update_layout(
                 title='Cumulative Token Release Schedule Over 48 Months',
                 xaxis_title='Month',
                 yaxis_title='Cumulative Tokens Released',
                 legend_title='Category',
-                height=550, width=800
+                height=550,
+                width=800
             )
 
-
             st.plotly_chart(fig, use_container_width=True)
+
 
 
             st.write("""
@@ -656,13 +679,38 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
             # Execute the function and store the cumulative token release DataFrame
             df_release = calculate_token_release()
 
-
             def plot_token_release(df_release):
                 fig = go.Figure()
-                for category in df_release.columns:
-                    fig.add_trace(go.Scatter(x=df_release.index, y=df_release[category], mode='lines', name=category))
-                    
-                fig.update_layout(title='Token Release Schedule Over 48 Months', xaxis_title='Month', yaxis_title='Number of Tokens', legend_title='Category', height=550, width=800)
+                
+                # Define your custom color palette:
+                colors = [
+                    "#36FFAB",  # Green
+                    "#1C9165",  # Green
+                    "#01231E",  # Green
+                    "#00F2FF",  # Blue
+                    "#135175",  # Blue
+                    "#965AFF",  # Purple
+                    "#582B88",  # Purple
+                    "#23053F"   # Purple (extra color in case you have more categories)
+                ]
+                
+                for i, category in enumerate(df_release.columns):
+                    fig.add_trace(go.Scatter(
+                        x=df_release.index,
+                        y=df_release[category],
+                        mode='lines',
+                        name=category,
+                        line=dict(color=colors[i % len(colors)])  # Assign custom color
+                    ))
+                                
+                fig.update_layout(
+                    title='Token Release Schedule Over 48 Months',
+                    xaxis_title='Month',
+                    yaxis_title='Number of Tokens',
+                    legend_title='Category',
+                    height=550,
+                    width=800
+                )
                 return fig
 
             st.plotly_chart(plot_token_release(df_release), use_container_width=True)
@@ -710,7 +758,7 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
 
 
             # fig = go.Figure(data=[
-            #     go.Bar(x=rounds, y=amounts, marker_color=['#5e28d5', '#5e28d5', '#5e28d5', '#5e28d5'])
+            #     go.Bar(x=rounds, y=amounts, marker_color=['#36FFAB', '#5e28d5', '#1C9165', '#5e28d5'])
             # ])
 
 
@@ -732,7 +780,7 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
 
 
             fig = go.Figure(data=[
-                go.Scatter(x=rounds, y=amounts, mode='markers', marker=dict(size=sizes, color=['#0486A1', '#0486A1', '#0486A1', '#0486A1']))
+                go.Scatter(x=rounds, y=amounts, mode='markers', marker=dict(size=sizes, color=['#36FFAB', '#36FFAB', '#1C9165', '#5e28d5']))
             ])
 
             fig.update_layout(title='Amount Raised at Each Funding Round',
@@ -776,7 +824,7 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
             df = pd.DataFrame(data)
 
 
-            fig = go.Figure(data=go.Scatter(x=df["Round"], y=df["Price ($)"], mode='lines+markers',line=dict(color='#0486A1')))
+            fig = go.Figure(data=go.Scatter(x=df["Round"], y=df["Price ($)"], mode='lines+markers',line=dict(color='#36FFAB')))
 
             fig.update_layout(title='Price of $PiPS at Each Funding Round',
                             xaxis_title='Round',
@@ -946,7 +994,7 @@ The graph presents the cumulative token release schedule for $PiPS over a 48-mon
 
         df = pd.DataFrame(table_data2)
         
-        colors = ['#01231E', '#965AFF', '#0486A1', '#965AFF', '#23053f', '#23053f', '#00F2FF', '#1C9165', '#001e35']
+        colors = ["#36FFAB", "#1C9165", "#01231E", "#00F2FF", "#135175", "#965AFF", "#582B88", "#23053F"]
 
         st.header('Token Allocation Table')
         st.dataframe(df, height=350)
@@ -1187,9 +1235,29 @@ In addition to the team and advisor vesting, the Network Incentives fund tokens 
 
         def plot_token_release(df_release):
             fig = go.Figure()
-            for category in df_release.columns:
-                fig.add_trace(go.Scatter(x=df_release.index, y=df_release[category], mode='lines', name=category, fill='tozeroy'))
-                
+            
+            # Define your custom color palette:
+            colors = [
+                "#36FFAB",  # Green
+                "#1C9165",  # Green
+                "#01231E",  # Green
+                "#00F2FF",  # Blue
+                "#135175",  # Blue
+                "#965AFF",  # Purple
+                "#582B88",  # Purple
+                "#23053F"   # Purple (extra color in case you have more categories)
+            ]
+            
+            for i, category in enumerate(df_release.columns):
+                fig.add_trace(go.Scatter(
+                    x=df_release.index,
+                    y=df_release[category],
+                    mode='lines',
+                    name=category,
+                    fill='tozeroy',
+                    line=dict(color=colors[i % len(colors)])  # Assign custom color
+                ))
+                        
             fig.update_layout(
                 title='Cumulative Token Release Schedule Over 48 Months',
                 xaxis_title='Month',
@@ -1202,6 +1270,7 @@ In addition to the team and advisor vesting, the Network Incentives fund tokens 
             return fig
 
         st.plotly_chart(plot_token_release(df_release), use_container_width=True)
+
 
     with col2:
         # Updated data with the newest allocation details
@@ -1234,20 +1303,41 @@ In addition to the team and advisor vesting, the Network Incentives fund tokens 
         df_data.apply(calculate_release, axis=1)
 
         # Plot using Plotly
+        # Define your custom color palette:
+        colors = [
+            "#36FFAB",  # Green
+            "#1C9165",  # Green
+            "#01231E",  # Green
+            "#00F2FF",  # Blue
+            "#135175",  # Blue
+            "#965AFF",  # Purple
+            "#582B88",  # Purple
+            "#23053F"   # Purple (extra color in case you have more categories)
+        ]
+
         fig = go.Figure()
-        for category in df_release.columns:
-            fig.add_trace(go.Scatter(x=df_release.index, y=df_release[category], mode='lines', name=category, fill='tozeroy'))
+        for i, category in enumerate(df_release.columns):
+            fig.add_trace(go.Scatter(
+                x=df_release.index,
+                y=df_release[category],
+                mode='lines',
+                name=category,
+                fill='tozeroy',
+                line=dict(color=colors[i % len(colors)])  # Assign custom color
+            ))
 
         fig.update_layout(
             title='Fixed Token Release Schedule Per Month Over 48 Months (Default Excluding TGE)',
             xaxis_title='Month',
             yaxis_title='Tokens Released Per Month',
             legend_title='Category',
-            height=600, width=800,
+            height=600,
+            width=800,
         )
 
         # Display the plot in Streamlit
         st.plotly_chart(fig, use_container_width=True)
+
 
     st.divider()
     st.header("Private Round Vesting")

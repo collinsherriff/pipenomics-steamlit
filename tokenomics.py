@@ -42,21 +42,21 @@ st.markdown("""
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Geist', monospace !important;
             font-weight: 400 !important;
-            color: #01231E !important;
+            color: white !important; //#01231E
             
         }
     </style>
 """, unsafe_allow_html=True)
 
 
-st.sidebar.image("piplogogreen.png", use_container_width=True)
+st.sidebar.image("piplogogreen-long.png", use_container_width=True)
 st.sidebar.markdown("<hr>", unsafe_allow_html=True)
-st.sidebar.title(":green[Navigation]")
+st.sidebar.title("Navigation")
 app_mode = st.sidebar.radio("",
-                                [":green[Token Supply]", ":green[Vesting Schedule]", ":green[Monetary & Fiscal]", ":green[Staking & Liquidity]"])
+                                ["Token Supply", "Vesting Schedule", "Monetary & Fiscal", "Staking & Liquidity"])
 
 if "app_mode" not in st.session_state:
-    st.session_state.app_mode = ":green[Token Supply]"
+    st.session_state.app_mode = "Token Supply"
 
 st.session_state.app_mode = app_mode
 
@@ -64,11 +64,11 @@ st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 
 
 # OpenAI starts
-st.sidebar.title(":green[Other]")
+st.sidebar.title("")
 with st.sidebar:
     
-    with st.expander(":green[PiP Tokenomics AI]"):
-        openai_api_key = st.text_input(":green[Add Your OpenAI API Key]", key="chatbot_api_key", type="password", placeholder="Not saved/stored")
+    with st.expander("PiP Tokenomics AI"):
+        openai_api_key = st.text_input("Add Your OpenAI API Key", key="chatbot_api_key", type="password", placeholder="Not saved/stored")
 
     #Start of OpenAI    
         @st.dialog("PiP World Tokenomics AI Expert")
@@ -110,8 +110,8 @@ with st.sidebar:
 
 # OpenAI end
 
-    with st.expander(":green[Links]"):
-        st.markdown("""[Website](https://pip.world)""")
+    with st.expander("Links"):
+        st.write("[Website](https://pip.world)")
         st.markdown("""[Whitepaper](https://pip.world)""")
         st.markdown("""[Market Run](https://pip.world)""")
         st.markdown("""[Agent Portal](https://pip.world)""")
@@ -130,7 +130,7 @@ def create_chart(data, title, ylabel):
 token_prices = np.random.rand(10) * 10
 market_caps = np.random.rand(10) * 1000
 
-if app_mode == ":green[Token Supply]":
+if app_mode == "Token Supply":
     st.title("$PiPS Token Supply and Distribution")
     
     
@@ -140,8 +140,8 @@ if app_mode == ":green[Token Supply]":
     with col1:
             labels = labelsABC
             sizes = sizeABC
-            colors = ['#01231E', '#965AFF', '#0486A1', '#00F2FF', '#1C9165', '#23053f', '#1C9165', '#36FFAB', '#001e35']
-
+            colors = ["#36FFAB", "#1C9165", "#01231E", "#00F2FF", "#135175", "#965AFF", "#582B88", "#23053F"]
+            
             fig = go.Figure(data=[go.Pie(labels=labels, 
                                         values=sizes, 
                                         hole=.3, 
@@ -1089,7 +1089,7 @@ By dissecting the relationships between token supply, speculator activity, and p
     #         app_mode = "Investment KPIs 💰"
         
 
-elif app_mode == ":green[Vesting Schedule]":
+elif app_mode == "Vesting Schedule":
     st.title("Vesting & Release Schedule")
     
     col1, space, col2 = st.columns([1,0.1,1])
@@ -1259,7 +1259,7 @@ For the initial investment phases, including Seed and Series A Rounds, we have c
 - **Series A Round**: The same structure, with a 12-month cliff and an 18-month lock, ensures these pivotal investors are aligned with our long-term vision while preventing early token liquidation.
 """)
 
-elif app_mode == ":green[Monetary & Fiscal]":
+elif app_mode == "Monetary & Fiscal":
     st.title("Monetary & Fiscal Policies")
     st.write("""
 
@@ -1449,7 +1449,7 @@ By understanding and applying this equation, investors and our teams can better 
 
     # st.pyplot(create_chart(market_caps, "Market Cap Over Time", "Market Cap ($)"))
 
-elif app_mode == ":green[Staking & Liquidity]":
+elif app_mode == "Staking & Liquidity":
     st.title("Staking and Liquidity Provisions")
 
     st.write("""
